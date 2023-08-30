@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
+
 """
 ###test
-Version 1.7
+Version 1.8
 
 transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
