@@ -1,7 +1,5 @@
-
 """
 Version 1.7
-
 
 transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -15,17 +13,16 @@ General features
       children cannot be found along with the class name.
  5 -- Converts the pick up time if a child is in 課外授業 and is 一号.  Children that are 一号 taking the after school class
       are exempt for charges resulting for being picked up late, up to a certain point.
- 6 -- created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
+ 6 -- Created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
       \u3000 in unicode escape character.  This was done to reduce replication to reduce effort when refactoring code.
  7 -- Iterate through the excel file to find where we charged extra money and fill in those cells with a pink color,
       to make it easier to find where we charged extra.
- 8 -- fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
+ 8 -- Fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
       from happnening with other functions down the line.
- 9 -- fixed the issue where the VBA code needed to be recalculated by opening the excel file in excel by triggering the
+ 9 -- Fixed the issue where the VBA code needed to be recalculated by opening the excel file in excel by triggering the
       recalculation within python.  Also made it so that the excel opening up is invisible to make it cleaner.
 10 -- No longer need to physically choose the recalculated excel file during execusion, it is automaticallt passed into
       the function that fills in the cells with extra charges.
-(new)
 11 -- Made it so the reference files (excel documents downloaded from hug note that has the time stamps of arrival and
       departure times of all the kids) can be opened regardless if they are zipped or unzipped.
 12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
@@ -43,33 +40,45 @@ General features
       their respective functions.
 ** -- Other various clean ups to make the code readable as well as organize things and changes to speed up things.
 """
-
+from __future__ import annotations
 import pandas as pd
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import messagebox
-from datetime import datetime
+#from datetime import datetime
 import openpyxl
-from openpyxl import Workbook
+#from openpyxl import Workbook
 from openpyxl import styles
 from openpyxl.styles import PatternFill
 import xlwings as xw
 import zipfile
 from io import StringIO
-
 import os
 
 
 
 def replace_all_spaces(words: str) -> str:
+    '''
+    Remove blank space, whether it is english space or the japanese space.
+
+    :param Words: a string that may or may not contain a blank space.
+    :return: Return a string with english and japanese spaces removed. (may still contain any other form of blank spaces)
+    '''
     words = words.replace('\u3000', '') # \u3000 is the equivalent to the japanese space. normal space -> ' '
     words = words.replace(' ', '')                                                    # japanese space -> '　'
     return words
 
 
 
-def find_date(tab: Workbook, date: datetime):
-    '''find the row and column (essentially the corordinates) of the matching date.'''
+def find_date(tab: Worksheet, date: datetime) -> list[int]:
+    '''
+    Find the row and column (essentially the corordinates) of the matching date.
+
+    :param tab: The current worksheet in use
+    :param date: Datetime object from the refference file
+    :return: A list of two integers representing the row and column the datetime had a match.
+             If no match was found return None.
+    '''
     for i, row in enumerate(tab.iter_rows()):
         for idx, cell in enumerate(row):
             if cell.value == date:
@@ -77,17 +86,29 @@ def find_date(tab: Workbook, date: datetime):
     return None
 
 
+# FIXME: Fix the function so that it doesnt have to return a list object and just an integer just for clarity sake. this
+# FIXME: will involve fixing other functions that uses this out put as its input. (check later for the names of those functions)
+def find_name(tab: Worksheet, name: str, date_row: int) -> list[int]: # speficically returning one int in the format of a list to avoid out of index errors.
+    '''
+    Find the row number of where the childs name is located in the workbook.  Generally speaking we expect to find
+    two locations, but sometimes we don't find them at all due to the kanji being the incorect one and a mismatch
+    happening from the refference file downloaded from hugnote and the record keeping file in excel.
+    ex) 髙田　!= 高田　though they seem similar they are two completely different strings in unicode.
 
-def find_name(tab1: Workbook, name: str, date_row: int) -> list[int]: # speficically returning one int in the format of a list to avoid out of index errors.
-    '''find the row number of where the childs name is located in the workbook'''
+    :param tab: the curent Worksheet we are iterating through
+    :param name: the name of the child we are looking for in the Worksheet.
+    :param date_row: the first number in the list that is returned from the fint_date function representing the row
+                     in which the date was found.
+    :return:
+    '''
     ans = []
-    for i, row in enumerate(tab1.iter_rows()):
+    for i, row in enumerate(tab.iter_rows()):
         if type(row[2].value) == str:
             cell_name = replace_all_spaces(row[2].value)
             if cell_name == name:
                 ans.append(i)
     if date_row < 10:
-        return ans[:1] # returning just one so make sure we only place the time correctly for the corresponding date
+        return ans[:1] # returning just one to make sure we only place the time correctly for the corresponding date
     else:
         return ans[-1:] # also using [:1] and [-1:] so an error is not raised when the list is empty
 
@@ -282,7 +303,7 @@ def find_total_row(sheet: Workbook) -> list[int]:
 
 
 
-def mark_charges_with_pink(input_file: Workbook):
+def mark_charges_with_pink(input_file: Workbook) -> None:
     '''
     finds cells that have numbers in them which indicates that we have charged the parents money for staying late.
     Then it fills in the cell with a light pink color so it easy to identify where these charges are.
@@ -358,7 +379,6 @@ def import_ref_data(result_choice: str) -> dict:
                     if class_name in file:
                         reference_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
     return reference_files
-
 
 
 
@@ -472,4 +492,6 @@ result_choise = messagebox.askquestion('一つを選んでください', 'ZIPフ
 reference_files = import_ref_data(result_choise)
 update_excel_data(input_file, reference_files, result_file)
 recalculate_vba_code(result_file)
+mark_charges_with_pink(result_file)
+mark_absent(result_file)
 
