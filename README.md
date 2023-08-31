@@ -1,7 +1,6 @@
 # Transfer_time_automation
  transfers time stamps from one excel file to another
 
-REVERT TEST
 
 Version 1.7
 
