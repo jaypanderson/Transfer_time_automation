@@ -1,35 +1,29 @@
 """
-Version 1.4
+Version 1.5
 
 First stable version that transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
 
 General features
-1 -- This version transfers time from one excel file to another.
-2 -- There is a window interface to choose the files needed in this script.
-3 -- If there are missing files from the refrerence data (data downloaded from hugh note) it will notify you that not all
-     files have been downloaded from hugnote, but will transfer data with what ever files are available.
-4 -- If children on the hugnote files(reference files) cannot be found in the 預かり料金表 then it will notify you which
-     children cannot be found along with the class name.
-5 -- Converts the pick up time if a child is in 課外授業 and is 一号.  Children that are 一号 taking the after school class
-     are exempt for charges resulting for being picked up late, up to a certain point.
-6 -- created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
-     \u3000 in unicode escape character.  This was done to reduce replication to reduce effort when refactoring code.
+ 1 -- This version transfers time from one excel file to another.
+ 2 -- There is a window interface to choose the files needed in this script.
+ 3 -- If there are missing files from the refrerence data (data downloaded from hugh note) it will notify you that not all
+      files have been downloaded from hugnote, but will transfer data with what ever files are available.
+ 4 -- If children on the hugnote files(reference files) cannot be found in the 預かり料金表 then it will notify you which
+      children cannot be found along with the class name.
+ 5 -- Converts the pick up time if a child is in 課外授業 and is 一号.  Children that are 一号 taking the after school class
+      are exempt for charges resulting for being picked up late, up to a certain point.
+ 6 -- created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
+      \u3000 in unicode escape character.  This was done to reduce replication to reduce effort when refactoring code.
+ 7 -- Iterate through the excel file to find where we charged extra money and fill in those cells with a pink color,
+      to make it easier to find where we charged extra.
+ 8 -- fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
+      from happnening with other functions down the line.
 (new)
-7 -- Iterate through the excel file to find where we charged extra money and fill in those cells with a pink color,
-     to make it easier to find where we charged extra.
-8 -- fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
-     from happnening with other functions down the line.
-
-
-!!!WARNING!!!
-issues to fix
-
-1 -- this version has an issue where i need to reopen the excel file to color in the cells where charges were made for
-     all the children.  The issue is that this charge is calculated internally by a custom VBA code within excel.  if you
-     try to open the file through python the VBA code is not executed and thus the cells with the charges cannot be colored
-     in.  To solve this problem you can open the _result file, enable macros, save and close the file before you chose the
-     file to be opened for color in part of the code.  (that is coloring the cells that contian charges)
+ 9 -- fixed the issue where the VBA code needed to be recalculated by opening the excel file in excel by triggering the
+      recalculation within python.  Also made it so that the excel opening up is invisible to make it cleaner.
+10 -- No longer need to physically choose the recalculated excel file during execution, it is automatically passed into
+      the function that fills in the cells with extra charges.
 """
 
 import pandas as pd
@@ -226,16 +220,17 @@ def update_excel_data(input_file, reference_files, output_file):
 
 
 
-def recalculate_vba_code():
+def recalculate_vba_code(input_file):
     '''
     Trigger the calculations in the excel book esternally so that we can access the results in the next step.
     :return:
     '''
-    input_file = filedialog.askopenfilename(title='ファイルを選択してくいださい。')
+    app = xw.App(visible=False)
     workbook = xw.Book(input_file)
     workbook.app.calculation = 'automatic'
     workbook.save(input_file)
     workbook.close()
+    app.quit()
 
 
 
@@ -255,14 +250,13 @@ def find_total_row(sheet: Workbook) -> list[int]:
 
 
 
-def mark_charges_with_pink():
+def mark_charges_with_pink(input_file: Workbook):
     '''
     finds cells that have numbers in them which indicates that we have charged the parents money for staying late.
     Then it fills in the cell with a light pink color so it easy to identify where these charges are.
     :param input_file:
     :return None:
     '''
-    input_file = filedialog.askopenfilename(title='追加料金の色塗りの為にファイルを選択してくいださい。')
     output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
     input_data = openpyxl.load_workbook(input_file, data_only=True)
     count = 0
@@ -328,7 +322,7 @@ for class_name in class_names:
 
 
 update_excel_data(input_file, reference_files, result_file)
-#recalculate_vba_code()
-mark_charges_with_pink()
+recalculate_vba_code(result_file)
+mark_charges_with_pink(result_file)
 print(result_file)
 
