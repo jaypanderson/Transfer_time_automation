@@ -1,5 +1,5 @@
 """
-Version 1.3
+Version 1.4
 
 First stable version that transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -13,9 +13,23 @@ General features
      children cannot be found along with the class name.
 5 -- Converts the pick up time if a child is in 課外授業 and is 一号.  Children that are 一号 taking the after school class
      are exempt for charges resulting for being picked up late, up to a certain point.
-(new)
 6 -- created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
      \u3000 in unicode escape character.  This was done to reduce replication to reduce effort when refactoring code.
+(new)
+7 -- Iterate through the excel file to find where we charged extra money and fill in those cells with a pink color,
+     to make it easier to find where we charged extra.
+8 -- fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
+     from happnening with other functions down the line.
+
+
+!!!WARNING!!!
+issues to fix
+
+1 -- this version has an issue where i need to reopen the excel file to color in the cells where charges were made for
+     all the children.  The issue is that this charge is calculated internally by a custom VBA code within excel.  if you
+     try to open the file through python the VBA code is not executed and thus the cells with the charges cannot be colored
+     in.  To solve this problem you can open the _result file, enable macros, save and close the file before you chose the
+     file to be opened for color in part of the code.  (that is coloring the cells that contian charges)
 """
 
 import pandas as pd
@@ -26,6 +40,9 @@ from datetime import datetime
 import openpyxl
 from openpyxl import Workbook
 from openpyxl import styles
+from openpyxl.styles import PatternFill
+import xlwings as xw
+
 import os
 
 
@@ -130,6 +147,8 @@ def update_excel_data(input_file, reference_files, output_file):
 
     missing_children = set()
     # Iterate over the input data tabs
+    # here i am iterating over the sheet names intead of the worksheet them selves because i will use the sheet names
+    # to access the correct file in the defference data.
     for sheet_name in input_data.sheetnames[2:11]:
 
         # access the sheet we are currently working on
@@ -201,12 +220,83 @@ def update_excel_data(input_file, reference_files, output_file):
         messagebox.showinfo('以下の子供が見つかりませんでした。', "ハグノートと預かり料金ファイルの子供の漢字が異なってる可能性があります。\n預かり料金ファイルの子供の名前を修正してください。:\n\n" + "\n".join(missing_children))
     else:
         messagebox.showinfo('完了', 'データ転送が完了しました。')
-
-
-
-
-
     output_data.save(output_file)
+    output_data.close()
+    input_data.close()
+
+
+
+def recalculate_vba_code():
+    '''
+    Trigger the calculations in the excel book esternally so that we can access the results in the next step.
+    :return:
+    '''
+    input_file = filedialog.askopenfilename(title='ファイルを選択してくいださい。')
+    workbook = xw.Book(input_file)
+    workbook.app.calculation = 'automatic'
+    workbook.save(input_file)
+    workbook.close()
+
+
+
+def find_total_row(sheet: Workbook) -> list[int]:
+    '''find the rows that have '日計' so that it only iterates through those rows'''
+    ans = []
+    test = 0
+    for i, row in enumerate(sheet.iter_rows(), start=1):
+        cell_value = row[2].value
+        if isinstance(cell_value, str):
+            cell_value = replace_all_spaces(cell_value)
+            if cell_value == '日計':
+                test += 1
+                print('count: ', test)
+                ans.append(i)
+    return ans
+
+
+
+def mark_charges_with_pink():
+    '''
+    finds cells that have numbers in them which indicates that we have charged the parents money for staying late.
+    Then it fills in the cell with a light pink color so it easy to identify where these charges are.
+    :param input_file:
+    :return None:
+    '''
+    input_file = filedialog.askopenfilename(title='追加料金の色塗りの為にファイルを選択してくいださい。')
+    output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
+    input_data = openpyxl.load_workbook(input_file, data_only=True)
+    count = 0
+    for in_work_sheet, out_work_sheet in zip(input_data.worksheets[2:11], output_data.worksheets[2:11]):
+        cells = []
+        # check for individual charges
+        for i, row in enumerate(in_work_sheet.iter_rows(min_row=6)):
+            for idx, cell in enumerate(row[5::4]):
+                if isinstance(cell.value, int) and cell.value >= 100:
+                    count += 1
+                    print(cell.value, count, 'heyo')
+                    cells.append((i + 6, (idx * 4) + 6)) # this is +6 because workbook objects are 1 indexed but when slicing withe [5::4] it is 0 indexed
+
+        # check for total charges
+        rows_to_check = find_total_row(in_work_sheet)
+        for i, row in enumerate(in_work_sheet.iter_rows(min_row=4), start=4):
+            if i in rows_to_check:
+                for idx, cell in enumerate(row[3:]):
+                    if isinstance(cell.value, int) and cell.value >= 100:
+                        print('total for day: ', cell.value)
+                        cells.append((i, idx + 4))
+
+        for cell in cells:
+            row = cell[0]
+            col = cell[1]
+            lavender = 'ffccff'
+            light_pink = 'fce5cd'
+            out_work_sheet.cell(row=row, column=col).fill = PatternFill(fgColor=lavender, fill_type="solid")
+    output_data.save(input_file)
+    output_data.close()
+    input_data.close()
+    #print(cells)
+    messagebox.showinfo('完了', '追加料金があったセルの色塗りが完了しました。')
+
 
 
 # create file paths by asking the user.
@@ -222,7 +312,8 @@ directory_path = filedialog.askdirectory(title = 'ダウンロードした打刻
 files = os.listdir(directory_path)
 
 # Generate output file name
-output_file = os.path.splitext(input_file)[0] + "_result.xlsm"
+result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
+test = os.path.splitext(input_file)[0] + "_test.xlsm"
 
 # create dictionary to store path names for reference files
 class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
@@ -236,5 +327,8 @@ for class_name in class_names:
 
 
 
-update_excel_data(input_file, reference_files, output_file)
+update_excel_data(input_file, reference_files, result_file)
+#recalculate_vba_code()
+mark_charges_with_pink()
+print(result_file)
 
