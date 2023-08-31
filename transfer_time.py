@@ -1,5 +1,5 @@
 """
-Version 1.7
+Version 1.8
 
 transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -27,11 +27,12 @@ General features
       departure times of all the kids) can be opened regardless if they are zipped or unzipped.
 12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
       children that are 一号.
-(new)
 13 -- Iterate through the excel file to fill in cells that have both the arrival time and departure time blank with
       休み to indicate that the child did not come to school on that day. Also highlight with yellow on cells that have
       only arrival time or departure time missing but not both to indicate something went wrong or the parents forgot
       to record the time for arrival or departure.
+(new)
+14 --
 (working on)
 ** -- Finish type hints and doc strings for all the functions.
 ** -- Fixed issiue where 一号課外 time adjustments were being made every single week. its not every week that they have
@@ -244,10 +245,12 @@ def update_excel_data(input_file, reference_data, output_file):
 
             # find the corresponding name. This only gives the row because we will use the column numbers from date_coor
             name_coor = find_name(cur_sheet, child_name, date_coor[0])
+            #print(i, date_coor, date, new_sheet_name, child_name)
             if not name_coor:
                 missing_children.add('{}組の{}'.format(new_sheet_name, child_name))
-                print(i, date_coor, date)
-                print(i, name_coor, child_name)
+                print(cur_sheet)
+                #print(i, date_coor, date, new_sheet_name, child_name)
+                #print(i, name_coor, child_name)
 
             # check to see if name_coor is an empty list. if so continue to next entry.
             if len(name_coor) == 0:
@@ -344,10 +347,15 @@ def mark_charges_with_pink(input_file: Workbook) -> None:
 
 def import_ref_data(result_choice: str) -> dict:
     '''
-    return the reference files all saved into a dictionary that will be imported from a zip file or a regular
+    Return the reference files all saved into a dictionary that will be imported from a zip file or a regular
     directory depending on the choice of the user.
-    :param result_choice:
-    :return: dictionary
+
+    :param Result_choice: A string indicating the user's choice. Expected values are 'yes' for zip files
+                          and 'no' for regular directories
+    :return: A dictionary object containing the contents of all the individual sheets coded to the class name.
+
+    Note:
+    -- The function will prompt the user to open a zip file or a folder depending on the choice the user made in a previous prompt.
     '''
     class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
                    'もも', 'みどり', 'き', 'あお', 'ふじ']
@@ -378,6 +386,7 @@ def import_ref_data(result_choice: str) -> dict:
                 for file in unzipped_files:
                     if class_name in file:
                         reference_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
+    print(reference_files.keys())
     return reference_files
 
 
@@ -394,7 +403,7 @@ def range_adjustment(ranges: list[list[int]]) -> list[list[int]]:
 
     Example:
     --------
-    >>> range_adjustment([[5, 21], [30,30]])
+    >> range_adjustment([[5, 21], [30,30]])
     [[5, 21],[30, 46]]
     """
     first_range = ranges[0]
