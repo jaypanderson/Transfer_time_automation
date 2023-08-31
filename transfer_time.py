@@ -1,5 +1,5 @@
 """
-Version 1.2
+Version 1.3
 
 First stable version that transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -11,11 +11,12 @@ General features
      files have been downloaded from hugnote, but will transfer data with what ever files are available.
 4 -- If children on the hugnote files(reference files) cannot be found in the 預かり料金表 then it will notify you which
      children cannot be found along with the class name.
-(new)
 5 -- Converts the pick up time if a child is in 課外授業 and is 一号.  Children that are 一号 taking the after school class
      are exempt for charges resulting for being picked up late, up to a certain point.
+(new)
+6 -- created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
+     \u3000 in unicode escape character.  This was done to reduce replication to reduce effort when refactoring code.
 """
-
 
 import pandas as pd
 import tkinter as tk
@@ -24,7 +25,15 @@ from tkinter import messagebox
 from datetime import datetime
 import openpyxl
 from openpyxl import Workbook
+from openpyxl import styles
 import os
+
+
+
+def replace_all_spaces(words: str) -> str:
+    words = words.replace('\u3000', '') # \u3000 is the equivalent to the japanese space. normal space -> ' '
+    words = words.replace(' ', '')                                                    # japanese space -> '　'
+    return words
 
 
 
@@ -43,9 +52,7 @@ def find_name(tab1: Workbook, name: str, date_row: int) -> list[int]: # speficic
     ans = []
     for i, row in enumerate(tab1.iter_rows()):
         if type(row[2].value) == str:
-            cell_name = row[2].value.replace('　', '') # here i am replacing a japanese space with an empty string. The japanese space is different from the us space.
-            cell_name = cell_name.replace(' ', '') # also replacing regular spaces.
-            #print(cell_name, name)
+            cell_name = replace_all_spaces(row[2].value)
             if cell_name == name:
                 ans.append(i)
     if date_row < 10:
@@ -78,11 +85,9 @@ def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workb
        they leave before the pick up time limit.'''
     days_of_week = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"]
     for i, row in enumerate(sheet):
-        #print(name, row[1].value)
         name_val = row[1].value
         if name_val != None:
-            name_val = name_val.replace('　','')  # replaceing the japanese space known as the IDEOGRAPHIC SPACE character or \u3000 in unicode escape character.
-            name_val = name_val.replace(' ', '')
+            name_val = replace_all_spaces(name_val)
         if name == name_val:
             time_limit = sheet[i+1][2 + day_of_week].value
             if time_limit == None:
@@ -110,7 +115,6 @@ def update_excel_data(input_file, reference_files, output_file):
     # Read the reference CSV files
     reference_data = {}
     for key, val in reference_files.items():
-        #print(key)
         reference_data[key] = pd.read_csv(val, parse_dates=['日付'])
 
     # create a list of children that are 一号 and are in the 課外授業.
@@ -119,8 +123,7 @@ def update_excel_data(input_file, reference_files, output_file):
     for row in ichigo_kagai_sheet:
         name_val = row[1].value
         if name_val != None:
-            name_val = name_val.replace('　', '') # replaceing the japanese space known as the IDEOGRAPHIC SPACE character or \u3000 in unicode escape character.
-            name_val = name_val.replace(' ', '')
+            name_val = replace_all_spaces(name_val)
             ichigo_kagai.append(name_val)
 
     print(ichigo_kagai)
@@ -134,8 +137,7 @@ def update_excel_data(input_file, reference_files, output_file):
         out_sheet = output_data[sheet_name]
 
         # erase any possible spaces in the sheetname
-        new_sheet_name = sheet_name.replace(' ', '')  # replacing normal english space
-        new_sheet_name = new_sheet_name.replace('　', '')  # replacing japanese space
+        new_sheet_name = replace_all_spaces(sheet_name)
 
         # check to see if tab name exists in reference data
         # if there is no match it is possible the user did not download all the files
@@ -146,13 +148,12 @@ def update_excel_data(input_file, reference_files, output_file):
         # Read the reference data for the current tab
         ref_data = reference_data[new_sheet_name]
 
-        #print(cur_sheet.max_row)
         # Iterate through the refference data
         for i, row in ref_data.iterrows():
             global date
             date = row['日付']
-            child_name = row['こども氏名'].replace(' ', '')
-            child_name = child_name.replace('　', '') # also replace the Japanese space.
+            child_name = row['こども氏名']
+            child_name = replace_all_spaces(child_name)
             arrive_time = row['出席時刻']
             departure_time = row['帰宅時刻']
 
@@ -160,9 +161,8 @@ def update_excel_data(input_file, reference_files, output_file):
             clean_date = date.to_pydatetime()
             day_of_week_num = clean_date.weekday()
             day_of_week_str = clean_date.strftime('%A')
-            # print(day_of_week_num, day_of_week_str)
 
-            # remove : from time stamp and skip procedure if it is a nan value.
+            # remove ':' from time stamp and skip procedure if it is a nan value.
             if isinstance(arrive_time, str):
                 arrive_time = arrive_time.replace(':', '')
 
@@ -171,8 +171,6 @@ def update_excel_data(input_file, reference_files, output_file):
 
             #find the corresponding date(cell row and col) date_coor[0] is the row and date_coor[1] is the column
             date_coor = find_date(cur_sheet, date)
-
-            #print(i, date_coor, date)
 
             # check to see if date_coor is empty or is None, if so skip the date. because it can cause errors in the fillowing operations.
             if date_coor == None:
@@ -197,7 +195,6 @@ def update_excel_data(input_file, reference_files, output_file):
                 adj_departure_time = dep_check_time(departure_time)
                 if child_name in ichigo_kagai: # adjust time if the kids are in 課外授業　and are 一号.
                     adj_departure_time = kagai_ichigo_check_time(child_name, adj_departure_time, day_of_week_num, ichigo_kagai_sheet)
-                #print(adj_arrive_time, adj_departure_time)
                 out_sheet.cell(name_coor[0] + 1, date_coor[1] + 2).value = adj_departure_time # Add one to adjust for the 0 index created with the enumreate() function
 
     if missing_children:

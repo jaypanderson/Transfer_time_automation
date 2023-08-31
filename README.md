@@ -2,7 +2,8 @@
  transfers time stamps from one excel file to another
 
 
-Version 1.2
+
+Version 1.3
 
 First stable version that transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -14,6 +15,8 @@ General features
      files have been downloaded from hugnote, but will transfer data with what ever files are available.
 4 -- If children on the hugnote files(reference files) cannot be found in the 預かり料金表 then it will notify you which
      children cannot be found along with the class name.
-(new)
 5 -- Converts the pick up time if a child is in 課外授業 and is 一号.  Children that are 一号 taking the after school class
      are exempt for charges resulting for being picked up late, up to a certain point.
+(new)
+6 -- created function to replace spaces between names including the japanese space aka IDEOGRAPHIC SPACE character or
+     \u3000 in unicode escape character.  This was done to reduce replication to reduce effort when refactoring code.
