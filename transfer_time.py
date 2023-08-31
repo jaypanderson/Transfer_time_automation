@@ -1,7 +1,7 @@
 """
-Version 1.5
+Version 1.6
 
-First stable version that transfers drop off and pick up times from one excel file to another that then calculates
+transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
 
 General features
@@ -19,11 +19,15 @@ General features
       to make it easier to find where we charged extra.
  8 -- fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
       from happnening with other functions down the line.
-(new)
  9 -- fixed the issue where the VBA code needed to be recalculated by opening the excel file in excel by triggering the
       recalculation within python.  Also made it so that the excel opening up is invisible to make it cleaner.
-10 -- No longer need to physically choose the recalculated excel file during execution, it is automatically passed into
+10 -- No longer need to physically choose the recalculated excel file during execusion, it is automaticallt passed into
       the function that fills in the cells with extra charges.
+(new)
+11 -- Made it so the reference files (excel documents downloaded from hug note that has the time stamps of arrival and
+      departure times of all the kids) can be opened regardless if they are zipped or unzipped.
+12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
+      children that are 一号.
 """
 
 import pandas as pd
@@ -36,6 +40,8 @@ from openpyxl import Workbook
 from openpyxl import styles
 from openpyxl.styles import PatternFill
 import xlwings as xw
+import zipfile
+from io import StringIO
 
 import os
 
@@ -59,7 +65,7 @@ def find_date(tab: Workbook, date: datetime):
 
 
 def find_name(tab1: Workbook, name: str, date_row: int) -> list[int]: # speficically returning one int in the format of a list to avoid out of index errors.
-    '''find the row number of where the childs name is located in thr workbook'''
+    '''find the row number of where the childs name is located in the workbook'''
     ans = []
     for i, row in enumerate(tab1.iter_rows()):
         if type(row[2].value) == str:
@@ -73,22 +79,38 @@ def find_name(tab1: Workbook, name: str, date_row: int) -> list[int]: # speficic
 
 
 
-def arr_check_time(time: str) -> int:
+def arr_check_time(time: int) -> int:
     '''Convert the arival time so that if anyone arrives before 7:30 it is set to 7:30'''
-    time = int(time)
     if  time < 730:
         time = 730
     return time
 
-def dep_check_time(time: str) -> int:
+def dep_check_time(time: int) -> int:
     '''Convert the departure time so that if they are 9 minuets over the time limit it reverts to the time limit
         So that they are not charged'''
-    time = int(time)
     if 1131 <= time <= 1139:
         time = 1130
     if 1431 <= time <= 1439:
         time = 1430
     return time
+
+
+def ichigo_check(name_coor: list[int], sheet: Workbook) -> bool:
+    """
+    returning a bool to check if a given child is in the 一号 category. There is a cell in the workbook that denotes
+    this information
+    :param name_coor: A list containing a single integer which tells you which row we need to look at. we will be
+                      looking at the first cell of the row.
+    :param sheet: The worksheet we are currently iterating through.
+    :return:  A bool value indicating whether the child is in the 一号 category.
+    """
+    row = name_coor[0] + 1 # adjust
+    col = 1
+    value = int(sheet.cell(row=row, column=col).value)
+    if value == 1:
+        return True
+    else:
+        return False
 
 
 def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workbook) -> int:
@@ -117,16 +139,12 @@ def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workb
 
 
 
-def update_excel_data(input_file, reference_files, output_file):
+def update_excel_data(input_file, reference_data, output_file):
 
     # Read the input Excel file with openpyxl
     output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
     input_data = openpyxl.load_workbook(input_file, data_only=True)
 
-    # Read the reference CSV files
-    reference_data = {}
-    for key, val in reference_files.items():
-        reference_data[key] = pd.read_csv(val, parse_dates=['日付'])
 
     # create a list of children that are 一号 and are in the 課外授業.
     ichigo_kagai_sheet = input_data['1号課外']
@@ -202,13 +220,16 @@ def update_excel_data(input_file, reference_files, output_file):
 
             # Write data into cells.
             if isinstance(arrive_time, str) :
-                adj_arrive_time = arr_check_time(arrive_time)
-                out_sheet.cell(name_coor[0] + 1, date_coor[1] + 1).value = adj_arrive_time # Add one to adjust for the 0 index created with the enumreate() function
+                arrive_time = int(arrive_time) # change type to allow for int comparisons
+                arrive_time = arr_check_time(arrive_time) # adjust time for those ariving earlier than 730.
+                out_sheet.cell(name_coor[0] + 1, date_coor[1] + 1).value = arrive_time # Add one to adjust for the 0 index created with the enumreate() function
             if isinstance(departure_time, str):
-                adj_departure_time = dep_check_time(departure_time)
+                departure_time = int(departure_time) # change type to allow for int comparisons
+                if ichigo_check(name_coor, cur_sheet): # check if child is 一号.
+                    departure_time = dep_check_time(departure_time)
                 if child_name in ichigo_kagai: # adjust time if the kids are in 課外授業　and are 一号.
-                    adj_departure_time = kagai_ichigo_check_time(child_name, adj_departure_time, day_of_week_num, ichigo_kagai_sheet)
-                out_sheet.cell(name_coor[0] + 1, date_coor[1] + 2).value = adj_departure_time # Add one to adjust for the 0 index created with the enumreate() function
+                    departure_time = kagai_ichigo_check_time(child_name, departure_time, day_of_week_num, ichigo_kagai_sheet)
+                out_sheet.cell(name_coor[0] + 1, date_coor[1] + 2).value = departure_time # Add one to adjust for the 0 index created with the enumreate() function
 
     if missing_children:
         messagebox.showinfo('以下の子供が見つかりませんでした。', "ハグノートと預かり料金ファイルの子供の漢字が異なってる可能性があります。\n預かり料金ファイルの子供の名前を修正してください。:\n\n" + "\n".join(missing_children))
@@ -222,7 +243,7 @@ def update_excel_data(input_file, reference_files, output_file):
 
 def recalculate_vba_code(input_file):
     '''
-    Trigger the calculations in the excel book esternally so that we can access the results in the next step.
+    Trigger the calculations in the excel book externally so that we can access the results in the next step.
     :return:
     '''
     app = xw.App(visible=False)
@@ -237,14 +258,11 @@ def recalculate_vba_code(input_file):
 def find_total_row(sheet: Workbook) -> list[int]:
     '''find the rows that have '日計' so that it only iterates through those rows'''
     ans = []
-    test = 0
     for i, row in enumerate(sheet.iter_rows(), start=1):
         cell_value = row[2].value
         if isinstance(cell_value, str):
             cell_value = replace_all_spaces(cell_value)
             if cell_value == '日計':
-                test += 1
-                print('count: ', test)
                 ans.append(i)
     return ans
 
@@ -259,15 +277,12 @@ def mark_charges_with_pink(input_file: Workbook):
     '''
     output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
     input_data = openpyxl.load_workbook(input_file, data_only=True)
-    count = 0
     for in_work_sheet, out_work_sheet in zip(input_data.worksheets[2:11], output_data.worksheets[2:11]):
         cells = []
         # check for individual charges
         for i, row in enumerate(in_work_sheet.iter_rows(min_row=6)):
             for idx, cell in enumerate(row[5::4]):
                 if isinstance(cell.value, int) and cell.value >= 100:
-                    count += 1
-                    print(cell.value, count, 'heyo')
                     cells.append((i + 6, (idx * 4) + 6)) # this is +6 because workbook objects are 1 indexed but when slicing withe [5::4] it is 0 indexed
 
         # check for total charges
@@ -288,8 +303,47 @@ def mark_charges_with_pink(input_file: Workbook):
     output_data.save(input_file)
     output_data.close()
     input_data.close()
-    #print(cells)
     messagebox.showinfo('完了', '追加料金があったセルの色塗りが完了しました。')
+
+
+
+def import_ref_data(result_choice: str) -> dict:
+    '''
+    return the reference files all saved into a dictionary that will be imported from a zip file or a regular
+    directory depending on the choice of the user.
+    :param result_choice:
+    :return: dictionary
+    '''
+    class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
+                   'もも', 'みどり', 'き', 'あお', 'ふじ']
+    reference_files = {}
+    # import data from reference file. choose method depending on whether user wants to use zip file or not.
+    if result_choise == 'no':
+        directory_path = filedialog.askdirectory(title='ダウンロードした打刻表のフォルダを選択してください。')
+        files = os.listdir(directory_path)
+
+        # create dictionary to store path names for reference files
+        for class_name in class_names:
+            for file_name in files:
+                file_path = os.path.join(directory_path, file_name)  # create the new file path
+                if os.path.isfile(file_path) and class_name in file_path:
+                    reference_files[class_name] = pd.read_csv(file_path, parse_dates=['日付'])
+
+
+    elif result_choise == 'yes':
+        zip_path = filedialog.askopenfilename(title='ダウンロードした打刻表のZIPフォルダを選択してください。',
+                                              filetypes=[('Zip Files', '*.zip')])
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            # Extract zipped files
+            zip_file_names = zip_ref.namelist()
+            unzipped_files = []
+            for file in zip_file_names:
+                unzipped_files.append(zip_ref.read(file).decode('utf-8'))
+            for class_name in class_names:
+                for file in unzipped_files:
+                    if class_name in file:
+                        reference_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
+    return reference_files
 
 
 
@@ -302,27 +356,19 @@ root.withdraw()  # Hide the root window
 
 # prompt user for input file
 input_file = filedialog.askopenfilename(title = '預かり料金表を選択してください。')
-directory_path = filedialog.askdirectory(title = 'ダウンロードした打刻表のフォルダを選択してください。')
-files = os.listdir(directory_path)
 
 # Generate output file name
 result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
 test = os.path.splitext(input_file)[0] + "_test.xlsm"
 
-# create dictionary to store path names for reference files
-class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
-              'もも', 'みどり', 'き', 'あお', 'ふじ']
-reference_files = {}
-for class_name in class_names:
-    for file_name in files:
-        file_path = os.path.join(directory_path, file_name) # create the new file path
-        if os.path.isfile(file_path) and class_name in file_path:
-            reference_files[class_name] = file_path
+# Ask user if they would like to use a zip file or if they already have unzipped the file.
+# and then import the reference files into a dictionary to be used later on.
+result_choise = messagebox.askquestion('一つを選んでください', 'ZIPファイルを使ってデータ転送をしますか？\n(展開がもう済んでいて普通のファイルを開けたい場合は no を選択してください。)',
+                                icon='warning')
 
 
-
+reference_files = import_ref_data(result_choise)
 update_excel_data(input_file, reference_files, result_file)
 recalculate_vba_code(result_file)
 mark_charges_with_pink(result_file)
-print(result_file)
 

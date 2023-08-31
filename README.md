@@ -2,9 +2,9 @@
  transfers time stamps from one excel file to another
 
 
-Version 1.5
+Version 1.6
 
-First stable version that transfers drop off and pick up times from one excel file to another that then calculates
+transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
 
 General features
@@ -22,8 +22,12 @@ General features
       to make it easier to find where we charged extra.
  8 -- fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
       from happnening with other functions down the line.
-(new)
  9 -- fixed the issue where the VBA code needed to be recalculated by opening the excel file in excel by triggering the
       recalculation within python.  Also made it so that the excel opening up is invisible to make it cleaner.
-10 -- No longer need to physically choose the recalculated excel file during execution, it is automatically passed into
+10 -- No longer need to physically choose the recalculated excel file during execusion, it is automaticallt passed into
       the function that fills in the cells with extra charges.
+(new)
+11 -- Made it so the reference files (excel documents downloaded from hug note that has the time stamps of arrival and
+      departure times of all the kids) can be opened regardless if they are zipped or unzipped.
+12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
+      children that are 一号.
