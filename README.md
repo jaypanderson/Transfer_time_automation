@@ -2,7 +2,7 @@
  transfers time stamps from one excel file to another
 
 
-Version 1.7
+Version 1.8
 
 transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -30,11 +30,12 @@ General features
       departure times of all the kids) can be opened regardless if they are zipped or unzipped.
 12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
       children that are 一号.
-(new)
 13 -- Iterate through the excel file to fill in cells that have both the arrival time and departure time blank with
       休み to indicate that the child did not come to school on that day. Also highlight with yellow on cells that have
       only arrival time or departure time missing but not both to indicate something went wrong or the parents forgot
       to record the time for arrival or departure.
+(new)
+14 -- 
 (working on)
 ** -- Finish type hints and doc strings for all the functions.
 ** -- Fixed issiue where 一号課外 time adjustments were being made every single week. its not every week that they have
