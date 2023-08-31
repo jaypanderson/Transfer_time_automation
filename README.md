@@ -31,6 +31,7 @@ General features
       departure times of all the kids) can be opened regardless if they are zipped or unzipped.
 12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
       children that are 一号.
+(new)
 13 -- Iterate through the excel file to fill in cells that have both the arrival time and departure time blank with
       休み to indicate that the child did not come to school on that day. Also highlight with yellow on cells that have
       only arrival time or departure time missing but not both to indicate something went wrong or the parents forgot

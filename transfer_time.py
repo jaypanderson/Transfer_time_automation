@@ -1,4 +1,7 @@
-"""Version 1.7
+
+"""
+Version 1.7
+
 
 transfers drop off and pick up times from one excel file to another that then calculates
 the appropriate amount of money to charge.
@@ -39,7 +42,6 @@ General features
 ** -- Cleaned up code so that 0 index and 1 index difference between enumerate and the workbook are taken care of within
       their respective functions.
 ** -- Other various clean ups to make the code readable as well as organize things and changes to speed up things.
->>>>>>> parent of f82ccaf (clean up)
 """
 
 import pandas as pd
@@ -470,5 +472,4 @@ result_choise = messagebox.askquestion('一つを選んでください', 'ZIPフ
 reference_files = import_ref_data(result_choise)
 update_excel_data(input_file, reference_files, result_file)
 recalculate_vba_code(result_file)
-mark_charges_with_pink(result_file)
 
