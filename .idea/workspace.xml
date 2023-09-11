@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d783158b-8e81-458a-af0c-49a31f53e59c" name="Changes" comment="test">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transfer_time.py" beforeDir="false" afterPath="$PROJECT_DIR$/transfer_time.py" afterDir="false" />
+    <list default="true" id="d783158b-8e81-458a-af0c-49a31f53e59c" name="Changes" comment="testing if commits only count in main branch">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +42,14 @@
       <option name="project" value="LOCAL" />
       <updated>1693456121642</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="testing if commits only count in main branch">
+      <created>1694422315108</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1694422315108</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -59,6 +65,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="testing if commits only count in main branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="testing if commits only count in main branch" />
   </component>
 </project>
