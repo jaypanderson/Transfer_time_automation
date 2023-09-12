@@ -466,7 +466,8 @@ def mark_absent(in_file: str) -> None:
             for row_num in range(rows[0], rows[1]):
                 row = in_work_sheet[row_num]
                 for idx, cell in enumerate(row[3:59:4]):
-                    cell_num = idx * 4 + 3  # adjusting the correct index because enumerate has to way to step(skip) index
+                    # adjusting index because enumerate step(skip) doesn't take into account the skipped indices.
+                    cell_num = idx * 4 + 3
                     merged = in_work_sheet.merged_cells
                     if cell.coordinate in merged:  # skip any merged cells
                         continue
