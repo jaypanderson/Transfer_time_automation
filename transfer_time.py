@@ -327,8 +327,8 @@ def mark_charges_with_pink(input_file: str) -> None:
         for i, row in enumerate(in_work_sheet.iter_rows(min_row=6)):
             for idx, cell in enumerate(row[5::4]):
                 if isinstance(cell.value, int) and cell.value >= 100:
-                    cells.append((i + 6, (
-                            idx * 4) + 6))  # this is +6 because workbook objects are 1 indexed but when slicing withe [5::4] it is 0 indexed
+                    # this is +6 because workbook objects are 1 indexed but when slicing withe [5::4] it is 0 indexed
+                    cells.append((i + 6, (idx * 4) + 6))
 
         # check for total charges
         rows_to_check = find_total_row(in_work_sheet)
@@ -361,7 +361,8 @@ def import_ref_data(choice: str) -> dict:
     :return: A dictionary object containing the contents of all the individual sheets coded to the class name.
 
     Note:
-    -- The function will prompt the user to open a zip file or a folder depending on the choice the user made in a previous prompt.
+    -- The function will prompt the user to open a zip file or a folder depending on the choice the user made
+       in a previous prompt.
     """
     class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
                    'もも', 'みどり', 'き', 'あお', 'ふじ']
