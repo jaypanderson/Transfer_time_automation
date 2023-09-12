@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d783158b-8e81-458a-af0c-49a31f53e59c" name="Changes" comment="fixed grammar in readme">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="d783158b-8e81-458a-af0c-49a31f53e59c" name="Changes" comment="deleted  test comments">
       <change beforePath="$PROJECT_DIR$/transfer_time.py" beforeDir="false" afterPath="$PROJECT_DIR$/transfer_time.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

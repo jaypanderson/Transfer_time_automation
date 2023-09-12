@@ -154,7 +154,7 @@ def ichigo_check(name_coor: list[int], sheet: Workbook) -> bool:
 
 def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workbook) -> int:
     """
-    Convert departure time for children that are in 課外授業 and are 一号 to 1430 if they have class that day and
+    Convert departure time for children that are in 課外授業 and are 一号 to 1430 if they have class that day, and
     they leave before the pickup time limit.
     """
     days_of_week = ["月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日", "日曜日"]
@@ -367,7 +367,7 @@ def import_ref_data(result_choice: str) -> dict:
                    'もも', 'みどり', 'き', 'あお', 'ふじ']
     reference_files = {}
     # import data from reference file. choose method depending on whether user wants to use zip file or not.
-    if result_choise == 'no':
+    if result_choice == 'no':
         directory_path = filedialog.askdirectory(title='ダウンロードした打刻表のフォルダを選択してください。')
         files = os.listdir(directory_path)
 
@@ -378,7 +378,7 @@ def import_ref_data(result_choice: str) -> dict:
                 if os.path.isfile(file_path) and class_name in file_path:
                     reference_files[class_name] = pd.read_csv(file_path, parse_dates=['日付'])
 
-    elif result_choise == 'yes':
+    elif result_choice == 'yes':
         zip_path = filedialog.askopenfilename(title='ダウンロードした打刻表のZIPフォルダを選択してください。',
                                               filetypes=[('Zip Files', '*.zip')])
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
