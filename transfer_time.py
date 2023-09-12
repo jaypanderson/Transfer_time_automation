@@ -285,15 +285,15 @@ def update_excel_data(input_file, reference_data, output_file):
     input_data.close()
 
 
-def recalculate_vba_code(input_file):
+def recalculate_vba_code(in_file):
     """
-    Trigger the calculations in the excel book externally so that we can access the results in the next step.
+    Trigger the calculations in the Excel book externally so that we can access the results in the next step.
     :return:
     """
     app = xw.App(visible=False)
-    workbook = xw.Book(input_file)
+    workbook = xw.Book(in_file)
     workbook.app.calculation = 'automatic'
-    workbook.save(input_file)
+    workbook.save(in_file)
     workbook.close()
     app.quit()
 
