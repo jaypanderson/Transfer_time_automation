@@ -365,7 +365,7 @@ def import_ref_data(result_choice: str) -> dict:
     """
     class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
                    'もも', 'みどり', 'き', 'あお', 'ふじ']
-    reference_files = {}
+    ref_files = {}
     # import data from reference file. choose method depending on whether user wants to use zip file or not.
     if result_choice == 'no':
         directory_path = filedialog.askdirectory(title='ダウンロードした打刻表のフォルダを選択してください。')
@@ -376,7 +376,7 @@ def import_ref_data(result_choice: str) -> dict:
             for file_name in files:
                 file_path = os.path.join(directory_path, file_name)  # create the new file path
                 if os.path.isfile(file_path) and class_name in file_path:
-                    reference_files[class_name] = pd.read_csv(file_path, parse_dates=['日付'])
+                    ref_files[class_name] = pd.read_csv(file_path, parse_dates=['日付'])
 
     elif result_choice == 'yes':
         zip_path = filedialog.askopenfilename(title='ダウンロードした打刻表のZIPフォルダを選択してください。',
@@ -390,9 +390,9 @@ def import_ref_data(result_choice: str) -> dict:
             for class_name in class_names:
                 for file in unzipped_files:
                     if class_name in file:
-                        reference_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
-    print(reference_files.keys())
-    return reference_files
+                        ref_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
+    print(ref_files.keys())
+    return ref_files
 
 
 def range_adjustment(ranges: list[list[int]]) -> list[list[int]]:
