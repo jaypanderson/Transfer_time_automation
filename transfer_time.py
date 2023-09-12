@@ -312,15 +312,15 @@ def find_total_row(sheet: Workbook) -> list[int]:
     return ans
 
 
-def mark_charges_with_pink(input_file: str) -> None:
+def mark_charges_with_pink(in_file: str) -> None:
     """
     finds cells that have numbers in them which indicates that we have charged the parents money for staying late.
     Then it fills in the cell with a light pink color so it easy to identify where these charges are.
-    :param input_file:
+    :param in_file:
     :return None:
     """
-    output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
-    input_data = openpyxl.load_workbook(input_file, data_only=True)
+    output_data = openpyxl.load_workbook(in_file, data_only=False, keep_vba=True)
+    input_data = openpyxl.load_workbook(in_file, data_only=True)
     for in_work_sheet, out_work_sheet in zip(input_data.worksheets[2:11], output_data.worksheets[2:11]):
         cells = []
         # check for individual charges
@@ -345,7 +345,7 @@ def mark_charges_with_pink(input_file: str) -> None:
             lavender = 'ffccff'
             light_pink = 'fce5cd'
             out_work_sheet.cell(row=row, column=col).fill = PatternFill(fgColor=lavender, fill_type="solid")
-    output_data.save(input_file)
+    output_data.save(in_file)
     output_data.close()
     input_data.close()
     messagebox.showinfo('完了', '追加料金があったセルの色塗りが完了しました。')
