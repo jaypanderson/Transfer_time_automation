@@ -241,7 +241,7 @@ def update_excel_data(input_file, reference_data, output_file):
             date_coor = find_date(cur_sheet, date)
 
             # check to see if date_coor is empty or is None, if so skip the date. because it can cause errors in the
-            # fillowing operations.
+            # following operations.
             if date_coor is None:
                 continue
 
@@ -261,9 +261,9 @@ def update_excel_data(input_file, reference_data, output_file):
             # Write data into cells.
             if isinstance(arrive_time, str):
                 arrive_time = int(arrive_time)  # change type to allow for int comparisons
-                arrive_time = arr_check_time(arrive_time)  # adjust time for those ariving earlier than 730.
-                out_sheet.cell(name_coor[0] + 1, date_coor[
-                    1] + 1).value = arrive_time  # Add one to adjust for the 0 index created with the enumreate() function
+                arrive_time = arr_check_time(arrive_time)  # adjust time for those arriving earlier than 730.
+                # Add one to adjust for the 0 index created with enumerate() function
+                out_sheet.cell(name_coor[0] + 1, date_coor[1] + 1).value = arrive_time
             if isinstance(departure_time, str):
                 departure_time = int(departure_time)  # change type to allow for int comparisons
                 if ichigo_check(name_coor, cur_sheet):  # check if child is 一号.
