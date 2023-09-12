@@ -312,7 +312,7 @@ def find_total_row(sheet: Workbook) -> list[int]:
     return ans
 
 
-def mark_charges_with_pink(input_file: Workbook) -> None:
+def mark_charges_with_pink(input_file: str) -> None:
     """
     finds cells that have numbers in them which indicates that we have charged the parents money for staying late.
     Then it fills in the cell with a light pink color so it easy to identify where these charges are.
@@ -447,7 +447,7 @@ def find_name_range(sheet: Workbook) -> list[list[int]]:
         ans)  # a temporary fix to work around not being able to read the function results in the excel file.
 
 
-def mark_absent(in_file: Workbook) -> None:
+def mark_absent(in_file: str) -> None:
     """
     Go through the workbook and fill in sections with '休み' where both arrival time and departure time are missing.
     Also mark with yellow where only one of the arrival or departure times is missing. Do nothing to cells that have both.
