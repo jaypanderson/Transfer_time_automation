@@ -271,8 +271,8 @@ def update_excel_data(input_file, reference_data, output_file):
                 if child_name in ichigo_kagai:  # adjust time if the kids are in 課外授業　and are 一号.
                     departure_time = kagai_ichigo_check_time(child_name, departure_time, day_of_week_num,
                                                              ichigo_kagai_sheet)
-                out_sheet.cell(name_coor[0] + 1, date_coor[
-                    1] + 2).value = departure_time  # Add one to adjust for the 0 index created with the enumreate() function
+                # Add one to adjust for the 0 index created with enumerate() function
+                out_sheet.cell(name_coor[0] + 1, date_coor[1] + 2).value = departure_time
 
     if missing_children:
         messagebox.showinfo('以下の子供が見つかりませんでした。',
