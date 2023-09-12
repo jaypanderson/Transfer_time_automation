@@ -351,12 +351,12 @@ def mark_charges_with_pink(input_file: Workbook) -> None:
     messagebox.showinfo('完了', '追加料金があったセルの色塗りが完了しました。')
 
 
-def import_ref_data(result_choice: str) -> dict:
+def import_ref_data(choice: str) -> dict:
     """
     Return the reference files all saved into a dictionary that will be imported from a zip file or a regular
     directory depending on the choice of the user.
 
-    :param result_choice: A string indicating the user's choice. Expected values are 'yes' for zip files
+    :param choice: A string indicating the user's choice. Expected values are 'yes' for zip files
                           and 'no' for regular directories
     :return: A dictionary object containing the contents of all the individual sheets coded to the class name.
 
@@ -367,7 +367,7 @@ def import_ref_data(result_choice: str) -> dict:
                    'もも', 'みどり', 'き', 'あお', 'ふじ']
     ref_files = {}
     # import data from reference file. choose method depending on whether user wants to use zip file or not.
-    if result_choice == 'no':
+    if choice == 'no':
         directory_path = filedialog.askdirectory(title='ダウンロードした打刻表のフォルダを選択してください。')
         files = os.listdir(directory_path)
 
@@ -378,7 +378,7 @@ def import_ref_data(result_choice: str) -> dict:
                 if os.path.isfile(file_path) and class_name in file_path:
                     ref_files[class_name] = pd.read_csv(file_path, parse_dates=['日付'])
 
-    elif result_choice == 'yes':
+    elif choice == 'yes':
         zip_path = filedialog.askopenfilename(title='ダウンロードした打刻表のZIPフォルダを選択してください。',
                                               filetypes=[('Zip Files', '*.zip')])
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
