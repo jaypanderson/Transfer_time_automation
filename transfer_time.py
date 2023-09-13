@@ -1,7 +1,7 @@
 """
 Version 1.8
 
-transfers drop off and pick up times from one excel file to another that then calculates
+transfers drop off and pick up times from one Excel file to another that then calculates
 the appropriate amount of money to charge.
 
 General features
@@ -18,7 +18,7 @@ General features
  7 -- Iterate through the Excel file to find where we charged extra money and fill in those cells with a pink color,
       to make it easier to find where we charged extra.
  8 -- Fixed it so that the workbooks are properly closed at the end of the function to prevent any unwanted things
-      from happnening with other functions down the line.
+      from happening with other functions down the line.
  9 -- Fixed the issue where the VBA code needed to be recalculated by opening the Excel file in Excel by triggering the
       recalculation within python.  Also made it so that the Excel opening up is invisible to make it cleaner.
 10 -- No longer need to physically choose the recalculated Excel file during execution, it is automatically passed into
@@ -61,27 +61,29 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 
 def replace_all_spaces(words: str) -> str:
+    # noinspection GrazieInspection
     """
-    Remove blank space, whether it is english space or the japanese space.
+        Remove blank space, whether it is english space or the japanese space.
 
-    :param words: a string that may or may not contain a blank space.
-    :return: Return a string with english and japanese spaces removed.
-             (may still contain any other form of blank spaces)
-    """
+        :param words: a string that may or may not contain a blank space.
+        :return: Return a string with english and japanese spaces removed.
+                 (may still contain any other form of blank spaces)
+        """
     words = words.replace('\u3000', '')  # \u3000 is the equivalent to the japanese space. normal space -> ' '
     words = words.replace(' ', '')  # japanese space -> '　'
     return words
 
 
 def find_date(tab: Worksheet, date: datetime) -> Union[list[int], None]:
+    # noinspection GrazieInspection
     """
-    Find the row and column (essentially the coordinates) of the matching date.
+        Find the row and column (essentially the coordinates) of the matching date.
 
-    :param tab: The current worksheet in use
-    :param date: Datetime object from the reference file
-    :return: A list of two integers representing the row and column the datetime had a match.
-             If no match was found return None.
-    """
+        :param tab: The current worksheet in use
+        :param date: Datetime object from the reference file
+        :return: A list of two integers representing the row and column the datetime had a match.
+                 If no match was found return None.
+        """
     for i, row in enumerate(tab.iter_rows()):
         for idx, cell in enumerate(row):
             if cell.value == date:
@@ -94,18 +96,19 @@ def find_date(tab: Worksheet, date: datetime) -> Union[list[int], None]:
 #        of those functions)
 # specifically returning one int in the format of a list to avoid out of index errors.
 def find_name(tab: Worksheet, name: str, date_row: int) -> list[int]:
+    # noinspection GrazieInspection
     """
-    Find the row number of where the child's name is located in the workbook.  Generally speaking we expect to find
-    two locations, but sometimes we don't find them at all due to the kanji being the incorrect one and a mismatch
-    happening from the reference file downloaded from hugnote and the record keeping file in Excel.
-    ex) 髙田　!= 高田　though they seem similar they are two completely different strings in unicode.
+        Find the row number of where the child's name is located in the workbook.  Generally speaking we expect to find
+        two locations, but sometimes we don't find them at all due to the kanji being the incorrect one and a mismatch
+        happening from the reference file downloaded from hugnote and the record keeping file in Excel.
+        ex: 髙田　!= 高田　though they seem similar they are two completely different strings in unicode.
 
-    :param tab: the current Worksheet we are iterating through
-    :param name: the name of the child we are looking for in the Worksheet.
-    :param date_row: the first number in the list that is returned from the find_date function representing the row
-                     in which the date was found.
-    :return:
-    """
+        :param tab: the current Worksheet we are iterating through
+        :param name: the name of the child we are looking for in the Worksheet.
+        :param date_row: the first number in the list that is returned from the find_date function representing the row
+                         in which the date was found.
+        :return:
+        """
     ans = []
     for i, row in enumerate(tab.iter_rows()):
         if type(row[2].value) == str:
@@ -119,7 +122,7 @@ def find_name(tab: Worksheet, name: str, date_row: int) -> list[int]:
 
 
 def arr_check_time(time: int) -> int:
-    """Convert the arival time so that if anyone arrives before 7:30 it is set to 7:30"""
+    """Convert the arrival time so that if anyone arrives before 7:30 it is set to 7:30"""
     if time < 730:
         time = 730
     return time
@@ -136,14 +139,15 @@ def dep_check_time(time: int) -> int:
 
 
 def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
+    # noinspection GrazieInspection
     """
-    returning a bool to check if a given child is in the 一号 category. There is a cell in the workbook that denotes
-    this information
-    :param name_coor: A list containing a single integer which tells you which row we need to look at. we will be
-                      looking at the first cell of the row.
-    :param sheet: The worksheet we are currently iterating through.
-    :return:  A bool value indicating whether the child is in the 一号 category.
-    """
+        returning a bool to check if a given child is in the 一号 category. There is a cell in the workbook that denotes
+        this information
+        :param name_coor: A list containing a single integer which tells you which row we need to look at. we will be
+                          looking at the first cell of the row.
+        :param sheet: The worksheet we are currently iterating through.
+        :return:  A bool value indicating whether the child is in the 一号 category.
+        """
     row = name_coor[0] + 1  # adjust
     col = 1
     value = int(sheet.cell(row=row, column=col).value)
@@ -179,6 +183,7 @@ def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workb
     return time
 
 
+# noinspection PyUnusedLocal
 def update_excel_data(input_file, reference_data, output_file):
     # Read the input Excel file with openpyxl
     output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
@@ -197,7 +202,7 @@ def update_excel_data(input_file, reference_data, output_file):
 
     missing_children = set()
     # Iterate over the input data tabs
-    # here i am iterating over the sheet names instead of the worksheet them selves because i will use the sheet names
+    # here I am iterating over the sheet names instead of the worksheet themselves because I will use the sheet names
     # to access the correct file in the difference data.
     for sheet_name in input_data.sheetnames[2:11]:
 
@@ -229,6 +234,7 @@ def update_excel_data(input_file, reference_data, output_file):
             # create day of week num to plug into function to check if the kids are in ichigo_kagai
             clean_date = date.to_pydatetime()
             day_of_week_num = clean_date.weekday()
+            # this one is not currently used but may use it in the future to change depending on the day of the week.
             day_of_week_str = clean_date.strftime('%A')
 
             # remove ':' from time stamp and skip procedure if it is a nan value.
@@ -352,18 +358,19 @@ def mark_charges_with_pink(in_file: str) -> None:
 
 
 def import_ref_data(choice: str) -> dict:
+    # noinspection GrazieInspection
     """
-    Return the reference files all saved into a dictionary that will be imported from a zip file or a regular
-    directory depending on the choice of the user.
+        Return the reference files all saved into a dictionary that will be imported from a zip file or a regular
+        directory depending on the choice of the user.
 
-    :param choice: A string indicating the user's choice. Expected values are 'yes' for zip files
-                          and 'no' for regular directories
-    :return: A dictionary object containing the contents of all the individual sheets coded to the class name.
+        :param choice: A string indicating the user's choice. Expected values are 'yes' for zip files
+                       and 'no' for regular directories
+        :return: A dictionary object containing the contents of all the individual sheets coded to the class name.
 
-    Note:
-    -- The function will prompt the user to open a zip file or a folder depending on the choice the user made
-       in a previous prompt.
-    """
+        Note:
+        -- The function will prompt the user to open a zip file or a folder depending on the choice the user made
+           in a previous prompt.
+        """
     class_names = ['ひよこ', 'ひつじ', 'うさぎ', 'だいだい',
                    'もも', 'みどり', 'き', 'あお', 'ふじ']
     ref_files = {}
@@ -398,20 +405,22 @@ def import_ref_data(choice: str) -> dict:
 
 
 def range_adjustment(ranges: list[list[int]]) -> list[list[int]]:
+    # noinspection GrazieInspection
     """
-    Due to some issues with not being able to calculate the values in some cells in the Excel sheet i have created this
-    work around function, The list contains two lists of two integers representing ranges. because of the mentioned issue
-    only the first range is correct, as well as the beginning of the second range, but not the end of the second range.
-    Using the width of the first range i can then calculate what the end of the second range should be.
+        Due to some issues with not being able to calculate the values in some cells in the Excel sheet I have created
+        this work around function, The list contains two lists of two integers representing ranges. because of the
+        mentioned issue only the first range is correct, as well as the beginning of the second range, but not the end
+        of the second range.  Using the width of the first range I can then calculate what the end of the second range
+        should be.
 
-    :param ranges: A list of two lists with two integers each representing two ranges.
-    :return: the adjusted ranges with the second range being corrected.
+        :param ranges: A list of two lists with two integers each representing two ranges.
+        :return: the adjusted ranges with the second range being corrected.
 
-    Example:
-    --------
-    >> range_adjustment([[5, 21], [30,30]])
-    [[5, 21],[30, 46]]
-    """
+        Example:
+        --------
+        >> range_adjustment([[5, 21], [30,30]])
+        [[5, 21],[30, 46]]
+        """
     first_range = ranges[0]
     range_width = first_range[1] - first_range[0]
     ranges[1][1] = ranges[1][0] + range_width
@@ -419,13 +428,14 @@ def range_adjustment(ranges: list[list[int]]) -> list[list[int]]:
 
 
 def find_name_range(sheet: Workbook) -> list[list[int]]:
+    # noinspection GrazieInspection
     """
-    locate the rows that need to be searched in order to fill in cells for the absent children.
-    :param sheet: The current sheet of an Excel workbook
-    :return: a list of tuples indicating the two ranges of rows that needs to be searched for blank cells
-            example -> [(6,27), (35, 56)] the second number of the tuple is +1 to account for python ranges
-            not being inclusive
-    """
+        locate the rows that need to be searched in order to fill in cells for the absent children.
+        :param sheet: The current sheet of an Excel workbook
+        :return: a list of tuples indicating the two ranges of rows that needs to be searched for blank cells
+                example -> [(6,27), (35, 56)] the second number of the tuple is +1 to account for python ranges
+                not being inclusive
+        """
     ans = []
     start = False
     temp = []
@@ -433,7 +443,7 @@ def find_name_range(sheet: Workbook) -> list[list[int]]:
         if row[2].value == '氏名':
             start = True
             # print(1, temp, start)
-            temp.append(i + 2)  # its 2 because 0 index plus i want to start at the row after this one
+            temp.append(i + 2)  # its 2 because 0 index plus I want to start at the row after this one
             # print(2, temp, start)
 
         if start is True and (row[2].value is None or row[2].value == 0):
@@ -445,20 +455,24 @@ def find_name_range(sheet: Workbook) -> list[list[int]]:
             temp = []
             # print(5, temp, start)
 
-    return range_adjustment(
-        ans)  # a temporary fix to work around not being able to read the function results in the excel file.
+    # A temporary fix to work around not being able to read the function results in the Excel file.
+
+    return range_adjustment(ans)
 
 
 def mark_absent(in_file: str) -> None:
+    # noinspection GrazieInspection
     """
-    Go through the workbook and fill in sections with '休み' where both arrival time and departure time are missing.
-    Also mark with yellow where only one of the arrival or departure times is missing. Do nothing to cells that have both.
-    :param in_file: an Excel workbook
-    :return: None since the changes will be happening in place.
-    """
-    # technically i may not need to have two separate files created because the section that i will be checking is not
-    # generated by the vba code, so i should be able to only use the output data (because i will be using this to save
-    # so that the vba code stays intact, if i save the input_data the vba code is lost) but just to stay consistent with
+        Go through the workbook and fill in sections with '休み' where both arrival time and departure time are missing.
+        Also mark with yellow where only one of the arrival or departure times is missing. Do nothing to cells that have
+        both.
+
+        :param in_file: an Excel workbook
+        :return: None since the changes will be happening in place.
+        """
+    # technically I may not need to have two separate files created because the section that I will be checking is not
+    # generated by the vba code, so I should be able to only use the output data (because I will be using this to save
+    # so that the vba code stays intact, if I save the input_data the vba code is lost) but just to stay consistent with
     # other functions I will be using both.
     output_data = openpyxl.load_workbook(in_file, data_only=False, keep_vba=True)
     input_data = openpyxl.load_workbook(in_file, data_only=True)
