@@ -50,7 +50,7 @@ from tkinter import messagebox
 from datetime import datetime
 import openpyxl
 from openpyxl import Workbook
-from openpyxl import styles
+#from openpyxl import styles
 from openpyxl.styles import PatternFill
 import xlwings as xw
 import zipfile
@@ -134,7 +134,7 @@ def dep_check_time(time: int) -> int:
     return time
 
 
-def ichigo_check(name_coor: list[int], sheet: Workbook) -> bool:
+def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
     """
     returning a bool to check if a given child is in the 一号 category. There is a cell in the workbook that denotes
     this information
