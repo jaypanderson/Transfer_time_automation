@@ -184,10 +184,10 @@ def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workb
 
 
 # noinspection PyUnusedLocal
-def update_excel_data(input_file, reference_data, output_file):
+def update_excel_data(in_file, reference_data, output_file):
     # Read the input Excel file with openpyxl
-    output_data = openpyxl.load_workbook(input_file, data_only=False, keep_vba=True)
-    input_data = openpyxl.load_workbook(input_file, data_only=True)
+    output_data = openpyxl.load_workbook(in_file, data_only=False, keep_vba=True)
+    input_data = openpyxl.load_workbook(in_file, data_only=True)
 
     # create a list of children that are 一号 and are in the 課外授業.
     ichigo_kagai_sheet = input_data['1号課外']
