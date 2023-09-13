@@ -343,7 +343,6 @@ def mark_charges_with_pink(in_file: str) -> None:
             row = cell[0]
             col = cell[1]
             lavender = 'ffccff'
-            light_pink = 'fce5cd'
             out_work_sheet.cell(row=row, column=col).fill = PatternFill(fgColor=lavender, fill_type="solid")
     output_data.save(in_file)
     output_data.close()
