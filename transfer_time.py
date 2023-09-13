@@ -65,7 +65,8 @@ def replace_all_spaces(words: str) -> str:
     Remove blank space, whether it is english space or the japanese space.
 
     :param words: a string that may or may not contain a blank space.
-    :return: Return a string with english and japanese spaces removed. (may still contain any other form of blank spaces)
+    :return: Return a string with english and japanese spaces removed.
+             (may still contain any other form of blank spaces)
     """
     words = words.replace('\u3000', '')  # \u3000 is the equivalent to the japanese space. normal space -> ' '
     words = words.replace(' ', '')  # japanese space -> '　'
@@ -390,6 +391,7 @@ def import_ref_data(choice: str) -> dict:
             for class_name in class_names:
                 for file in unzipped_files:
                     if class_name in file:
+                        # noinspection PyTypeChecker
                         ref_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
     print(ref_files.keys())
     return ref_files
