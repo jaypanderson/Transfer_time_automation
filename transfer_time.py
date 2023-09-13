@@ -298,7 +298,7 @@ def recalculate_vba_code(in_file):
     app.quit()
 
 
-def find_total_row(sheet: Workbook) -> list[int]:
+def find_total_row(sheet: Worksheet) -> list[int]:
     """
     find the rows that have '日計' so that it only iterates through those rows
     """
