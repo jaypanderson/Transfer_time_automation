@@ -157,7 +157,7 @@ def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
         return False
 
 
-def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workbook) -> int:
+def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workbook, date: datetime) -> int:
     """
     Convert departure time for children that are in 課外授業 and are 一号 to 1430 if they have class that day, and
     they leave before the pickup time limit.
@@ -224,7 +224,6 @@ def update_excel_data(input_file, reference_data, output_file):
 
         # Iterate through the references data
         for i, row in ref_data.iterrows():
-            global date
             date = row['日付']
             child_name = row['こども氏名']
             child_name = replace_all_spaces(child_name)
@@ -277,7 +276,7 @@ def update_excel_data(input_file, reference_data, output_file):
                     departure_time = dep_check_time(departure_time)
                 if child_name in ichigo_kagai:  # adjust time if the kids are in 課外授業　and are 一号.
                     departure_time = kagai_ichigo_check_time(child_name, departure_time, day_of_week_num,
-                                                             ichigo_kagai_sheet)
+                                                             ichigo_kagai_sheet, date)
                 # Add one to adjust for the 0 index created with enumerate() function
                 out_sheet.cell(name_coor[0] + 1, date_coor[1] + 2).value = departure_time
 
