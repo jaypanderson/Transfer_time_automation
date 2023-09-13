@@ -50,7 +50,7 @@ from tkinter import messagebox
 from datetime import datetime
 import openpyxl
 from openpyxl import Workbook
-#from openpyxl import styles
+# from openpyxl import styles
 from openpyxl.styles import PatternFill
 import xlwings as xw
 import zipfile
@@ -196,8 +196,8 @@ def update_excel_data(input_file, reference_data, output_file):
 
     missing_children = set()
     # Iterate over the input data tabs
-    # here i am iterating over the sheet names intead of the worksheet them selves because i will use the sheet names
-    # to access the correct file in the defference data.
+    # here i am iterating over the sheet names instead of the worksheet them selves because i will use the sheet names
+    # to access the correct file in the difference data.
     for sheet_name in input_data.sheetnames[2:11]:
 
         # access the sheet we are currently working on
