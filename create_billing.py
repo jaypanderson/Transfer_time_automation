@@ -42,10 +42,15 @@ def count_charges():
     file_path = open_excel_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
-    for sheet in book.sheetnames[2:3]:
-        row_ranges = find_name_range(book[sheet])
-        # for i, row in enumerate(book[sheet].iter_rows(min_row=6)):
-        #     name = row[]
+    for sheet_name in book.sheetnames[2:3]:
+        sheet = book[sheet_name]
+        row_ranges = find_name_range(sheet)
+        for row_range in row_ranges:
+            start = row_range[0]
+            end = row_range[1]
+            for row in sheet.iter_rows(min_row=start, max_row=end-1):
+                name = row[2].value
+                print(name)
 
 
 if __name__ == '__main__':
