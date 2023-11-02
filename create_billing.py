@@ -19,6 +19,9 @@ import zipfile
 from io import StringIO
 import os
 from collections import defaultdict
+from transfer_time import replace_all_spaces
+from transfer_time import find_name_range
+from transfer_time import range_adjustment
 
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -40,8 +43,10 @@ def count_charges():
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
     for sheet in book.sheetnames[2:3]:
-        for i, row in enumerate(book[sheet].iter_rows(min_row=2)):
-            name = row
+        row_ranges = find_name_range(book[sheet])
+        # for i, row in enumerate(book[sheet].iter_rows(min_row=6)):
+        #     name = row[]
+
 
 if __name__ == '__main__':
     count_charges()
