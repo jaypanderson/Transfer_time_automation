@@ -496,29 +496,29 @@ def mark_absent(in_file: str) -> None:
     messagebox.showinfo('完了', '空欄のセルに休みの書き込みが完了しました。')
 
 
+if __name__ == '__main__':
 
+    # create file paths by asking the user.
 
-# create file paths by asking the user.
+    # Create the Tkinter root window
+    root = tk.Tk()
+    root.withdraw()  # Hide the root window
 
-# Create the Tkinter root window
-root = tk.Tk()
-root.withdraw()  # Hide the root window
+    # prompt user for input file
+    input_file = filedialog.askopenfilename(title='預かり料金表を選択してください。')
 
-# prompt user for input file
-input_file = filedialog.askopenfilename(title='預かり料金表を選択してください。')
+    # Generate output file name
+    result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
+    test = os.path.splitext(input_file)[0] + "_test.xlsm"
 
-# Generate output file name
-result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
-test = os.path.splitext(input_file)[0] + "_test.xlsm"
+    # Ask user if they would like to use a zip file or if they already have unzipped the file.
+    # and then import the reference files into a dictionary to be used later on.
+    result_choice = messagebox.askquestion('一つを選んでください',
+                                           'ZIPファイルを使ってデータ転送をしますか？\n(展開がもう済んでいて普通のファイルを開けたい場合は no を選択してください。)',
+                                           icon='warning')
 
-# Ask user if they would like to use a zip file or if they already have unzipped the file.
-# and then import the reference files into a dictionary to be used later on.
-result_choice = messagebox.askquestion('一つを選んでください',
-                                       'ZIPファイルを使ってデータ転送をしますか？\n(展開がもう済んでいて普通のファイルを開けたい場合は no を選択してください。)',
-                                       icon='warning')
-
-reference_files = import_ref_data(result_choice)
-update_excel_data(input_file, reference_files, result_file)
-recalculate_vba_code(result_file)
-mark_charges_with_pink(result_file)
-mark_absent(result_file)
+    reference_files = import_ref_data(result_choice)
+    update_excel_data(input_file, reference_files, result_file)
+    recalculate_vba_code(result_file)
+    mark_charges_with_pink(result_file)
+    mark_absent(result_file)
