@@ -496,6 +496,8 @@ def mark_absent(in_file: str) -> None:
     messagebox.showinfo('完了', '空欄のセルに休みの書き込みが完了しました。')
 
 
+
+
 # create file paths by asking the user.
 
 # Create the Tkinter root window
