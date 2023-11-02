@@ -22,6 +22,7 @@ from collections import defaultdict
 from transfer_time import replace_all_spaces
 from transfer_time import find_name_range
 from transfer_time import range_adjustment
+from itertools import chain
 
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -42,9 +43,12 @@ def count_charges():
     file_path = open_excel_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
-    for sheet_name in book.sheetnames[2:3]:
+    # iterate through the sheets
+    for sheet_name in book.sheetnames[2:11]:
         sheet = book[sheet_name]
         row_ranges = find_name_range(sheet)
+        # iterate through the two ranges (its like doing two chained iterations. but this way it's easier to calculate
+        # the date row)
         for row_range in row_ranges:
             start = row_range[0]
             end = row_range[1]
@@ -56,7 +60,7 @@ def count_charges():
                         date_row = start - 4
                         date_col = i*4 + 4 # (its 6 for the price but 2 less for the column that has the date.)
                         date = sheet.cell(row=date_row, column=date_col).value
-                        print(name, price, date)
+                        print(sheet_name, name, price, date)
 
 
 
