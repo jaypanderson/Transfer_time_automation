@@ -40,11 +40,8 @@ def count_charges():
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
     for sheet in book.sheetnames[2:3]:
-        for row in book[sheet].iter_rows(min_row=2):
-            if row[2].value != '日付':
-                continue
-            for cell in row[2:]:
-                print(cell.value)
+        for i, row in enumerate(book[sheet].iter_rows(min_row=2)):
+            name = row
 
 if __name__ == '__main__':
     count_charges()
