@@ -50,7 +50,14 @@ def count_charges():
             end = row_range[1]
             for row in sheet.iter_rows(min_row=start, max_row=end-1):
                 name = row[2].value
-                print(name)
+                for i, cell in enumerate(row[5::4]):
+                    price = cell.value
+                    if price is not None and price >= 100:
+                        date_row = start - 4
+                        date_col = i*4 + 4 # (its 6 for the price but 2 less for the column that has the date.)
+                        date = sheet.cell(row=date_row, column=date_col).value
+                        print(name, price, date)
+
 
 
 if __name__ == '__main__':
