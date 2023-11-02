@@ -18,14 +18,25 @@ import xlwings as xw
 import zipfile
 from io import StringIO
 import os
+from collections import defaultdict
 
 from openpyxl.worksheet.worksheet import Worksheet
 
 
 # open file that will be used create billing docs.
+def open_word_file():
+    directory = filedialog.askopenfile()
+    pass
 
 
 # open Excel file that has the information about the extra charges.
+def open_excel_file() -> str:
+    return filedialog.askopenfile(title='打刻表を選択してください。')
 
 
 # create list or dict with all the extra charges for each children.
+def count_charges():
+    file_path = open_excel_file()
+    book = openpyxl.workbook(file_path, data_only=True)
+    charges = defaultdict(lambda : defaultdict(list))
+    for sheet in book.sheetnames[2:11]:
