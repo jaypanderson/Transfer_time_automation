@@ -31,12 +31,21 @@ def open_word_file():
 
 # open Excel file that has the information about the extra charges.
 def open_excel_file() -> str:
-    return filedialog.askopenfile(title='打刻表を選択してください。')
+    return filedialog.askopenfilename(title='打刻表を選択してください。')
 
 
 # create list or dict with all the extra charges for each children.
 def count_charges():
     file_path = open_excel_file()
-    book = openpyxl.workbook(file_path, data_only=True)
+    book = openpyxl.load_workbook(file_path, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
-    for sheet in book.sheetnames[2:11]:
+    for sheet in book.sheetnames[2:3]:
+        for row in book[sheet].iter_rows(min_row=2):
+            if row[2] = 
+            for cell in row:
+                if cell.value != '日付':
+                    continue
+                print(cell.value)
+
+if __name__ == '__main__':
+    count_charges()
