@@ -38,7 +38,7 @@ def open_excel_file() -> str:
     return filedialog.askopenfilename(title='打刻表を選択してください。')
 
 
-# create list or dict with all the extra charges for each children.
+# create list or dict with all the extra charges for each child.
 def count_charges():
     file_path = open_excel_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
