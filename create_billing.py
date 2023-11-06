@@ -45,6 +45,7 @@ def count_charges():
     charges = defaultdict(lambda : defaultdict(list))
     # iterate through the sheets
     for sheet_name in book.sheetnames[2:11]:
+        sheet_name = replace_all_spaces(sheet_name) # replace spaces
         sheet = book[sheet_name]
         row_ranges = find_name_range(sheet)
         # iterate through the two ranges (its like doing two chained iterations. but this way it's easier to calculate
@@ -60,9 +61,11 @@ def count_charges():
                         date_row = start - 4
                         date_col = i*4 + 4 # (its 6 for the price but 2 less for the column that has the date.)
                         date = sheet.cell(row=date_row, column=date_col).value
-                        print(sheet_name, name, price, date)
-
+                        date = str(date)[0:10]
+                        charges[sheet_name][name].append((price, date))
+                        #print(sheet_name, name, price, date)
+    return charges['ひよこ']
 
 
 if __name__ == '__main__':
-    count_charges()
+    print(count_charges())
