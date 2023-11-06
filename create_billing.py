@@ -64,7 +64,7 @@ def count_charges():
                         date = str(date)[0:10]
                         charges[sheet_name][name].append((price, date))
                         #print(sheet_name, name, price, date)
-    return charges['ひよこ']
+    return charges['あお']
 
 
 if __name__ == '__main__':
