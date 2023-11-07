@@ -68,5 +68,6 @@ def count_charges():
         print(i, charges['あお'][i])
 
 
+
 if __name__ == '__main__':
     count_charges()
