@@ -62,9 +62,9 @@ def count_charges():
                         date_col = i*4 + 4 # (its 6 for the price but 2 less for the column that has the date.)
                         date = sheet.cell(row=date_row, column=date_col).value
                         date = str(date)[0:10]
-                        arriv_row = start
+                        arriv_row = start + idx
                         arriv_col = i * 4 + 4
-                        dept_row = start
+                        dept_row = start + idx
                         dept_col = i * 4 + 5
                         arrival = sheet.cell(row=arriv_row, column=arriv_col).value
                         departure = sheet.cell(row=dept_row, column=dept_col).value
