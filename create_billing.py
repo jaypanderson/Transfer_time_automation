@@ -60,13 +60,15 @@ def count_charges():
                     if price is not None and price >= 100:
                         date_row = start - 4
                         date_col = i*4 + 4 # (its 6 for the price but 2 less for the column that has the date.)
-                        arriv_row = 
-                        arriv_col =
-                        dept_row =
-                        dept_col =
                         date = sheet.cell(row=date_row, column=date_col).value
                         date = str(date)[0:10]
-                        charges[sheet_name][name].append((price, date))
+                        arriv_row = start
+                        arriv_col = i * 4 + 4
+                        dept_row = start
+                        dept_col = i * 4 + 5
+                        arrival = sheet.cell(row=arriv_row, column=arriv_col).value
+                        departure = sheet.cell(row=dept_row, column=dept_col).value
+                        charges[sheet_name][name].append((price, arrival, departure, date))
                         #print(sheet_name, name, price, date)
     for i in charges['あお']:
         print(i, charges['あお'][i])
