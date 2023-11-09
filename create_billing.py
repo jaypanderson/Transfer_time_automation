@@ -70,14 +70,14 @@ def count_charges():
                         departure = sheet.cell(row=dept_row, column=dept_col).value
                         charges[sheet_name][name].append((price, arrival, departure, date))
                         #print(sheet_name, name, price, date)
-    for i in charges['あお']:
-        print(i, charges['あお'][i])
+    return charges
 
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
     source = book[1]
-    
+
+    charges = count_charges()
 
 
 
