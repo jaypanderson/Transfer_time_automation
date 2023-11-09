@@ -23,6 +23,7 @@ from transfer_time import replace_all_spaces
 from transfer_time import find_name_range
 from transfer_time import range_adjustment
 from itertools import chain
+from copy import copy
 
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -76,6 +77,15 @@ def copy_sheet(sheet, new_sheet):
     for row in sheet:
         for cell in row:
             new_cell = new_sheet.cell(row=cell.row, column=cell.column, value=cell.value)
+
+            if cell.has_style:
+                new_cell.font = copy(cell.font)
+                new_cell.border = copy(cell.border)
+                new_cell.fill = copy(cell.fill)
+                new_cell.number_format = copy(cell.number_format)
+                new_cell.protection = copy(cell.protection)
+                new_cell.alignment = copy(cell.alignment)
+                new_cell.comment = copy(cell.comment)
 
 
 
