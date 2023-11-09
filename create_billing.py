@@ -73,6 +73,10 @@ def count_charges():
     for i in charges['あお']:
         print(i, charges['あお'][i])
 
+def create_billing():
+    file_path = open_billing_file()
+    book = openpyxl.load_workbook(file_path, keep_vba=True)
+
 
 
 if __name__ == '__main__':
