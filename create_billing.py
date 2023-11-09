@@ -28,8 +28,8 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 
 # open file that will be used create billing docs.
-def open_billing_file() -> :
-    return = filedialog.askopenfile()
+def open_billing_file() -> str:
+    return filedialog.askopenfilename(title='料金明細票を選択してください。')
 
 
 
