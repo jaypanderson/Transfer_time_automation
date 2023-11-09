@@ -28,9 +28,9 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 
 # open file that will be used create billing docs.
-def open_word_file():
-    directory = filedialog.askopenfile()
-    pass
+def open_billing_file() -> :
+    return = filedialog.askopenfile()
+
 
 
 # open Excel file that has the information about the extra charges.
