@@ -76,6 +76,8 @@ def count_charges():
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
+    source = book[1]
+    
 
 
 
