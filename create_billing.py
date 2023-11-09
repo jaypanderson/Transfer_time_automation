@@ -72,6 +72,10 @@ def count_charges():
                         #print(sheet_name, name, price, date)
     return charges
 
+def copy_sheet(sheet, new_sheet):
+    for row in sheet:
+        for cell in row:
+            new_cell = new_sheet.cell(row=cell.row, column=cell.column, value=cell.value)
 
 
 
