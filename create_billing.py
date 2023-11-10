@@ -96,7 +96,13 @@ def copy_sheet(sheet, new_sheet) -> None:
                 new_cell.comment = copy(cell.comment)
 
 def find_max(counts: Counter) -> int:
-    pass
+    highest = 0
+    ans = None
+    for i in counts:
+        if counts[i] > highest:
+            highest = counts[i]
+            ans = i
+    return ans
 
 def find_year(charges: dict) -> int:
     years = []
@@ -109,17 +115,9 @@ def find_year(charges: dict) -> int:
                 month = data[3].split('-')[1]
                 months.append(month)
 
-    year_counts = Counter(years)
-    highest = 0
-    ans = None
-    for i in year_counts:
-        if year_counts[i] > highest:
-            highest = year_counts[i]
-            ans = i
-
-    month_counts = Counter(months)
-    highest = 0
-    print(ans)
+    year_ans = find_max(Counter(years))
+    month_ans = find_max(Counter(months))
+    print(year_ans, month_ans)
 
 def convert_reiwa(num: int) -> int:
     pass
