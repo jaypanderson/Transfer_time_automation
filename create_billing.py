@@ -116,9 +116,9 @@ def testtes(dic):
     for clas in dic:
         for name in clas:
             count += 1
-    return o
+    return count
 
 if __name__ == '__main__':
     #count_charges()
-    create_billing()
+    #create_billing()
     testtes(count_charges())
