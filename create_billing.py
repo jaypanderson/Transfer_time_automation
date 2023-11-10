@@ -24,6 +24,7 @@ from transfer_time import find_name_range
 from transfer_time import range_adjustment
 from itertools import chain
 from copy import copy
+from collections import Counter
 
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -95,6 +96,21 @@ def copy_sheet(sheet, new_sheet) -> None:
                 new_cell.comment = copy(cell.comment)
 
 
+def find_year(charges: dict) -> int:
+    years = []
+    for i in charges:
+        for j in charges[i]:
+            for data in charges[i][j]:
+                year = data[3][:4]
+                years.append(year)
+    year_counts = Counter(years)
+    highest = 0
+    ans = None
+    for i in year_counts:
+        if year_counts[i] > highest:
+            highest = year_counts[i]
+            ans = i
+    print(ans)
 
 def create_billing():
     file_path = open_billing_file()
@@ -121,5 +137,6 @@ def testtest(dic):
 
 if __name__ == '__main__':
     #count_charges()
-    create_billing()
+    #create_billing()
     #testtest(count_charges())
+    find_year(count_charges())
