@@ -105,7 +105,8 @@ def create_billing():
     temp = charges['あお']['宮西　つぐみ']
     month = '10月'
     for class_name in charges:
-        for kid_name in class_name:
+        for kid_name in charges[class_name]:
+            print(month, class_name, replace_all_spaces(kid_name))
             new_sheet = book.create_sheet(f'{month}{class_name}{replace_all_spaces(kid_name)}')
             copy_sheet(source, new_sheet)
 
@@ -116,9 +117,9 @@ def testtes(dic):
     for clas in dic:
         for name in clas:
             count += 1
-    return count
+    print(count)
 
 if __name__ == '__main__':
     #count_charges()
-    #create_billing()
-    testtes(count_charges())
+    create_billing()
+    #testtes(count_charges())
