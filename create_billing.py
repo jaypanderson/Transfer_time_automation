@@ -73,7 +73,7 @@ def count_charges():
                         #print(sheet_name, name, price, date)
     return charges
 
-def copy_sheet(sheet, new_sheet):
+def copy_sheet(sheet, new_sheet) -> None:
     for row in sheet:
         for cell in row:
             new_cell = new_sheet.cell(row=cell.row, column=cell.column, value=cell.value)
@@ -92,14 +92,22 @@ def copy_sheet(sheet, new_sheet):
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
-    source = book[1]
+    source = book['base']
 
     charges = count_charges()
     temp = charges['あお']['宮西　つぐみ']
+    month = '10月'
+    class_name = 'あお'
+    kid_name = '宮西　つぐみ'
+    for _ in range(1):
+        new_sheet = book.create_sheet(f'{month}{class_name}{replace_all_spaces(kid_name)}')
+        copy_sheet(source, new_sheet)
 
+    book.save(file_path + 'result')
 
 
 
 
 if __name__ == '__main__':
-    count_charges()
+    #count_charges()
+    create_billing()
