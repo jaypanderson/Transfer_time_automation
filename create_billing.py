@@ -104,7 +104,7 @@ def find_max(counts: Counter) -> int:
             ans = i
     return ans
 
-def find_year(charges: dict) -> int:
+def find_year(charges: dict) -> tuple[int]:
     years = []
     months = []
     for i in charges:
@@ -118,6 +118,7 @@ def find_year(charges: dict) -> int:
     year_ans = find_max(Counter(years))
     month_ans = find_max(Counter(months))
     print(year_ans, month_ans)
+    return int(year_ans), int(month_ans)
 
 def convert_reiwa(year: int, month: int) -> int:
     reiwa = year - 2018
@@ -153,5 +154,5 @@ if __name__ == '__main__':
     #count_charges()
     #create_billing()
     #testtest(count_charges())
-    #find_year(count_charges())
+    find_year(count_charges())
     convert_reiwa(2024, 4)
