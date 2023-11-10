@@ -95,6 +95,8 @@ def copy_sheet(sheet, new_sheet) -> None:
                 new_cell.alignment = copy(cell.alignment)
                 new_cell.comment = copy(cell.comment)
 
+def find_max(counts: Counter) -> int:
+    pass
 
 def find_year(charges: dict) -> int:
     years = []
@@ -104,6 +106,9 @@ def find_year(charges: dict) -> int:
             for data in charges[i][j]:
                 year = data[3].split('-')[0]
                 years.append(year)
+                month = data[3].split('-')[1]
+                months.append(month)
+
     year_counts = Counter(years)
     highest = 0
     ans = None
@@ -111,6 +116,9 @@ def find_year(charges: dict) -> int:
         if year_counts[i] > highest:
             highest = year_counts[i]
             ans = i
+
+    month_counts = Counter(months)
+    highest = 0
     print(ans)
 
 def convert_reiwa(num: int) -> int:
