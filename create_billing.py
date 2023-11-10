@@ -92,7 +92,7 @@ def copy_sheet(sheet, new_sheet) -> None:
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
-    source = book['base']
+    source = book.sheetnames[0]
 
     charges = count_charges()
     temp = charges['あお']['宮西　つぐみ']
