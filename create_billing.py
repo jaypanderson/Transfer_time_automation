@@ -119,8 +119,12 @@ def find_year(charges: dict) -> int:
     month_ans = find_max(Counter(months))
     print(year_ans, month_ans)
 
-def convert_reiwa(num: int) -> int:
-    pass
+def convert_reiwa(year: int, month: int) -> int:
+    reiwa = year - 2018
+    if month in [1, 2, 3]:
+        reiwa -= 1
+    print(reiwa)
+    return reiwa
 
 def create_billing():
     file_path = open_billing_file()
@@ -149,4 +153,5 @@ if __name__ == '__main__':
     #count_charges()
     #create_billing()
     #testtest(count_charges())
-    find_year(count_charges())
+    #find_year(count_charges())
+    convert_reiwa(2024, 4)
