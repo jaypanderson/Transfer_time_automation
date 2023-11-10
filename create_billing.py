@@ -98,10 +98,11 @@ def copy_sheet(sheet, new_sheet) -> None:
 
 def find_year(charges: dict) -> int:
     years = []
+    months
     for i in charges:
         for j in charges[i]:
             for data in charges[i][j]:
-                year = data[3][:4]
+                year = data[3].split('-')[0]
                 years.append(year)
     year_counts = Counter(years)
     highest = 0
@@ -111,6 +112,9 @@ def find_year(charges: dict) -> int:
             highest = year_counts[i]
             ans = i
     print(ans)
+
+def convert_reiwa(num: int) -> int:
+    pass
 
 def create_billing():
     file_path = open_billing_file()
