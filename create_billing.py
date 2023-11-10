@@ -39,6 +39,13 @@ def open_excel_file() -> str:
     return filedialog.askopenfilename(title='打刻表を選択してください。')
 
 
+# add result to the end of the file name
+def new_file_path(path: str) -> str:
+    idx = path.find('.')
+    ans = path[:idx] +'result' + path[idx:]
+    return ans
+
+
 # create list or dict with all the extra charges for each child.
 def count_charges():
     file_path = open_excel_file()
@@ -103,14 +110,9 @@ def create_billing():
         new_sheet = book.create_sheet(f'{month}{class_name}{replace_all_spaces(kid_name)}')
         copy_sheet(source, new_sheet)
 
-    book.save(file_path + 'result')
+    book.save(new_file_path(file_path))
 
-def new_file_path(path: str) -> str:
-    temp = path.split('.')
-    temp.insert(-1, 'result')
-    print('.'.join(temp))
 
 if __name__ == '__main__':
     #count_charges()
-    #create_billing()
-    new_file_path('test.com')
+    create_billing()
