@@ -112,7 +112,7 @@ def create_billing():
 
     book.save(new_file_path(file_path))
 
-def testtes(dic):
+def testtest(dic):
     count = 0
     for clas in dic:
         for name in clas:
@@ -122,4 +122,4 @@ def testtes(dic):
 if __name__ == '__main__':
     #count_charges()
     create_billing()
-    #testtes(count_charges())
+    #testtest(count_charges())
