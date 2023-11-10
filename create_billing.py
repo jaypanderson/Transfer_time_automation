@@ -98,7 +98,7 @@ def copy_sheet(sheet, new_sheet) -> None:
 
 def find_year(charges: dict) -> int:
     years = []
-    months
+    months = []
     for i in charges:
         for j in charges[i]:
             for data in charges[i][j]:
