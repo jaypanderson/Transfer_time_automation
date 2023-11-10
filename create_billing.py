@@ -105,9 +105,12 @@ def create_billing():
 
     book.save(file_path + 'result')
 
-
-
+def new_file_path(path: str) -> str:
+    temp = path.split('.')
+    temp.insert(-1, 'result')
+    print('.'.join(temp))
 
 if __name__ == '__main__':
     #count_charges()
-    create_billing()
+    #create_billing()
+    new_file_path('test.com')
