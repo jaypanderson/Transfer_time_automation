@@ -104,7 +104,7 @@ def find_max(counts: Counter) -> int:
             ans = i
     return ans
 
-def find_year(charges: dict) -> tuple[int]:
+def find_year(charges: dict) -> tuple[int, int]:
     years = []
     months = []
     for i in charges:
