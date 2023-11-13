@@ -177,7 +177,7 @@ def testtest(dic):
 
 if __name__ == '__main__':
     #count_charges()
-    #create_billing()
+    create_billing()
     #testtest(count_charges())
-    find_year(count_charges())
-    convert_reiwa(2024, 4)
+    #find_year(count_charges())
+    #convert_reiwa(2024, 4)
