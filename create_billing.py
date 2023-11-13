@@ -127,6 +127,8 @@ def convert_reiwa(year: int, month: int) -> int:
     print(reiwa)
     return reiwa
 
+def copy_row_contents(sheet)
+
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
@@ -142,7 +144,9 @@ def create_billing():
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(source, new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
-                
+                row_to_copy = 14
+                new_sheet.insert_rows(15 + 1)
+
 
 
     book.save(new_file_path(file_path))
