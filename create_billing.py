@@ -127,7 +127,17 @@ def convert_reiwa(year: int, month: int) -> int:
     print(reiwa)
     return reiwa
 
-def copy_row_contents(sheet)
+def copy_row_contents(sheet: Worksheet, row: int) -> None:
+    for row, new_row in zip(sheet.iter_rows(min_row=row, max_row=row), sheet.iter_rows(min_row=row + 1, max_row=row + 1)):
+        for cell, new_cell in zip(row, new_row):
+            new_cell.font = copy(cell.font)
+            new_cell.border = copy(cell.border)
+            new_cell.fill = copy(cell.fill)
+            new_cell.number_format = copy(cell.number_format)
+            new_cell.protection = copy(cell.protection)
+            new_cell.alignment = copy(cell.alignment)
+
+
 
 def create_billing():
     file_path = open_billing_file()
@@ -146,6 +156,7 @@ def create_billing():
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_to_copy = 14
                 new_sheet.insert_rows(15 + 1)
+                copy_row_contents(new_sheet, row_to_copy)
 
 
 
