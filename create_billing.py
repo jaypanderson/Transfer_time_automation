@@ -81,6 +81,7 @@ def count_charges():
                         #print(sheet_name, name, price, date)
     return charges
 
+
 def copy_sheet(sheet, new_sheet) -> None:
     for row in sheet:
         for cell in row:
@@ -95,6 +96,7 @@ def copy_sheet(sheet, new_sheet) -> None:
                 new_cell.alignment = copy(cell.alignment)
                 new_cell.comment = copy(cell.comment)
 
+
 def find_max(counts: Counter) -> int:
     highest = 0
     ans = None
@@ -103,6 +105,7 @@ def find_max(counts: Counter) -> int:
             highest = counts[i]
             ans = i
     return ans
+
 
 def find_year(charges: dict) -> tuple[int, int]:
     years = []
@@ -120,12 +123,14 @@ def find_year(charges: dict) -> tuple[int, int]:
     print(year_ans, month_ans)
     return int(year_ans), int(month_ans)
 
+
 def convert_reiwa(year: int, month: int) -> int:
     reiwa = year - 2018
     if month in [1, 2, 3]:
         reiwa -= 1
     print(reiwa)
     return reiwa
+
 
 def copy_row_contents(sheet: Worksheet, row: int) -> None:
     for row, new_row in zip(sheet.iter_rows(min_row=row, max_row=row), sheet.iter_rows(min_row=row + 1, max_row=row + 1)):
@@ -136,7 +141,6 @@ def copy_row_contents(sheet: Worksheet, row: int) -> None:
             new_cell.number_format = copy(cell.number_format)
             new_cell.protection = copy(cell.protection)
             new_cell.alignment = copy(cell.alignment)
-
 
 
 def create_billing():
@@ -162,12 +166,14 @@ def create_billing():
 
     book.save(new_file_path(file_path))
 
+
 def testtest(dic):
     count = 0
     for clas in dic:
         for name in clas:
             count += 1
     print(count)
+
 
 if __name__ == '__main__':
     #count_charges()
