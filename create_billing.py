@@ -138,8 +138,12 @@ def create_billing():
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(month, class_name, replace_all_spaces(kid_name))
-            new_sheet = book.create_sheet(f'{month}{class_name}{replace_all_spaces(kid_name)}')
+            new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
+            new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(source, new_sheet)
+            for i, data in enumerate(charges[class_name][kid_name]):
+                
+
 
     book.save(new_file_path(file_path))
 
