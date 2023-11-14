@@ -97,6 +97,12 @@ def copy_sheet(sheet, new_sheet) -> None:
                 new_cell.comment = copy(cell.comment)
 
 
+# replicate the cell merges from base template.
+def merge_cells(sheet: Worksheet) -> None:
+    for merged_cell_range in sheet.merged_cells.ranges:
+        sheet.merge_cells(str(merged_cell_range))
+
+
 def find_max(counts: Counter) -> int:
     highest = 0
     ans = None
@@ -145,7 +151,8 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num) -> None:
 
 
 def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure: int, date: str) -> None:
-    pass
+    for cells in sheet.iter_rows(min_row=row, max_row=row):
+        pass
 
 
 def create_billing():
@@ -164,12 +171,15 @@ def create_billing():
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(source, new_sheet)
+            merge_cells(new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
-                #new_row_num = 15 + i
+                new_row_num = 15 + i
                 if i != 0:
-                    new_sheet.insert_rows(row_num + 1 + i)
-                    copy_row_contents(new_sheet, row_num, row_num + i)
+                    pass
+                    #new_sheet.insert_rows(row_num + 1 + i)
+                    #copy_row_contents(new_sheet, row_num, row_num + i)
+                    #insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
 
 
 
@@ -186,8 +196,8 @@ def testtest(dic):
 
 
 if __name__ == '__main__':
-    count_charges()
-    #create_billing()
+    #count_charges()
+    create_billing()
     #testtest(count_charges())
     #find_year(count_charges())
     #convert_reiwa(2024, 4)
