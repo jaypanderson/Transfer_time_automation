@@ -98,9 +98,9 @@ def copy_sheet(sheet, new_sheet) -> None:
 
 
 # replicate the cell merges from base template.
-def merge_cells(sheet: Worksheet) -> None:
+def merge_cells(sheet: Worksheet, new_sheet) -> None:
     for merged_cell_range in sheet.merged_cells.ranges:
-        sheet.merge_cells(str(merged_cell_range))
+        new_sheet.merge_cells(str(merged_cell_range))
 
 
 def find_max(counts: Counter) -> int:
@@ -138,7 +138,7 @@ def convert_reiwa(year: int, month: int) -> int:
     return reiwa
 
 
-def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num) -> None:
+def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     for row, new_row in zip(sheet.iter_rows(min_row=row_num, max_row=row_num),
                             sheet.iter_rows(min_row=new_row_num, max_row=new_row_num)):
         for cell, new_cell in zip(row, new_row):
@@ -171,7 +171,7 @@ def create_billing():
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(source, new_sheet)
-            merge_cells(new_sheet)
+            merge_cells(source, new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 new_row_num = 15 + i
