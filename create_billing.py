@@ -26,6 +26,7 @@ from itertools import chain
 from copy import copy
 from collections import Counter
 from itertools import zip_longest
+from openpyxl.utils.cell import range_boundaries
 
 
 from openpyxl.worksheet.worksheet import Worksheet
@@ -170,6 +171,23 @@ def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure:
         pass
 
 
+def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
+    new_merged_ranges = []
+    for merged_range in sheet.merged_cells.ranges:
+        min_col, min_row, max_col, max_row = range_boundaries(str(merged_range))
+
+        if min_row >= loc_row_inserted:
+            min_row += num_rows_inserted
+            max_row += num_rows_inserted
+
+        new_range = f'{openpyxl.utils.get_column_letter(min_col)}{min_row}:{openpyxl.utils.get_column_letter(max_col)}{max_row}'
+        new_merged_ranges.append(new_range)
+
+        sheet.merged_cells.ranges = []
+
+        for new_range in new_merged_ranges:
+            sheet.merged_cells(new_range)
+
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False)
@@ -198,6 +216,8 @@ def create_billing():
                     new_sheet.insert_rows(row_num + 1 + i)
                     copy_row_contents(new_sheet, row_num, row_num + i)
                     insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
+
+            adjust_merged_cells(new_sheet, new_row_num, rows_inserted)
 
     book.save(new_file_path(file_path))
 
