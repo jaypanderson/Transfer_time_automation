@@ -98,9 +98,17 @@ def copy_sheet(sheet, new_sheet) -> None:
 
 
 # replicate the cell merges from base template.
-def merge_cells(sheet: Worksheet, new_sheet) -> None:
+def merge_cells(sheet: Worksheet, new_sheet: Worksheet) -> None:
     for merged_cell_range in sheet.merged_cells.ranges:
         new_sheet.merge_cells(str(merged_cell_range))
+
+
+def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
+    print(sheet.print_area)
+    if sheet.print_area:
+        print('there is print area')
+        new_sheet.print_area = sheet.print_area
+
 
 
 def find_max(counts: Counter) -> int:
@@ -158,7 +166,7 @@ def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure:
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
-    source = book[book.sheetnames[0]]
+    sheet = book[book.sheetnames[0]]
 
 
     class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
@@ -170,8 +178,9 @@ def create_billing():
             print(month, class_name, replace_all_spaces(kid_name))
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
-            copy_sheet(source, new_sheet)
-            merge_cells(source, new_sheet)
+            copy_sheet(sheet, new_sheet)
+            merge_cells(sheet, new_sheet)
+            copy_print_area(sheet, new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 new_row_num = 15 + i
