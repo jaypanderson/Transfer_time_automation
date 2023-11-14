@@ -149,6 +149,8 @@ def create_billing():
     book = openpyxl.load_workbook(file_path, keep_vba=True)
     source = book[book.sheetnames[0]]
 
+
+    class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
     charges = count_charges()
     temp = charges['あお']['宮西　つぐみ']
     month = '10月'
