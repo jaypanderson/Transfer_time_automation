@@ -144,8 +144,8 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num) -> None:
             new_cell.alignment = copy(cell.alignment)
 
 
-def insert_data() -> None:
-    pass
+def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure: int, date: str) -> None:
+
 
 
 def create_billing():
