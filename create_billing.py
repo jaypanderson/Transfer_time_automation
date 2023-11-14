@@ -192,7 +192,9 @@ def create_billing():
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 new_row_num = 15 + i
+                rows_inserted = 0
                 if i != 0:
+                    rows_inserted += 1
                     new_sheet.insert_rows(row_num + 1 + i)
                     copy_row_contents(new_sheet, row_num, row_num + i)
                     insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
