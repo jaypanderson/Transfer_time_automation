@@ -144,6 +144,10 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num) -> None:
             new_cell.alignment = copy(cell.alignment)
 
 
+def insert_data() -> None:
+    pass
+
+
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=True)
@@ -166,6 +170,7 @@ def create_billing():
                 if i != 0:
                     new_sheet.insert_rows(row_num + 1 + i)
                     copy_row_contents(new_sheet, row_num, row_num + i)
+
 
 
 
