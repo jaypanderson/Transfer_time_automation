@@ -219,9 +219,9 @@ def create_billing():
                 if i != 0:
                     new_sheet.insert_rows(row_num + 1 + i)
                     rows_inserted += 1
-                    copy_row_contents(new_sheet, row_num, row_num + i)
-                    merge_specific_cells(new_sheet, new_row_num, 'B', 'C')
-                    insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
+                copy_row_contents(new_sheet, row_num, row_num + i)
+                merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
+                insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
 
             adjust_merged_cells(new_sheet, new_row_num, rows_inserted)
 
