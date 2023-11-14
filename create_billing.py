@@ -106,16 +106,14 @@ def merge_cells(sheet: Worksheet, new_sheet: Worksheet) -> None:
 
 
 def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
-    print(sheet.print_area)
     if sheet.print_area:
-        print('there is print area')
         new_sheet.print_area = sheet.print_area
 
 
 def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
     for row, col in zip_longest(sheet.row_dimensions, sheet.column_dimensions):
         if row is not None:
-            new_sheet.column_dimensions[row].height = sheet.column_dimensions[row].height
+            new_sheet.row_dimensions[row].height = sheet.row_dimensions[row].height
         if col is not None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
@@ -174,7 +172,7 @@ def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure:
 
 def create_billing():
     file_path = open_billing_file()
-    book = openpyxl.load_workbook(file_path, keep_vba=True)
+    book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
 
 
@@ -190,18 +188,14 @@ def create_billing():
             copy_sheet(sheet, new_sheet)
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
-            copy_dimensions(sheet, new_sheet)
+            #copy_dimensions(sheet, new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 new_row_num = 15 + i
                 if i != 0:
-                    pass
-                    #new_sheet.insert_rows(row_num + 1 + i)
-                    #copy_row_contents(new_sheet, row_num, row_num + i)
-                    #insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
-
-
-
+                    new_sheet.insert_rows(row_num + 1 + i)
+                    copy_row_contents(new_sheet, row_num, row_num + i)
+                    insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
 
     book.save(new_file_path(file_path))
 
