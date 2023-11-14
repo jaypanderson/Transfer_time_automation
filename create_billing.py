@@ -171,6 +171,11 @@ def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure:
         pass
 
 
+def merge_specific_cells(sheet, new_row_num, start_col, end_col):
+    merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
+    sheet.merged_cells(merge_range)
+
+
 def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
     new_merged_ranges = []
     for merged_range in sheet.merged_cells.ranges:
@@ -186,7 +191,7 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
         sheet.merged_cells.ranges = []
 
         for new_range in new_merged_ranges:
-            sheet.merged_cells(new_range)
+            sheet.merge_cells(new_range)
 
 def create_billing():
     file_path = open_billing_file()
@@ -204,17 +209,18 @@ def create_billing():
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(sheet, new_sheet)
-            #merge_cells(sheet, new_sheet)
-            #copy_print_area(sheet, new_sheet)
+            merge_cells(sheet, new_sheet)
+            copy_print_area(sheet, new_sheet)
             #copy_dimensions(sheet, new_sheet)
+            rows_inserted = 0
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 new_row_num = 15 + i
-                rows_inserted = 0
                 if i != 0:
                     rows_inserted += 1
                     new_sheet.insert_rows(row_num + 1 + i)
                     copy_row_contents(new_sheet, row_num, row_num + i)
+                    merge_specific_cells(sheet, new_row_num, 'B', 'C')
                     insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
 
             adjust_merged_cells(new_sheet, new_row_num, rows_inserted)
