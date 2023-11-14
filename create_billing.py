@@ -186,8 +186,8 @@ def create_billing():
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(sheet, new_sheet)
-            merge_cells(sheet, new_sheet)
-            copy_print_area(sheet, new_sheet)
+            #merge_cells(sheet, new_sheet)
+            #copy_print_area(sheet, new_sheet)
             #copy_dimensions(sheet, new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
