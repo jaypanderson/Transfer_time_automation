@@ -25,6 +25,8 @@ from transfer_time import range_adjustment
 from itertools import chain
 from copy import copy
 from collections import Counter
+from itertools import zip_longest
+
 
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -110,6 +112,13 @@ def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
         new_sheet.print_area = sheet.print_area
 
 
+def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
+    for row, col in zip_longest(sheet.row_dimensions, sheet.column_dimensions):
+        if row is not None:
+            new_sheet.column_dimensions[row].height = sheet.column_dimensions[row].height
+        if col is not None:
+            new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
+
 
 def find_max(counts: Counter) -> int:
     highest = 0
@@ -181,6 +190,7 @@ def create_billing():
             copy_sheet(sheet, new_sheet)
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
+            copy_dimensions(sheet, new_sheet)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 new_row_num = 15 + i
