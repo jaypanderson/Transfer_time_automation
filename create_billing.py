@@ -78,7 +78,7 @@ def count_charges():
                         arrival = sheet.cell(row=arriv_row, column=arriv_col).value
                         departure = sheet.cell(row=dept_row, column=dept_col).value
                         charges[sheet_name][name].append((price, arrival, departure, date))
-                        #print(sheet_name, name, price, date)
+    print(charges)
     return charges
 
 
@@ -145,7 +145,7 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num) -> None:
 
 
 def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure: int, date: str) -> None:
-
+    pass
 
 
 def create_billing():
@@ -186,8 +186,8 @@ def testtest(dic):
 
 
 if __name__ == '__main__':
-    #count_charges()
-    create_billing()
+    count_charges()
+    #create_billing()
     #testtest(count_charges())
     #find_year(count_charges())
     #convert_reiwa(2024, 4)
