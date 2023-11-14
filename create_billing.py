@@ -184,14 +184,13 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
         if min_row >= loc_row_inserted:
             min_row += num_rows_inserted
             max_row += num_rows_inserted
-
         new_range = f'{openpyxl.utils.get_column_letter(min_col)}{min_row}:{openpyxl.utils.get_column_letter(max_col)}{max_row}'
         new_merged_ranges.append(new_range)
 
-        sheet.merged_cells.ranges = []
+    sheet.merged_cells.ranges = []
 
-        for new_range in new_merged_ranges:
-            sheet.merge_cells(new_range)
+    for new_range in new_merged_ranges:
+        sheet.merge_cells(new_range)
 
 def create_billing():
     file_path = open_billing_file()
@@ -212,18 +211,20 @@ def create_billing():
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
             #copy_dimensions(sheet, new_sheet)
-            rows_inserted = 0
+
+            rows_inserted = len(charges[class_name][kid_name])
+            adjust_merged_cells(new_sheet, rows_inserted + 1, rows_inserted)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
+                first_insertion_location = 15
                 new_row_num = 15 + i
                 if i != 0:
                     new_sheet.insert_rows(row_num + 1 + i)
-                    rows_inserted += 1
                 copy_row_contents(new_sheet, row_num, row_num + i)
                 merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
                 insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
 
-            adjust_merged_cells(new_sheet, new_row_num, rows_inserted)
+
 
     book.save(new_file_path(file_path))
 
