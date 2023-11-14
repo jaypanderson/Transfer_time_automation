@@ -173,7 +173,7 @@ def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure:
 
 def merge_specific_cells(sheet, new_row_num, start_col, end_col):
     merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
-    sheet.merged_cells(merge_range)
+    sheet.merge_cells(merge_range)
 
 
 def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
@@ -217,10 +217,10 @@ def create_billing():
                 row_num = 14
                 new_row_num = 15 + i
                 if i != 0:
-                    rows_inserted += 1
                     new_sheet.insert_rows(row_num + 1 + i)
+                    rows_inserted += 1
                     copy_row_contents(new_sheet, row_num, row_num + i)
-                    merge_specific_cells(sheet, new_row_num, 'B', 'C')
+                    merge_specific_cells(new_sheet, new_row_num, 'B', 'C')
                     insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
 
             adjust_merged_cells(new_sheet, new_row_num, rows_inserted)
