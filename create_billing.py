@@ -154,14 +154,6 @@ def convert_reiwa(year: int, month: int) -> int:
     return reiwa
 
 
-def format_time(time: int) -> str:
-    if 3 > len(time) > 4:
-        return 'Time error'
-    chars = str(time).split('')
-    formatted = chars.insert(-2, ':')
-    return ''.join(formatted)
-
-
 def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     for row, new_row in zip(sheet.iter_rows(min_row=row_num, max_row=row_num),
                             sheet.iter_rows(min_row=new_row_num, max_row=new_row_num)):
@@ -179,12 +171,20 @@ def convert_date(date: str) -> str:
     return '/'.join(mo_da_ye)
 
 
+def format_time(time: int) -> str:
+    if 3 > len(time) > 4:
+        return 'Time error'
+    chars = str(time).split('')
+    formatted = chars.insert(-2, ':')
+    return ''.join(formatted)
+
+
 def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
     for cells in sheet.iter_rows(min_row=row, max_row=row):
         cells[1].value = f'{month}月分預かり保育料金'
         cells[2].value = convert_date(date)
-        cells[3].value = arrival
-        cells[4].value = departure
+        cells[3].value = format_time(arrival)
+        cells[4].value = format_time(departure)
         cells[5].value = price
 
 
