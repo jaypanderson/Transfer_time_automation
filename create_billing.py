@@ -240,7 +240,7 @@ def create_billing():
                     new_sheet.insert_rows(row_num + 1 + i)
                 copy_row_contents(new_sheet, row_num, row_num + i)
                 merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
-                insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
+                insert_data(new_sheet, row_num, month, data[0], data[1], data[2], data[3])
 
 
 
