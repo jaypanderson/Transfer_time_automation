@@ -235,12 +235,12 @@ def create_billing():
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 first_insertion_location = 15
-                new_row_num = 15 + i
+                new_row_num = 14 + i
                 if i != 0:
                     new_sheet.insert_rows(row_num + 1 + i)
                 copy_row_contents(new_sheet, row_num, row_num + i)
                 merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
-                insert_data(new_sheet, row_num, month, data[0], data[1], data[2], data[3])
+                insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
 
 
 
