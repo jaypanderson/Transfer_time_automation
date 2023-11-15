@@ -154,6 +154,14 @@ def convert_reiwa(year: int, month: int) -> int:
     return reiwa
 
 
+def format_time(time: int) -> str:
+    if 3 > len(time) > 4:
+        return 'Time error'
+    chars = str(time).split('')
+    formatted = chars.insert(-2, ':')
+    return ''.join(formatted)
+
+
 def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     for row, new_row in zip(sheet.iter_rows(min_row=row_num, max_row=row_num),
                             sheet.iter_rows(min_row=new_row_num, max_row=new_row_num)):
