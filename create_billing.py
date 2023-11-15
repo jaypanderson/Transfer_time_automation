@@ -166,9 +166,9 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
             new_cell.alignment = copy(cell.alignment)
 
 
-def insert_data(sheet: Worksheet, row: int, price: int, arrival: int, departure: int, date: str) -> None:
+def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
     for cells in sheet.iter_rows(min_row=row, max_row=row):
-        pass
+        cells[]
 
 
 def merge_specific_cells(sheet, new_row_num, start_col, end_col):
@@ -201,7 +201,7 @@ def create_billing():
     class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
     charges = count_charges()
     temp = charges['あお']['宮西　つぐみ']
-    month = '10月'
+    month = find_year(charges)[1]
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(month, class_name, replace_all_spaces(kid_name))
@@ -211,7 +211,6 @@ def create_billing():
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
             copy_dimensions(sheet, new_sheet)
-
 
             rows_inserted = len(charges[class_name][kid_name])
             if rows_inserted > 1:
@@ -224,7 +223,7 @@ def create_billing():
                     new_sheet.insert_rows(row_num + 1 + i)
                 copy_row_contents(new_sheet, row_num, row_num + i)
                 merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
-                insert_data(new_sheet, new_row_num, data[0], data[1], data[2], data[3])
+                insert_data(new_sheet, new_row_num,  data[0], data[1], data[2], data[3])
 
 
 
