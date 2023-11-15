@@ -113,8 +113,8 @@ def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
 
 def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
     for row, col in zip_longest(sheet.row_dimensions, sheet.column_dimensions):
-        if row is not None:
-            new_sheet.row_dimensions[row].height = sheet.row_dimensions[row].height
+        # if row is not None:
+        #     new_sheet.row_dimensions[row].height = sheet.row_dimensions[row].height
         if col is not None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
@@ -210,7 +210,7 @@ def create_billing():
             copy_sheet(sheet, new_sheet)
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
-            #copy_dimensions(sheet, new_sheet)
+            copy_dimensions(sheet, new_sheet)
 
             rows_inserted = len(charges[class_name][kid_name])
             if rows_inserted > 1:
