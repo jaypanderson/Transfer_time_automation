@@ -165,10 +165,16 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
             new_cell.protection = copy(cell.protection)
             new_cell.alignment = copy(cell.alignment)
 
+def convert_date(date: str) -> str:
+    ye_mo_da = date.split('-')
+    mo_da_ye = [te_mo_da[1], te_mo_da[2], te_mo_da[0]]
+    return '/'.joint(mo_da_ye)
+
 
 def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
     for cells in sheet.iter_rows(min_row=row, max_row=row):
-        cells[]
+        cells[1].value = f'{month}月分預かり保育料金'
+        cells[2].value = 
 
 
 def merge_specific_cells(sheet, new_row_num, start_col, end_col):
@@ -223,7 +229,7 @@ def create_billing():
                     new_sheet.insert_rows(row_num + 1 + i)
                 copy_row_contents(new_sheet, row_num, row_num + i)
                 merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
-                insert_data(new_sheet, new_row_num,  data[0], data[1], data[2], data[3])
+                insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
 
 
 
