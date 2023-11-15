@@ -174,7 +174,10 @@ def convert_date(date: str) -> str:
 def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
     for cells in sheet.iter_rows(min_row=row, max_row=row):
         cells[1].value = f'{month}月分預かり保育料金'
-        cells[2].value = 
+        cells[2].value = convert_date(date)
+        cells[3].value = arrival
+        cells[4].value = departure
+        cells[5].value = price
 
 
 def merge_specific_cells(sheet, new_row_num, start_col, end_col):
