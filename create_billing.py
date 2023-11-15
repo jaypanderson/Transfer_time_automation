@@ -172,9 +172,9 @@ def convert_date(date: str) -> str:
 
 
 def format_time(time: int) -> str:
-    if 3 > len(time) > 4:
-        return 'Time error'
     chars = str(time).split('')
+    if 3 > len(chars) > 4:
+        return 'Time error'
     formatted = chars.insert(-2, ':')
     return ''.join(formatted)
 
