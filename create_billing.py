@@ -172,11 +172,11 @@ def convert_date(date: str) -> str:
 
 
 def format_time(time: int) -> str:
-    chars = str(time).split('')
+    chars = list(str(time))
     if 3 > len(chars) > 4:
         return 'Time error'
-    formatted = chars.insert(-2, ':')
-    return ''.join(formatted)
+    chars.insert(-2, ':')
+    return ''.join(chars)
 
 
 def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
