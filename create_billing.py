@@ -209,6 +209,13 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
     for new_range in new_merged_ranges:
         sheet.merge_cells(new_range)
 
+
+def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
+    formula_1 = sheet.cell(16, 7).value
+    formula_2 = sheet.cell(30, 4).value
+    
+
+
 def create_billing():
     file_path = open_billing_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False)
@@ -221,7 +228,7 @@ def create_billing():
     month = find_year(charges)[1]
     for class_name in charges:
         for kid_name in charges[class_name]:
-            print(month, class_name, replace_all_spaces(kid_name))
+            #print(month, class_name, replace_all_spaces(kid_name))
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(sheet, new_sheet)
@@ -232,6 +239,7 @@ def create_billing():
             rows_inserted = len(charges[class_name][kid_name])
             if rows_inserted > 1:
                 adjust_merged_cells(new_sheet, 15, rows_inserted - 1)
+                adjust_formulas(new_sheet, rows_inserted)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 first_insertion_location = 15
@@ -252,7 +260,7 @@ def testtest(dic):
     for clas in dic:
         for name in clas:
             count += 1
-    print(count)
+    #print(count)
 
 
 if __name__ == '__main__':
