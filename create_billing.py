@@ -261,7 +261,7 @@ def create_billing():
     month = find_year(charges)[1]
     for class_name in charges:
         for kid_name in charges[class_name]:
-            #print(month, class_name, replace_all_spaces(kid_name))
+            print(month, class_name, replace_all_spaces(kid_name))
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             copy_sheet(sheet, new_sheet)
