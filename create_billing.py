@@ -232,7 +232,7 @@ def recalc_number(num_rows_inserted: int, formula, range: bool) -> tuple[int, in
     return new_num, start, end
 
 
-
+# apply the new values to the formulas based on how many rows were inserted.
 def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
     formula_1 = sheet.cell(16, 7).value
     formula_2 = sheet.cell(30, 4).value
