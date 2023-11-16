@@ -210,10 +210,24 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
         sheet.merge_cells(new_range)
 
 
+def recalc_range()
+
+
 def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
     formula_1 = sheet.cell(16, 7).value
     formula_2 = sheet.cell(30, 4).value
-    
+
+    start = None
+    end = None
+    for i in formula_1:
+        if i == ':':
+            start = i + 2   # it's two, to account for ':' and the column letter.
+        if i == ')':
+            end = i
+    num = formula_1[start:end]
+
+
+
 
 
 def create_billing():
