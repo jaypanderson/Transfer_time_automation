@@ -86,7 +86,8 @@ def count_charges():
 
 
 def set_color(sheet: Worksheet) -> None:
-    pass
+    color_map = {'ひよこ': '', 'ひつじ': '', 'うさぎ': '', 'もも': '',
+                 'だいだい': '', 'き': '', 'みどり': '', 'あお': '', 'ふじ': ''}
 
 
 def copy_sheet(sheet, new_sheet) -> None:
