@@ -85,7 +85,7 @@ def count_charges():
     return charges
 
 
-def set_color(sheet: Worksheet) -> None:
+def set_color(sheet: Worksheet, class_name: str) -> None:
     color_map = {'ひよこ': '', 'ひつじ': '', 'うさぎ': '', 'もも': '',
                  'だいだい': '', 'き': '', 'みどり': '', 'あお': '', 'ふじ': ''}
 
@@ -269,7 +269,7 @@ def create_billing():
             print(month, class_name, replace_all_spaces(kid_name))
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
-            set_color(new_sheet)
+            set_color(new_sheet, class_name)
             copy_sheet(sheet, new_sheet)
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
