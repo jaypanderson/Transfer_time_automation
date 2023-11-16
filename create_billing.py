@@ -85,6 +85,10 @@ def count_charges():
     return charges
 
 
+def set_color(sheet: Worksheet) -> None:
+    pass
+
+
 def copy_sheet(sheet, new_sheet) -> None:
     for row in sheet:
         for cell in row:
@@ -264,6 +268,7 @@ def create_billing():
             print(month, class_name, replace_all_spaces(kid_name))
             new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
+            set_color(new_sheet)
             copy_sheet(sheet, new_sheet)
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
