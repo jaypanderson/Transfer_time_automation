@@ -235,6 +235,12 @@ def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
     formula_1 = sheet.cell(16, 7).value
     formula_2 = sheet.cell(30, 4).value
 
+    new_num, start, end = recalc_number(formula_1, num_rows_inserted, True)
+    sheet.cell(16, 7).value = formula_1[:start] + str(new_num) + formula_1[end:]
+
+    new_num, start, end = recalc_number(formula_2, num_rows_inserted, False)
+    sheet.cell(30, 4).value = formula_2[:start] + str(new_num) + formula_2[end:]
+
 
 
 
