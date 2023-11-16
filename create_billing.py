@@ -210,21 +210,32 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
         sheet.merge_cells(new_range)
 
 
-def recalc_range()
+def recalc_number(num_rows_inserted: int, formula, range: bool) -> tuple[int, int, int]:
+    start = None
+    end = None
+    if range is True:
+        for i in formula:
+            if i == ':':
+                start = i + 2  # it's two, to account for ':' and the column letter.
+            if i == ')':
+                end = i
+    else:
+        for i in formula:
+            if i.isalpha:
+                start = i + 1
+        end = len(formula)
+
+    num = formula[start:end]
+    new_num = num + num_rows_inserted
+    return new_num, start, end
+
 
 
 def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
     formula_1 = sheet.cell(16, 7).value
     formula_2 = sheet.cell(30, 4).value
 
-    start = None
-    end = None
-    for i in formula_1:
-        if i == ':':
-            start = i + 2   # it's two, to account for ':' and the column letter.
-        if i == ')':
-            end = i
-    num = formula_1[start:end]
+
 
 
 
