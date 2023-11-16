@@ -272,7 +272,7 @@ def create_billing():
             rows_inserted = len(charges[class_name][kid_name])
             if rows_inserted > 1:
                 adjust_merged_cells(new_sheet, 15, rows_inserted - 1)
-                adjust_formulas(new_sheet, rows_inserted)
+                adjust_formulas(new_sheet, rows_inserted - 1)
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 first_insertion_location = 15
