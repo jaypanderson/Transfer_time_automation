@@ -223,7 +223,7 @@ def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[in
                 end = i
     else:
         for i, char in enumerate(formula):
-            if char.isalpha:
+            if char.isalpha():
                 start = i + 1
         end = len(formula)
 
