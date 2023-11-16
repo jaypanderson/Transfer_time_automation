@@ -216,14 +216,14 @@ def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[in
     start = None
     end = None
     if range is True:
-        for i in formula:
-            if i == ':':
+        for i, char in enumerate(formula):
+            if char == ':':
                 start = i + 2  # it's two, to account for ':' and the column letter.
-            if i == ')':
+            if char == ')':
                 end = i
     else:
-        for i in formula:
-            if i.isalpha:
+        for i, char in enumerate(formula):
+            if char.isalpha:
                 start = i + 1
         end = len(formula)
 
