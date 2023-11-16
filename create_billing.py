@@ -228,7 +228,7 @@ def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[in
         end = len(formula)
 
     num = formula[start:end]
-    new_num = num + num_rows_inserted
+    new_num = int(num) + num_rows_inserted
     return new_num, start, end
 
 
