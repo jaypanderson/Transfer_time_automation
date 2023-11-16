@@ -212,7 +212,7 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
 
 # find the location of the number that needs to be recalculated and add the number of rows based on
 # how many rows were inserted.
-def recalc_number(num_rows_inserted: int, formula, range: bool) -> tuple[int, int, int]:
+def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[int, int, int]:
     start = None
     end = None
     if range is True:
