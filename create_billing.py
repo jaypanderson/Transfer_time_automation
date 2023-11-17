@@ -124,12 +124,16 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
 
+# spliting child name into first and last name
 def separate_names(name: str) -> list[str, str]:
     return name.split('　')
 
 
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
     class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
+    full_name = child_name.split('　')
+    last = full_name[0]
+    first = full_name[1]
     for row in sheet.iter_rows():
         for cell in row:
             val = cell.value
@@ -145,10 +149,6 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
                 cell.value = val.replace('&', separate_names(child_name)[0])
             if '$' in val:
                 cell.value = val.replace('&', separate_names(child_name)[1])
-
-
-
-
 
 
 def find_max(counts: Counter) -> int:
