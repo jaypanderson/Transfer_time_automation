@@ -142,7 +142,7 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
             if '#' in val:
                 cell.value = val.replace('#', month)
             if '?' in val:
-                cell.value = val.replace('?', class_age_map(class_name))
+                cell.value = val.replace('?', class_age_map[class_name])
             if '@' in val:
                 cell.value = val.replace('?', class_name)
             if '&' in val:
