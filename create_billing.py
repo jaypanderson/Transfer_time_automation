@@ -124,6 +124,12 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
 
+def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
+    for row in sheet.iter_rows():
+        for cell in row:
+            pass
+
+
 def find_max(counts: Counter) -> int:
     highest = 0
     ans = None
@@ -274,6 +280,7 @@ def create_billing():
             merge_cells(sheet, new_sheet)
             copy_print_area(sheet, new_sheet)
             copy_dimensions(sheet, new_sheet)
+            insert_name_date(new_sheet, year, month, class_name, kid_name)
 
             rows_inserted = len(charges[class_name][kid_name])
             if rows_inserted > 1:
