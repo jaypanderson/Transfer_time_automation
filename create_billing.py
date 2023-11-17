@@ -137,6 +137,8 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
     for row in sheet.iter_rows():
         for cell in row:
             val = cell.value
+            if val is None:
+                continue
             if '%' in val:
                 cell.value = val.replace('%', year)
             if '#' in val:
