@@ -129,9 +129,11 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
         for cell in row:
             val = cell.value
             if '%' in val:
-                val = val.replace('%', year)
+                cell.value = val.replace('%', year)
             if '#' in val:
-                val = val.replace('#', month)
+                cell.value = val.replace('#', month)
+            
+
 
 
 def find_max(counts: Counter) -> int:
