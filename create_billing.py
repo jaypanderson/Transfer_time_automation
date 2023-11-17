@@ -146,9 +146,9 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
             if '@' in val:
                 cell.value = val.replace('?', class_name)
             if '&' in val:
-                cell.value = val.replace('&', separate_names(child_name)[0])
+                cell.value = val.replace('&', last)
             if '$' in val:
-                cell.value = val.replace('$', separate_names(child_name)[1])
+                cell.value = val.replace('$', first)
 
 
 def find_max(counts: Counter) -> int:
