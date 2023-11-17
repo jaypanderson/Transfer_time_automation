@@ -88,7 +88,7 @@ def count_charges():
 def set_color(sheet: Worksheet, class_name: str) -> None:
     color_map = {'ひよこ': '#FFD700', 'ひつじ': '#90EE90', 'うさぎ': '#ADD8E6', 'もも': 'pink',
                  'だいだい': 'orange', 'き': 'yellow', 'みどり': 'green', 'あお': 'blue', 'ふじ': 'purple'}
-    sheet.tabColor = color_map[class_name]
+    sheet.sheet_properties.tabColor = color_map[class_name]
 
 def copy_sheet(sheet, new_sheet) -> None:
     for row in sheet:
