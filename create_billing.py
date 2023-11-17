@@ -124,7 +124,12 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
 
+def separate_names(name: str) -> list[str, str]:
+    return name.split('　')
+
+
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
+    class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
     for row in sheet.iter_rows():
         for cell in row:
             val = cell.value
@@ -132,7 +137,17 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
                 cell.value = val.replace('%', year)
             if '#' in val:
                 cell.value = val.replace('#', month)
-            
+            if '?' in val:
+                cell.value = val.replace('?', class_age_map(class_name))
+            if '@' in val:
+                cell.value = val.replace('?', class_name)
+            if '&' in val:
+                cell.value = val.replace('&', separate_names(child_name)[0])
+            if '$' in val:
+                cell.value = val.replace('&', separate_names(child_name)[1])
+
+
+
 
 
 
@@ -271,8 +286,6 @@ def create_billing():
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
 
-
-    class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
     charges = count_charges()
     year = find_year(charges)[0]
     month = find_year(charges)[1]
