@@ -137,21 +137,20 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
     first = full_name[1]
     for row in sheet.iter_rows():
         for cell in row:
-            val = cell.value
-            if val is None:
+            if cell.value is None:
                 continue
-            if '%' in val:
-                cell.value = val.replace('%', str(year))
-            if '#' in val:
-                cell.value = val.replace('#', str(month))
-            if '?' in val:
-                cell.value = val.replace('?', class_age_map[class_name])
-            if '@' in val:
-                cell.value = val.replace('?', class_name)
-            if '&' in val:
-                cell.value = val.replace('&', last)
-            if '$' in val:
-                cell.value = val.replace('$', first)
+            if '%' in cell.value:
+                cell.value = cell.value.replace('%', str(year))
+            if '#' in cell.value:
+                cell.value = cell.value.replace('#', str(month))
+            if '?' in cell.value:
+                cell.value = cell.value.replace('?', class_age_map[class_name])
+            if '@' in cell.value:
+                cell.value = cell.value.replace('?', class_name)
+            if '&' in cell.value:
+                cell.value = cell.value.replace('&', last)
+            if '$' in cell.value:
+                cell.value = cell.value.replace('$', first)
 
 
 def find_max(counts: Counter) -> int:
