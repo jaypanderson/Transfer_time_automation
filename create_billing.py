@@ -11,6 +11,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 from datetime import datetime
 import openpyxl
+from openpyxl.styles import Color
 from openpyxl import Workbook
 # from openpyxl import styles
 from openpyxl.styles import PatternFill
@@ -86,9 +87,10 @@ def count_charges():
 
 
 def set_color(sheet: Worksheet, class_name: str) -> None:
-    color_map = {'ひよこ': '#FFD700', 'ひつじ': '#90EE90', 'うさぎ': '#ADD8E6', 'もも': '#FFC0CB',
-                 'だいだい': '#FFA500', 'き': '#FFFF00', 'みどり': '#008000', 'あお': '#0000FF', 'ふじ': '#800080'}
-    sheet.sheet_properties.tabColor = color_map[class_name]
+    color_map = {'ひよこ': 'FFFFD700', 'ひつじ': 'FF90EE90', 'うさぎ': 'FFADD8E6', 'もも': 'FFFFC0CB',
+                 'だいだい': 'FFFFA500', 'き': 'FFFFFF00', 'みどり': 'FF008000', 'あお': 'FF0000FF', 'ふじ': 'FF800080'}
+    color = Color(rgb=color_map[class_name])
+    sheet.sheet_properties.tabColor = color
 
 def copy_sheet(sheet, new_sheet) -> None:
     for row in sheet:
