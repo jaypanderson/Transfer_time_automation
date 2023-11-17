@@ -262,7 +262,7 @@ def create_billing():
 
     class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
     charges = count_charges()
-    temp = charges['あお']['宮西　つぐみ']
+    year = find_year(charges)[0]
     month = find_year(charges)[1]
     for class_name in charges:
         for kid_name in charges[class_name]:
