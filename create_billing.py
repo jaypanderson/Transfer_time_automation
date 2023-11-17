@@ -130,7 +130,8 @@ def separate_names(name: str) -> list[str, str]:
 
 
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
-    class_age_map = {'あお': 5, 'ふじ': 5, 'き': 4, 'みどり': 4, 'だいだい': 3, 'もも': 3, 'うさぎ': 2, 'ひつじ': 1, 'ひよこ': 0}
+    class_age_map = {'あお': '5', 'ふじ': '5', 'き': '4', 'みどり': '4', 'だいだい': '3', 'もも': '3',
+                     'うさぎ': '2', 'ひつじ': '1', 'ひよこ': '0'}
     full_name = child_name.split('　')
     last = full_name[0]
     first = full_name[1]
