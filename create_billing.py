@@ -127,7 +127,11 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
     for row in sheet.iter_rows():
         for cell in row:
-            pass
+            val = cell.value
+            if '%' in val:
+                val = val.replace('%', year)
+            if '#' in val:
+                val = val.replace('#', month)
 
 
 def find_max(counts: Counter) -> int:
