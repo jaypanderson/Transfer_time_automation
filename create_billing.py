@@ -295,7 +295,7 @@ def create_billing():
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(month, class_name, replace_all_spaces(kid_name))
-            new_sheet_name = f'{month}{class_name}{replace_all_spaces(kid_name)}'
+            new_sheet_name = f'{month}月{class_name}{replace_all_spaces(kid_name)}'
             new_sheet = book.create_sheet(new_sheet_name)
             set_color(new_sheet, class_name)
             copy_sheet(sheet, new_sheet)
