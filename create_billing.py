@@ -285,14 +285,11 @@ def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
 
 
 
-def create_billing_sheets():
+def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     file_path = open_billing_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
 
-    charges = count_charges()
-    year = find_year(charges)[0]
-    month = find_year(charges)[1]
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(month, class_name, replace_all_spaces(kid_name))
@@ -325,7 +322,11 @@ def create_tally_sheet():
     pass
 
 def create_extra_charges_documents():
-    
+    charges = count_charges()
+    year = find_year(charges)[0]
+    month = find_year(charges)[1]
+    create_billing_sheets(charges, year, month)
+
 
 
 def testtest(dic):
