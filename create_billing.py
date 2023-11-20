@@ -323,6 +323,10 @@ def create_billing():
     book.save(new_file_path(file_path))
 
 
+def create_tally_sheet():
+    pass
+
+
 def testtest(dic):
     count = 0
     for clas in dic:
