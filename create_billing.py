@@ -186,7 +186,6 @@ def convert_reiwa(year: int, month: int) -> int:
     reiwa = year - 2018
     if month in [1, 2, 3]:
         reiwa -= 1
-    print(reiwa)
     return reiwa
 
 
