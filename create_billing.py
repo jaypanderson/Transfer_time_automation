@@ -326,6 +326,7 @@ def create_extra_charges_documents():
     year = find_year(charges)[0]
     month = find_year(charges)[1]
     create_billing_sheets(charges, year, month)
+    create_tally_sheet()
 
 
 
@@ -339,7 +340,7 @@ def testtest(dic):
 
 if __name__ == '__main__':
     #count_charges()
-    create_billing_sheets()
+    create_extra_charges_documents()
     #testtest(count_charges())
     #find_year(count_charges())
     #convert_reiwa(2024, 4)
