@@ -142,7 +142,7 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
             if cell.value is None:
                 continue
             if '%' in cell.value:
-                cell.value = cell.value.replace('%', str(convert_reiwa(year)))
+                cell.value = cell.value.replace('%', str(convert_reiwa(year, month)))
             if '#' in cell.value:
                 cell.value = cell.value.replace('#', str(month))
             if '?' in cell.value:
