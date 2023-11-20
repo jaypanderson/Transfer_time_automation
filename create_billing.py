@@ -34,8 +34,9 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 
 # open file that will be used create billing docs.
-def open_billing_file() -> str:
-    return filedialog.askopenfilename(title='料金明細票を選択してください。')
+def open_billing_file(option: int) -> str:
+    if option == 1:
+        return filedialog.askopenfilename(title='料金明細票を選択してください。')
 
 
 
@@ -284,8 +285,8 @@ def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
 
 
 
-def create_billing():
-    file_path = open_billing_file()
+def create_billing_sheets():
+    file_path = open_billing_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
 
@@ -317,14 +318,14 @@ def create_billing():
                 copy_row_contents(new_sheet, row_num, row_num + i)
                 merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
                 insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
-
-
-
     book.save(new_file_path(file_path))
 
 
 def create_tally_sheet():
     pass
+
+def create_extra_charges_documents():
+    
 
 
 def testtest(dic):
@@ -337,7 +338,7 @@ def testtest(dic):
 
 if __name__ == '__main__':
     #count_charges()
-    create_billing()
+    create_billing_sheets()
     #testtest(count_charges())
     #find_year(count_charges())
     #convert_reiwa(2024, 4)
