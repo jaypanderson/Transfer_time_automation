@@ -318,7 +318,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
-def create_tally_sheet():
+def create_tally_sheet(charges: defaultdict, year: int, month: int):
     pass
 
 def create_extra_charges_documents():
