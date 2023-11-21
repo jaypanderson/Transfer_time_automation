@@ -328,10 +328,10 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int):
     #file_path = open_billing_file(2)
     pass
 
-# main function to run all the processes i need.  Currently this only create one file because I need to think about
+# main function to run all the processes i need.  Currently, this only create one file because I need to think about
 # how I want to organize my code.  Later on I want to make it so my scripts create 3 different files, but some of these
-# might need someone to manually place in data so it doesnt make sense to automate it quite yet. I might actually need
-# to make separate executables for each one so that someone can do the editing and a choose when to move onto the next
+# might need someone to manually place in data so it doesn't make sense to automate it quite yet. I might actually need
+# to make separate executables for each one so that someone can do the editing and a chose when to move onto the next
 # automation portion of the work flow.
 def main():
     charges = count_charges()
