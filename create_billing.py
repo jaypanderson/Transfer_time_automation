@@ -324,6 +324,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
+# temporary place-holder for a function to create the second document I need.
 def create_tally_sheet(charges: defaultdict, year: int, month: int):
     #file_path = open_billing_file(2)
     pass
