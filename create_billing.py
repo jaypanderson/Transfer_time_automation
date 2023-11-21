@@ -37,6 +37,8 @@ from openpyxl.worksheet.worksheet import Worksheet
 def open_billing_file(option: int) -> str:
     if option == 1:
         return filedialog.askopenfilename(title='料金明細票を選択してください。')
+    elif option == 2:
+        return filedialog.askopenfilename(title='料金集計を選択してください。')
 
 
 
