@@ -41,7 +41,7 @@ def open_billing_file(option: int) -> str:
         title = '料金集計を選択してください。'
     else:
         title = 'incorrect option chosen'
-        
+
     return filedialog.askopenfilename(title=title)
 
 
