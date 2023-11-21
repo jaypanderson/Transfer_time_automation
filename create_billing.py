@@ -328,7 +328,8 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int):
     #file_path = open_billing_file(2)
     pass
 
-def create_extra_charges_documents():
+
+def main():
     charges = count_charges()
     year = find_year(charges)[0]
     month = find_year(charges)[1]
@@ -347,7 +348,7 @@ def testtest(dic: dict) -> None:
 
 if __name__ == '__main__':
     #count_charges()
-    create_extra_charges_documents()
+    main()
     #testtest(count_charges())
     #find_year(count_charges())
     #convert_reiwa(2024, 4)
