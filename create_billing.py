@@ -325,6 +325,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
 
 
 def create_tally_sheet(charges: defaultdict, year: int, month: int):
+    #file_path = open_billing_file(2)
     pass
 
 def create_extra_charges_documents():
@@ -335,13 +336,13 @@ def create_extra_charges_documents():
     create_tally_sheet(charges, year, month)
 
 
-
-def testtest(dic):
+# non important function to count how many children will be parched extra for the month.
+def testtest(dic: dict) -> None:
     count = 0
     for clas in dic:
         for name in clas:
             count += 1
-    #print(count)
+    print(count)
 
 
 if __name__ == '__main__':
