@@ -256,6 +256,22 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
 # find the location of the number that needs to be recalculated and add the number of rows based on
 # how many rows were inserted.
 def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[int, int, int]:
+    """
+    This function finds the specific number in the formula that need to be changed. Depending on whether the formula
+    is a simple cell number or a formula that uses a range of cells it looks for the desired number to change as well
+    as its location.
+
+    :param formula: this is the formula that was found in the cell that need to be adjusted.
+    :param num_rows_inserted: This basically is the number of days the child was charged extra.  This is because
+    for every day the child was charged, there will be a new row inserted to record the charge.
+    :param range: a bool argument that determines how we search for the number that need to be change. If True it
+    searches the formula assuming that it uses as range of cells.(ex: sum(B23:B25))  If False it searched the formula assuming that it
+    uses a single cell. (ex: =B23)
+    :return: returns a tuple containing [new_num, start, end]. new_num is the adjusted number after recalculating with
+    the numbers of rows inserted, start is the index of where the number started and end is the index for where the
+    number ended. these will be used to splice together the new formula that will be inserted into as cell in the
+    new sheet.
+    """
     start = None
     end = None
     if range is True:
