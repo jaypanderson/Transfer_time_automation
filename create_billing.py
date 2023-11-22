@@ -277,6 +277,17 @@ def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[in
 
 # apply the new values to the formulas based on how many rows were inserted.
 def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
+    """
+    Because rows are being inserted, the range of the formulas that tally the total amounts need to adjust for that.
+    Normally if we do this in Excel is automatically adjusts it. However, with openpyxl when a row is inserted the
+    formulas are not adjusted automatically.  That's why, depending on the number of rows inserted we need to adjust
+    the formulas present in the Excel book.
+
+    :param sheet: new sheet that was created for each child that has extra charges.
+    :param num_rows_inserted: This basically is the number of days the child was charged extra.  This is because
+    for every day the child was charged, there will be a new row inserted to record the charge.
+    :return:
+    """
     formula_1 = sheet.cell(16, 7).value
     formula_2 = sheet.cell(30, 4).value
 
