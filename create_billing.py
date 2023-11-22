@@ -287,6 +287,8 @@ def adjust_formulas(sheet: Worksheet, num_rows_inserted: int) -> None:
     sheet.cell(30, 4).value = formula_2[:start] + str(new_num) + formula_2[end:]
 
 
+# one of three documents that this automation creates.  This one creates the billing documents that will be
+# given to the parents with all the individual charges organized by day.
 def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     file_path = open_billing_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
