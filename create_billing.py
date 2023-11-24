@@ -376,8 +376,9 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     copy_sheet(sheet, new_sheet)
     new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
     for class_name in charges:
-        for kid_name in charges[class_name]:
+        for i, kid_name in enumerate(charges[class_name]):
             price = price_per_child_total(charges[class_name][kid_name])
+            new_sheet.insert_rows(3)
             insert_tally_data(new_sheet, i + 3, class_name, kid_name, price)
 
 
