@@ -374,7 +374,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     for class_name in charges:
         for kid_name in charges[class_name]:
             for i, data in enumerate(charges[class_name][kid_name]):
-                insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0], data[4])
+                insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0], data[3])
 
     book.save(new_file_path(file_path))
 
