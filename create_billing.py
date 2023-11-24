@@ -349,14 +349,14 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
-def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name: str, price: int, date: str) -> None:
+def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name: str, price: int) -> None:
     class_age_map = {'あお': '5', 'ふじ': '5', 'き': '4', 'みどり': '4', 'だいだい': '3', 'もも': '3',
                      'うさぎ': '2', 'ひつじ': '1', 'ひよこ': '0'}
     for cells in new_sheet.iter_rows(min_row=row, max_row=row):
         cells[0].value = f'{class_age_map[class_name]}歳児'
         cells[1].value = class_name
-        cells[2].value = price
-        cells[3].value = convert_date(date)
+        cells[2].value = kid_name
+        cells[3].value = price
         
 
 
@@ -374,7 +374,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     for class_name in charges:
         for kid_name in charges[class_name]:
             for i, data in enumerate(charges[class_name][kid_name]):
-                insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0], data[3])
+                insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0])
 
     book.save(new_file_path(file_path))
 
