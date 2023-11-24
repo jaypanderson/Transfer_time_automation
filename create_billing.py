@@ -349,12 +349,19 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
+def insert_tally_data(charges: defaultdict) -> None:
+
+
+
 # temporary place-holder for a function to create the second document I need.
-def create_tally_sheet(charges: defaultdict, year: int, month: int):
+def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     file_path = open_billing_file(2)
     book = openpyxl.load_workbook(file_path)
+    sheet = book['base']
     new_sheet_name = f'{year}.{month}'
     new_sheet = book.create_sheet(new_sheet_name)
+    copy_sheet(sheet, new_sheet)
+    insert_tally_data()
 
 
 # main function to run all the processes I need.  Currently, this only create one file because I need to think about
