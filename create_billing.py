@@ -380,7 +380,8 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             print(class_name, kid_name)
             price = price_per_child_total(charges[class_name][kid_name])
             if i != 0:
-                new_sheet.insert_rows(i + 4)
+                new_sheet.insert_rows(i + 3)
+                copy_row_contents(new_sheet, 3, i + 3)
             insert_tally_data(new_sheet, i + 3, class_name, kid_name, price)
 
 
