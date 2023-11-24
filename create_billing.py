@@ -355,6 +355,7 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
     for cells in new_sheet.iter_rows(min_row=row, max_row=row):
         cells[0].value = f'{class_age_map[class_name]}歳児'
         cells[1].value = class_name
+        
 
 
 
