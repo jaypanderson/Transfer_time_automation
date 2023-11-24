@@ -349,7 +349,9 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
-def insert_tally_data(charges: defaultdict) -> None:
+def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name: str, price: int, date: str) -> None:
+    
+
 
 
 
@@ -361,7 +363,10 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     new_sheet_name = f'{year}.{month}'
     new_sheet = book.create_sheet(new_sheet_name)
     copy_sheet(sheet, new_sheet)
-    insert_tally_data()
+    for class_name in charges:
+        for kid_name in charges[class_name]:
+            for i, data in enumerate(charges[class_name][kid_name]):
+                insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0], data[4])
 
 
 # main function to run all the processes I need.  Currently, this only create one file because I need to think about
