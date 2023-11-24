@@ -351,8 +351,11 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
 
 # temporary place-holder for a function to create the second document I need.
 def create_tally_sheet(charges: defaultdict, year: int, month: int):
-    #file_path = open_billing_file(2)
-    pass
+    file_path = open_billing_file(2)
+    book = openpyxl.load_workbook(file_path)
+    new_sheet_name = f'{year}.{month}'
+    new_sheet = book.create_sheet(new_sheet_name)
+
 
 # main function to run all the processes I need.  Currently, this only create one file because I need to think about
 # how I want to organize my code.  Later on I want to make it so my scripts create 3 different files, but some of these
