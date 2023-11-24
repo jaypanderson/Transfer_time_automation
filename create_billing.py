@@ -376,15 +376,17 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     copy_sheet(sheet, new_sheet)
     new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
     first = True
+    count = 0
     for class_name in charges:
-        for i, kid_name in enumerate(charges[class_name]):
+        for kid_name in charges[class_name]:
             print(class_name, kid_name)
             price = price_per_child_total(charges[class_name][kid_name])
             if first is not True:
-                new_sheet.insert_rows(i + 3)
-                copy_row_contents(new_sheet, 3, i + 3)
+                new_sheet.insert_rows(count + 3)
+            copy_row_contents(new_sheet, 3, count + 3)
+            insert_tally_data(new_sheet, count + 3, class_name, kid_name, price)
             first = False
-            insert_tally_data(new_sheet, i + 3, class_name, kid_name, price)
+            count += 1
 
 
     book.save(new_file_path(file_path))
