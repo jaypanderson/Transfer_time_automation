@@ -355,6 +355,8 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
     for cells in new_sheet.iter_rows(min_row=row, max_row=row):
         cells[0].value = f'{class_age_map[class_name]}歳児'
         cells[1].value = class_name
+        cells[2].value = price
+        cells[3].value = convert_date(date)
         
 
 
@@ -368,10 +370,13 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     new_sheet_name = f'{year}.{month}'
     new_sheet = book.create_sheet(new_sheet_name)
     copy_sheet(sheet, new_sheet)
+    new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
     for class_name in charges:
         for kid_name in charges[class_name]:
             for i, data in enumerate(charges[class_name][kid_name]):
                 insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0], data[4])
+
+    book.save(new_file_path(file_path))
 
 
 # main function to run all the processes I need.  Currently, this only create one file because I need to think about
