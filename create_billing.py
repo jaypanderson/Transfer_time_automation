@@ -378,7 +378,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     for class_name in charges:
         for i, kid_name in enumerate(charges[class_name]):
             price = price_per_child_total(charges[class_name][kid_name])
-            new_sheet.insert_rows(3)
+            new_sheet.insert_row(3)
             insert_tally_data(new_sheet, i + 3, class_name, kid_name, price)
 
 
@@ -394,7 +394,7 @@ def main():
     charges = count_charges()
     year = find_year(charges)[0]
     month = find_year(charges)[1]
-    create_billing_sheets(charges, year, month)
+    #create_billing_sheets(charges, year, month)
     create_tally_sheet(charges, year, month)
 
 
