@@ -349,6 +349,13 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
+def price_per_child_total(child_charges: defaultdict) -> int:
+    total = 0
+    for data in child_charges:
+        total += data[0]
+    return total
+
+
 def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name: str, price: int) -> None:
     class_age_map = {'あお': '5', 'ふじ': '5', 'き': '4', 'みどり': '4', 'だいだい': '3', 'もも': '3',
                      'うさぎ': '2', 'ひつじ': '1', 'ひよこ': '0'}
@@ -357,9 +364,6 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
         cells[1].value = class_name
         cells[2].value = kid_name
         cells[3].value = price
-        
-
-
 
 
 # temporary place-holder for a function to create the second document I need.
@@ -373,8 +377,9 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
     for class_name in charges:
         for kid_name in charges[class_name]:
-            for i, data in enumerate(charges[class_name][kid_name]):
-                insert_tally_data(new_sheet, i+3, class_name, kid_name, data[0])
+            price = price_per_child_total(charges[class_name][kid_name])
+            insert_tally_data(new_sheet, i + 3, class_name, kid_name, price)
+
 
     book.save(new_file_path(file_path))
 
