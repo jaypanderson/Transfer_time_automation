@@ -377,15 +377,17 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
     merge_cells(sheet, new_sheet)
     copy_dimensions(sheet, new_sheet)
-    
+
     first = True
     count = 0
+    rows_inserted = 0
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(class_name, kid_name)
             price = price_per_child_total(charges[class_name][kid_name])
             if first is not True:
                 new_sheet.insert_rows(count + 3)
+                rows_inserted += 1
             copy_row_contents(new_sheet, 3, count + 3)
             insert_tally_data(new_sheet, count + 3, class_name, kid_name, price)
             first = False
