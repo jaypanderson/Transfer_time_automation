@@ -375,6 +375,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     new_sheet = book.create_sheet(new_sheet_name)
     copy_sheet(sheet, new_sheet)
     new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
+    merge_cells(sheet, new_sheet)
     first = True
     count = 0
     for class_name in charges:
@@ -401,7 +402,7 @@ def main():
     charges = count_charges()
     year = find_year(charges)[0]
     month = find_year(charges)[1]
-    create_billing_sheets(charges, year, month)
+    #create_billing_sheets(charges, year, month)
     create_tally_sheet(charges, year, month)
 
 
