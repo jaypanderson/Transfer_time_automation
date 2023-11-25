@@ -385,7 +385,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     first = True
     count = 0
     rows_inserted = 0
-    first_row = 3
+    first_row = 3 # row number that will be used to set the range for the sum of each class.
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(class_name, kid_name)
@@ -397,6 +397,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             insert_tally_data(new_sheet, count + 3, class_name, kid_name, price)
             first = False
             count += 1
+        # this functions returns an object as well as mutates the new_sheet that is passed in.
         first_row = insert_formular_class_total(new_sheet, rows_inserted, first_row)
 
 
