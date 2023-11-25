@@ -368,7 +368,7 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
 
 def insert_formular_class_total(new_sheet: Worksheet, rows_inserted: int, start_row: int) -> None:
     last_row = start_row + rows_inserted
-    new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{start_row}:D{bottom_range})'
+    new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{start_row}:D{last_row})'
 
 # temporary place-holder for a function to create the second document I need.
 def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
@@ -398,7 +398,6 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             first = False
             count += 1
         insert_formular_class_total(new_sheet, rows_inserted, start_row)
-        last_row =
 
 
     book.save(new_file_path(file_path))
