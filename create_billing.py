@@ -376,6 +376,8 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     copy_sheet(sheet, new_sheet)
     new_sheet.cell(row=2, column=1).value = f'{year}.{month}月'
     merge_cells(sheet, new_sheet)
+    copy_dimensions(sheet, new_sheet)
+    
     first = True
     count = 0
     for class_name in charges:
