@@ -366,10 +366,10 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
         cells[3].value = price
 
 
-def insert_formular_class_total(new_sheet: Worksheet, rows_inserted: int, start_row: int) -> None:
-    last_row = start_row + rows_inserted
-    new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{start_row}:D{last_row})'
-
+def insert_formular_class_total(new_sheet: Worksheet, rows_inserted: int, first_row: int) -> int:
+    last_row = 3 + rows_inserted
+    new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{first_row}:D{last_row})'
+    return last_row + 1
 # temporary place-holder for a function to create the second document I need.
 def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     file_path = open_billing_file(2)
@@ -385,7 +385,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     first = True
     count = 0
     rows_inserted = 0
-    start_row = 3
+    first_row = 3
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(class_name, kid_name)
@@ -397,7 +397,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             insert_tally_data(new_sheet, count + 3, class_name, kid_name, price)
             first = False
             count += 1
-        insert_formular_class_total(new_sheet, rows_inserted, start_row)
+        first_row = insert_formular_class_total(new_sheet, rows_inserted, first_row)
 
 
     book.save(new_file_path(file_path))
