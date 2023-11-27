@@ -404,6 +404,11 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             count += 1
         # this functions returns an object as well as mutates the new_sheet that is passed in.
         first_row = insert_formular_class_total(new_sheet, rows_inserted, first_row)
+
+    # make adjustments to the coordinates of the cells that need to be adjusted because we are changing it after the
+    # rows are inserted.  I could define the rows being inserted before the loop instead of counting during the loop,
+    # but I need the intermediate counts of rows_inserted to add formulas along the way that count how much extra
+    # charges each class has.
     cells_to_be_adjusted = ((4 + rows_inserted, 4, True), (4 + rows_inserted, 7, True), (4 + rows_inserted, 8, True))
     adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted)
 
