@@ -300,9 +300,11 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
     the formulas present in the Excel book.
 
     :param sheet: new sheet that was created for each child that has extra charges.
-    :param cells_to_be_adjusted: tuple of tuples containing the rows and columns of the cells that need their formulas
-    to be adjusted. ex:((3, 2), (10, 5)) Each tuple in the tuple represents a cell. The first number in the tuple is
-    the row, the second number is the column of the cell that need to be changed.
+    :param cells_to_be_adjusted: tuple of tuples containing the rows, columns, and type of formula of the cells that
+    need their formulasv to be adjusted. ex:((3, 2, True), (10, 5, False)) Each tuple in the tuple represents a cell.
+    The first number in the tuple is the row, the second number is the column of the cell that need to be changed and
+    the last bool represents if the formula uses a range of cells or just a single cell. (For True it is a
+    range =SUM(D3:D10), for False it is a single cell =D43.
     :param num_rows_inserted: This basically is the number of days the child was charged extra.  This is because
     for every day the child was charged, there will be a new row inserted to record the charge.
     :return:
