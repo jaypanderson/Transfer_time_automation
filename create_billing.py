@@ -255,7 +255,7 @@ def adjust_merged_cells(sheet: Worksheet, loc_row_inserted, num_rows_inserted):
 
 # find the location of the number that needs to be recalculated and add the number of rows based on
 # how many rows were inserted.
-def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[int, int, int]:
+def recalc_number(formula: str, num_rows_inserted: int, cell_range: bool) -> tuple[int, int, int]:
     """
     This function finds the specific number in the formula that need to be changed. Depending on whether the formula
     is a simple cell number or a formula that uses a range of cells it looks for the desired number to change as well
@@ -274,7 +274,7 @@ def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[in
     """
     start = None
     end = None
-    if range is True:
+    if cell_range is True:
         for i, char in enumerate(formula):
             if char == ':':
                 start = i + 2  # it's two, to account for ':' and the column letter.
@@ -292,7 +292,7 @@ def recalc_number(formula: str, num_rows_inserted: int, range: bool) -> tuple[in
 
 
 # apply the new values to the formulas based on how many rows were inserted.
-def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple], num_rows_inserted: int) -> None:
+def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int, bool]], num_rows_inserted: int) -> None:
     """
     Because rows are being inserted, the range of the formulas that tally the total amounts need to adjust for that.
     Normally if we do this in Excel is automatically adjusts it. However, with openpyxl when a row is inserted the
@@ -307,14 +307,11 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple], num_ro
     for every day the child was charged, there will be a new row inserted to record the charge.
     :return:
     """
-    formula_1 = sheet.cell(16, 7).value
-    formula_2 = sheet.cell(30, 4).value
+    for row, column, cell_range in cells_to_be_adjusted:
+        formula = sheet.cell(row, column).value
 
-    new_num, start, end = recalc_number(formula_1, num_rows_inserted, True)
-    sheet.cell(16, 7).value = formula_1[:start] + str(new_num) + formula_1[end:]
-
-    new_num, start, end = recalc_number(formula_2, num_rows_inserted, False)
-    sheet.cell(30, 4).value = formula_2[:start] + str(new_num) + formula_2[end:]
+        new_num, start, end = recalc_number(formula, num_rows_inserted, cell_range)
+        sheet.cell(row, column).value = formula[:start] + str(new_num) + formula[end:]
 
 
 # one of three documents that this automation creates.  This one creates the billing documents that will be
@@ -339,7 +336,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
             rows_inserted = len(charges[class_name][kid_name])
             if rows_inserted > 1:
                 adjust_merged_cells(new_sheet, 15, rows_inserted - 1)
-                cells_to_be_adjusted =((16, 7), (30, 4))
+                cells_to_be_adjusted =((16, 7, True), (30, 4, False))
                 formula_1 = sheet.cell(16, 7).value
                 formula_2 = sheet.cell(30, 4).value
                 adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted - 1)
