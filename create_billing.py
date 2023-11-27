@@ -404,7 +404,9 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             count += 1
         # this functions returns an object as well as mutates the new_sheet that is passed in.
         first_row = insert_formular_class_total(new_sheet, rows_inserted, first_row)
-
+    cells_to_be_adjusted = ((4 + rows_inserted, 3, True), (4 + rows_inserted, 4, True),
+                            (4 + rows_inserted, 7, True), (4 + rows_inserted, 8, True))
+    adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted)
 
     book.save(new_file_path(file_path))
 
