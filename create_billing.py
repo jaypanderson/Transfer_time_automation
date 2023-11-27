@@ -419,7 +419,7 @@ def main():
     charges = count_charges()
     year = find_year(charges)[0]
     month = find_year(charges)[1]
-    #create_billing_sheets(charges, year, month)
+    create_billing_sheets(charges, year, month)
     create_tally_sheet(charges, year, month)
 
 
