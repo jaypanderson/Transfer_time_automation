@@ -360,7 +360,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
                 insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
 
             # TODO there is still a bug that is caused by the fact that I make merged cells before, during, and after
-            # TODO row insertion. This causes wrong cells to be merged which causes formating mistakes. a possible solution
+            # TODO row insertion. This causes wrong cells to be merged which causes formatting mistakes. a possible solution
             # TODO would be to do all the merges at the end at specific locations.
             if rows_inserted > 0:
                 cells_to_be_adjusted =((16 + rows_inserted, 7, True), (30 + rows_inserted, 4, False))
