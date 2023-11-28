@@ -415,11 +415,8 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path))
 
 
-# main function to run all the processes I need.  Currently, this only create one file because I need to think about
-# how I want to organize my code.  Later on I want to make it so my scripts create 3 different files, but some of these
-# might need someone to manually place in data, so it doesn't make sense to automate it quite yet. I might actually need
-# to make separate executables for each one so that someone can do the editing and a chose when to move onto the next
-# automation portion of the work flow.
+# main function to run all the processes I need.  Currently, this only creates two files. The final file still needs
+# some thought put into it on whether it should be created by hand or not.
 def main():
     charges = count_charges()
     year = find_year(charges)[0]
