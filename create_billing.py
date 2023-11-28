@@ -371,7 +371,7 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
         cells[3].value = price
 
 
-def insert_formular_class_total(new_sheet: Worksheet, rows_inserted: int, first_row: int) -> int:
+def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_row: int) -> int:
     last_row = 3 + rows_inserted
     new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{first_row}:D{last_row})'
     return last_row + 1
@@ -403,7 +403,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             first = False
             count += 1
         # this functions returns an object as well as mutates the new_sheet that is passed in.
-        first_row = insert_formular_class_total(new_sheet, rows_inserted, first_row)
+        first_row = insert_formula_class_total(new_sheet, rows_inserted, first_row)
 
     # make adjustments to the coordinates of the cells that need to be adjusted because we are changing it after the
     # rows are inserted.  I could define the rows being inserted before the loop instead of counting during the loop,
