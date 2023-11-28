@@ -236,7 +236,15 @@ def merge_specific_cells(sheet, new_row_num, start_col, end_col):
     sheet.merge_cells(merge_range)
 
 
-def adjust_merged_cells(sheet: Worksheet, new_row):
+def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
+    """
+    Because openpyxl has no build in way of adjusting the merged cells when a row is inserted this function was created.
+    It works by taking in the location of where the row was inserted and then adjusting any merged cells bellow that row.
+    That is this function is build to incrementally shift the merged cells every time it is called.
+    :param sheet: The worksheet that it we need to adjust the merged cells.
+    :param new_row: the location at which a new row was inserted.
+    :return: None
+    """
     new_merged_ranges = []
     for merged_range in sheet.merged_cells.ranges:
         min_col, min_row, max_col, max_row = range_boundaries(str(merged_range))
