@@ -335,22 +335,21 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
             copy_dimensions(sheet, new_sheet)
             insert_name_date(new_sheet, year, month, class_name, kid_name)
 
-            rows_inserted = len(charges[class_name][kid_name])
-            if rows_inserted > 1:
-                adjust_merged_cells(new_sheet, 15, rows_inserted)
-                cells_to_be_adjusted =((16, 7, True), (30, 4, False))
-                formula_1 = sheet.cell(16, 7).value
-                formula_2 = sheet.cell(30, 4).value
-                adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted)
+            rows_inserted = 0
             for i, data in enumerate(charges[class_name][kid_name]):
                 row_num = 14
                 first_insertion_location = 15
                 new_row_num = 14 + i
                 if i != 0:
                     new_sheet.insert_rows(row_num + 1 + i)
+                    rows_inserted += 1
+                    merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
                 copy_row_contents(new_sheet, row_num, row_num + i)
-                merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
                 insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
+            if rows_inserted > 1:
+                adjust_merged_cells(new_sheet, 15 + rows_inserted, rows_inserted)
+                cells_to_be_adjusted =((16 + rows_inserted, 7, True), (30 + rows_inserted, 4, False))
+                adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted)
     book.save(new_file_path(file_path))
 
 
