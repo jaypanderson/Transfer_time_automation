@@ -426,7 +426,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     cells_to_be_adjusted = ((4 + rows_inserted, 4, True), (4 + rows_inserted, 7, True), (4 + rows_inserted, 8, True))
     adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted)
 
-    book.save(new_file_path(file_path))
+    book.save(file_path)
 
 
 # main function to run all the processes I need.  Currently, this only creates two files. The final file still needs
