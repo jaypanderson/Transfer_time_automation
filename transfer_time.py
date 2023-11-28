@@ -507,6 +507,8 @@ if __name__ == '__main__':
     # prompt user for input file
     input_file = filedialog.askopenfilename(title='預かり料金表を選択してください。')
 
+    # TODO import function new_file_path from create billing so that we can easily adjust the new name as well as to
+    # TODO to unify how the new file name is created.
     # Generate output file name
     result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
     test = os.path.splitext(input_file)[0] + "_test.xlsm"
