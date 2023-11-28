@@ -292,7 +292,7 @@ def recalc_number(formula: str, num_rows_inserted: int, cell_range: bool) -> tup
 
 
 # apply the new values to the formulas based on how many rows were inserted.
-def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int, bool]], num_rows_inserted: int) -> None:
+def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int, bool],...], num_rows_inserted: int) -> None:
     """
     Because rows are being inserted, the range of the formulas that tally the total amounts need to adjust for that.
     Normally if we do this in Excel is automatically adjusts it. However, with openpyxl when a row is inserted the
