@@ -370,6 +370,13 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
 
 # Calculate the total charge for a single child.
 def price_per_child_total(child_charges: defaultdict) -> int:
+    """
+    A function to calculate the subtotal of extra charges for an individual child incurred during the month. This
+    should be called for every child that has extra charges during the month.
+    :param child_charges: The value of the innermost part of the charges dictionary. it is basically the data that is
+    needed for all operations in the form of a list of tuples ex: [()]
+    :return:
+    """
     total = 0
     for data in child_charges:
         total += data[0]
