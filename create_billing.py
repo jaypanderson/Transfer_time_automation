@@ -389,8 +389,20 @@ def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_r
     last_row = 3 + rows_inserted
     new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{first_row}:D{last_row})'
     return last_row + 1
-# temporary place-holder for a function to create the second document I need.
+
+
+# function to create the second document for billing purposes.
 def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
+    f"""
+    This function creates the second document that is a tally of all the charges for each child organized into one
+    worksheet.  It displays the age, class name, child name, and the total charges for each child. It also calculates
+    the total for each class as well as the subtotal of all the classes.
+    :param charges: A dictionary that organizes the charges in a nested format.
+    ex: {'class_name': {'kid_name': (charge, arrival_time, departure_time, date), ...}, ...}
+    :param year: The current year used to fill in the documents as well as name the sheets.
+    :param month: The current month used to fill in the documents as well as name the sheets.
+    :return: None
+    """
     file_path = open_billing_file(2)
     book = openpyxl.load_workbook(file_path)
     sheet = book['base']
