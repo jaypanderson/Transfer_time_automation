@@ -432,7 +432,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     worksheet.  It displays the age, class name, child name, and the total charges for each child. It also calculates
     the total for each class as well as the subtotal of all the classes.
     :param charges: A dictionary that organizes the charges in a nested format.
-    ex: {'class_name': {'kid_name': (charge, arrival_time, departure_time, date), ...}, ...}
+    ex: {'class_name': {'kid_name': [(charge, arrival_time, departure_time, date), ...]}, ...}
     :param year: The current year used to fill in the documents as well as name the sheets.
     :param month: The current month used to fill in the documents as well as name the sheets.
     :return: None
