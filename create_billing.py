@@ -393,7 +393,7 @@ def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_r
 
 # function to create the second document for billing purposes.
 def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
-    f"""
+    """
     This function creates the second document that is a tally of all the charges for each child organized into one
     worksheet.  It displays the age, class name, child name, and the total charges for each child. It also calculates
     the total for each class as well as the subtotal of all the classes.
