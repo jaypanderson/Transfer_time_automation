@@ -386,6 +386,19 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
 
 
 def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_row: int) -> int:
+    """
+    A function to create and insert a new formula into a cell to calculate the total charges for each class.
+    it is meant to be called after the information for last child from a given class is inserted into the worksheet.
+    This function also returns an integer that represents the beginning row of where the child from the next class will
+    be inserted so that the total can be calculated.
+    :param new_sheet: The new sheet that was created to insert the charges for each child.
+    :param rows_inserted: The number of rows that were inserted for a particular class. Basically the number of children
+    from a class that have extra charges. this is used for the added to 3 to which is the first row any childs data was
+    inserted.calculate the bottom range so
+    that the formula can calculate the
+    :param first_row: The first row from which we start counting to calculate the total for
+    :return:
+    """
     last_row = 3 + rows_inserted
     new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{first_row}:D{last_row})'
     return last_row + 1
