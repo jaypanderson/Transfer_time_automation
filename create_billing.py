@@ -385,6 +385,7 @@ def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name:
         cells[3].value = price
 
 
+# Function to add formula that calculates total for each class.
 def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_row: int) -> int:
     """
     A function to create and insert a new formula into a cell to calculate the total charges for each class.
