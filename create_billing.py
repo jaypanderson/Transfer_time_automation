@@ -368,6 +368,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path, '★★作成シート★★'))
 
 
+# Calculate the total charge for a single child.
 def price_per_child_total(child_charges: defaultdict) -> int:
     total = 0
     for data in child_charges:
