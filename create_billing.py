@@ -456,6 +456,8 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     book.save(new_file_path(file_path, '★★作成シート★★'))
 
 
+# TODO refactor code so that i dont need to call find_year in the outer most layer of abstraction. I know this
+# means repeating but this is a small function that should be fine to be called twice.
 # main function to run all the processes I need.  Currently, this only creates two files. The final file still needs
 # some thought put into it on whether it should be created by hand or not.
 def main():
