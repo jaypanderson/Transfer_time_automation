@@ -374,8 +374,19 @@ def price_per_child_total(child_charges: defaultdict) -> int:
         total += data[0]
     return total
 
-
+# function that inserts the data into the correct cell.
 def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name: str, price: int) -> None:
+    """
+    A function that inserts the data in to their respective cells. This function should be called for every child that
+    has extra charges.
+    :param new_sheet: The sheet that was created to insert the data
+    :param row: The row in which we cant to insert the data into
+    :param class_name: The name of the class. ex: 'うさぎ', 'だいだい'
+    :param kid_name: The name of the child. ex: '田中　太郎' the names should have a Japanese space between the first
+    and last name. The Japanese name can be represented as \u3000
+    :param price: The total charges for a child for that particular month. This value is calculated in another function.
+    :return: None
+    """
     class_age_map = {'あお': '5', 'ふじ': '5', 'き': '4', 'みどり': '4', 'だいだい': '3', 'もも': '3',
                      'うさぎ': '2', 'ひつじ': '1', 'ひよこ': '0'}
     for cells in new_sheet.iter_rows(min_row=row, max_row=row):
