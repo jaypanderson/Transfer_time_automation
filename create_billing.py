@@ -393,11 +393,12 @@ def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_r
     be inserted so that the total can be calculated.
     :param new_sheet: The new sheet that was created to insert the charges for each child.
     :param rows_inserted: The number of rows that were inserted for a particular class. Basically the number of children
-    from a class that have extra charges. this is used for the added to 3 to which is the first row any childs data was
-    inserted.calculate the bottom range so
-    that the formula can calculate the
-    :param first_row: The first row from which we start counting to calculate the total for
-    :return:
+    from a class that have extra charges. This is then added to 3, which is the first row that any child's data was
+    inserted, to calculate the bottom range for the formula.
+    :param first_row: The first row from which we start counting to calculate the total for each class. This is the
+    upper range used in the formular
+    :return: Add one to the last_row, so we know where the next range starts.  This will become the first_row when this
+    function is called again.
     """
     last_row = 3 + rows_inserted
     new_sheet.cell(row=last_row, column=8).value = f'=SUM(D{first_row}:D{last_row})'
