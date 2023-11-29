@@ -373,9 +373,10 @@ def price_per_child_total(child_charges: defaultdict) -> int:
     """
     A function to calculate the subtotal of extra charges for an individual child incurred during the month. This
     should be called for every child that has extra charges during the month.
-    :param child_charges: The value of the innermost part of the charges dictionary. it is basically the data that is
-    needed for all operations in the form of a list of tuples ex: [()]
-    :return:
+    :param child_charges: The value of the innermost part of the charges' dictionary. it is basically the data that is
+    needed for all operations in the form of a list of tuples ex1: [(charge, arrival_time, departure_time, date), ...]
+    ex2: [(500, 859, 1631, '2023-10-24'), ...]
+    :return: The total charges for a given child
     """
     total = 0
     for data in child_charges:
@@ -432,7 +433,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     worksheet.  It displays the age, class name, child name, and the total charges for each child. It also calculates
     the total for each class as well as the subtotal of all the classes.
     :param charges: A dictionary that organizes the charges in a nested format.
-    ex: {'class_name': {'kid_name': [(charge, arrival_time, departure_time, date), ...]}, ...}
+    ex:1 {'class_name': {'kid_name': [(charge, arrival_time, departure_time, date), ...]}, ...}
     :param year: The current year used to fill in the documents as well as name the sheets.
     :param month: The current month used to fill in the documents as well as name the sheets.
     :return: None
