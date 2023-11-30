@@ -233,15 +233,15 @@ def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int
 
 
 # merge specified cells
-def merge_specific_cells(sheet: Worksheet, new_row_num: int, start_col: int, end_col: int) -> None:
+def merge_specific_cells(sheet: Worksheet, new_row_num: int, start_col: str, end_col: str) -> None:
     """
     merge specified cells. This particular cell merge function only merges columns in a single cell due to the nature
     of merging needed in this document.
     :param sheet: The Worksheet that is currently being worked on.
     :param new_row_num: The row that will be used as the start_row and end_row to merge cells. For this function they
     are the same thing.
-    :param start_col: The upper range for which columns will be merged.
-    :param end_col: The lower range for which columns will be merged
+    :param start_col: The upper range for which columns will be merged. use a string such as 'D' or 'G'.
+    :param end_col: The lower range for which columns will be merged.  use a string such as 'D' or 'G'.
     :return: None
     """
     merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
