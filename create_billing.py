@@ -231,8 +231,19 @@ def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int
         cells[5].value = format_time(departure)
         cells[6].value = price
 
+
 # merge specified cells
 def merge_specific_cells(sheet, new_row_num, start_col, end_col):
+    """
+    merge specified cells. This particular cell merge function only merges columns in a single cell due to the nature
+    of merging needed in this document.
+    :param sheet: The Worksheet that is currently being worked on.
+    :param new_row_num: The row that will be used as the start_row and end_row to merge cells. For this function they
+    are the same thing.
+    :param start_col: The upper range for which columns will be merged.
+    :param end_col: The lower range for which columns will be merged
+    :return: None
+    """
     merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
     sheet.merge_cells(merge_range)
 
