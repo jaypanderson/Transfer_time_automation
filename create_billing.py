@@ -233,7 +233,7 @@ def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int
 
 
 # merge specified cells
-def merge_specific_cells(sheet, new_row_num, start_col, end_col):
+def merge_specific_cells(sheet: Worksheet, new_row_num: int, start_col: int, end_col: int) -> None:
     """
     merge specified cells. This particular cell merge function only merges columns in a single cell due to the nature
     of merging needed in this document.
