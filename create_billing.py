@@ -231,7 +231,7 @@ def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int
         cells[5].value = format_time(departure)
         cells[6].value = price
 
-
+# merge specified cells
 def merge_specific_cells(sheet, new_row_num, start_col, end_col):
     merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
     sheet.merge_cells(merge_range)
