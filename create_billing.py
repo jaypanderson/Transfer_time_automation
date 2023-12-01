@@ -223,7 +223,7 @@ def format_time(time: int) -> str:
     return ''.join(chars)
 
 
-
+# function to insert data into the billing form
 def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
     """
     This function inserts the data into the billing documents at their respective rows.  This function is called from
