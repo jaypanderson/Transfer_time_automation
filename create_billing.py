@@ -84,6 +84,7 @@ def count_charges():
                     except TypeError:
                         continue
                     except ValueError:
+                        # TODO add proper warnings to that we can identify where there was an error with the formular.
                         print('数式に間違いがあるかもしれません', price, name, i*4 + 6)
                         continue
 
