@@ -215,6 +215,7 @@ def convert_date(date: str) -> str:
     return f'{month}月{date}日'
 
 
+# change the time to the desired format.
 def format_time(time: int) -> str:
     chars = list(str(time))
     if 3 > len(chars) > 4:
