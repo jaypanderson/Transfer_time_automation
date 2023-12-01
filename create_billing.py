@@ -83,6 +83,7 @@ def count_charges():
                     except TypeError:
                         continue
                     except ValueError:
+                        print('数式に間違いがあるかもしれません', price, name, i*4 + 5)
                         continue
 
                     if price is not None and price >= 100:
