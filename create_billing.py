@@ -217,6 +217,11 @@ def convert_date(date: str) -> str:
 
 # change the time to the desired format.
 def format_time(time: int) -> str:
+    """
+    The
+    :param time:
+    :return:
+    """
     chars = list(str(time))
     if 3 > len(chars) > 4:
         return 'Time error'
