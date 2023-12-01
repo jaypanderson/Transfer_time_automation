@@ -223,7 +223,21 @@ def format_time(time: int) -> str:
     return ''.join(chars)
 
 
+
 def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int, departure: int, date: str) -> None:
+    """
+    This function inserts the data into the billing documents at their respective rows.  This function is called from
+    the create_billing function and it not to be confused with insert_tally_data. This function should be called for
+    every day the child has an extra charge.
+    :param sheet: The sheet that was created to insert the data
+    :param row: The row in which we cant to insert the data into
+    :param month: The month of the current billing cycle
+    :param price: The accumulated charge for that particular day.
+    :param arrival: The time that the child arrived at the school.
+    :param departure: The time that the child departed the school.
+    :param date: The date at with the extra charges incurred.
+    :return: None
+    """
     for cells in sheet.iter_rows(min_row=row, max_row=row):
         cells[1].value = f'{month}月分預かり保育料金'
         cells[3].value = convert_date(date)
