@@ -341,6 +341,18 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
 # one of three documents that this automation creates.  This one creates the billing documents that will be
 # given to the parents with all the individual charges organized by day.
 def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
+    """
+    This function creates the first document that is a billing form that will be given to the parents. It includes
+    the individual charges for each day there was a charge.  It also includes formulas that calculate the subtotal of
+    the month for an individual.
+    :param charges: A dictionary that organizes the charges in a nested format.
+    ex:1 {'class_name': {'kid_name': [(charge, arrival_time, departure_time, date), ...]}, ...}
+    ex:2 {'だいだい': {'田中　太郎': [(500, 832, 1700, 2023-10-03), ...]}, ...} The names includes the Japanese space
+    character than can also be represented as \u3000
+    :param year: The current year used to fill in the documents as well as name the sheets.
+    :param month: The current month used to fill in the documents as well as name the sheets.
+    :return: None
+    """
     file_path = open_billing_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
