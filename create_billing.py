@@ -78,12 +78,13 @@ def count_charges():
                 name = row[2].value
                 for i, cell in enumerate(row[5::4]):
                     price = cell.value
+                    # TODO refactor so that the code is more organized.
                     try:
                         price = int(price)
                     except TypeError:
                         continue
                     except ValueError:
-                        print('数式に間違いがあるかもしれません', price, name, i*4 + 5)
+                        print('数式に間違いがあるかもしれません', price, name, i*4 + 6)
                         continue
 
                     if price is not None and price >= 100:
