@@ -218,11 +218,12 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
             new_cell.protection = copy(cell.protection)
             new_cell.alignment = copy(cell.alignment)
 
+# convert the dates into a preferred format.
 def convert_date(date: str) -> str:
     ye_mo_da = date.split('-')
     month = ye_mo_da[1]
     date = ye_mo_da[2]
-    
+
     # I'm converting to int and then inserting into f string because the leading 0 in something like
     # '10月07日' was not desirable. instead we want something like '10月7日'. So converting to int gets
     # rid of the leading 0.
