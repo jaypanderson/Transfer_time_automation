@@ -222,7 +222,7 @@ def convert_date(date: str) -> str:
     ye_mo_da = date.split('-')
     month = ye_mo_da[1]
     date = ye_mo_da[2]
-    return f'{month}月{date}日'
+    return f'{int(month)}月{int(date)}日'
 
 
 # change the time to the desired format.
