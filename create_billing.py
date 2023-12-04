@@ -220,6 +220,13 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
 
 # convert the dates into a preferred format.
 def convert_date(date: str) -> str:
+    """
+    Change the format of the date to the desired format. In this particular case we want to convert the date format from
+    '2023-10-07' to '10月7日'. Notice how the 0 is gone from the day. this must also be the case for the month
+    so if we had '2023-04-03' it should be converted to '4月3日'
+    :param date: a date string in the format of year dash month dash day i.e. '2023-10-07'
+    :return: the desired format of a date string i.e. '10月7日'.
+    """
     ye_mo_da = date.split('-')
     month = ye_mo_da[1]
     date = ye_mo_da[2]
