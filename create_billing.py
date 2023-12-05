@@ -206,6 +206,7 @@ def convert_reiwa(year: int, month: int) -> int:
         reiwa -= 1
     return reiwa
 
+
 # function to copy the contents of a row into another.
 def copy_row_style(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     """
@@ -226,6 +227,7 @@ def copy_row_style(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
             new_cell.number_format = copy(cell.number_format)
             new_cell.protection = copy(cell.protection)
             new_cell.alignment = copy(cell.alignment)
+
 
 # convert the dates into a preferred format.
 def convert_date(date: str) -> str:
