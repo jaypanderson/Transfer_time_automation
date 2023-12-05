@@ -242,7 +242,8 @@ def format_time(time: int) -> str:
     """
     The arrival time and departure time are formatted aas 1034 or 1645 in the worksheet that keeps track of the times
     of the individual kids.  This function converts it into the format where it has ':' in the middle such as
-    10:34 or 16:45.
+    10:34 or 16:45. Also returns 'Time' error if the length of time is not 3 or 4. Because this would indicate that
+    the time was inserted incorrectly.
     :param time: a string of the time in the format of 1645
     :return: a string of the time in the format of 16:45
     """
