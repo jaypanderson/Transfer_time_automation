@@ -208,6 +208,13 @@ def convert_reiwa(year: int, month: int) -> int:
 
 # function to copy the contents of a row into another.
 def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
+    """
+    
+    :param sheet:
+    :param row_num:
+    :param new_row_num:
+    :return:
+    """
     for row, new_row in zip(sheet.iter_rows(min_row=row_num, max_row=row_num),
                             sheet.iter_rows(min_row=new_row_num, max_row=new_row_num)):
         for cell, new_cell in zip(row, new_row):
