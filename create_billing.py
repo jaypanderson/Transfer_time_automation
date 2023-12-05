@@ -209,7 +209,9 @@ def convert_reiwa(year: int, month: int) -> int:
 # function to copy the contents of a row into another.
 def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     """
-    
+    This function copies the contents of a row into another.  It is meant to copy and replicate the row as
+    much as possible.  Not all the attributes are copied over, just the main ones.  This function is indented to be
+    used when a new row is inserted, so that the new row looks the same as the previous row.
     :param sheet:
     :param row_num:
     :param new_row_num:
