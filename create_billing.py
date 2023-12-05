@@ -212,10 +212,10 @@ def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     This function copies the contents of a row into another.  It is meant to copy and replicate the row as
     much as possible.  Not all the attributes are copied over, just the main ones.  This function is indented to be
     used when a new row is inserted, so that the new row looks the same as the previous row.
-    :param sheet:
-    :param row_num:
-    :param new_row_num:
-    :return:
+    :param sheet: Worksheet that we are working on
+    :param row_num: the row number from which the function will copy the contents.
+    :param new_row_num: The row number of where the function will place the contents
+    :return: None
     """
     for row, new_row in zip(sheet.iter_rows(min_row=row_num, max_row=row_num),
                             sheet.iter_rows(min_row=new_row_num, max_row=new_row_num)):
