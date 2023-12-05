@@ -206,7 +206,7 @@ def convert_reiwa(year: int, month: int) -> int:
         reiwa -= 1
     return reiwa
 
-
+# function to copy the contents of a row into another.
 def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     for row, new_row in zip(sheet.iter_rows(min_row=row_num, max_row=row_num),
                             sheet.iter_rows(min_row=new_row_num, max_row=new_row_num)):
