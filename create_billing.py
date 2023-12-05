@@ -213,7 +213,10 @@ def convert_reiwa(year: int, month: int) -> str:
     reiwa = year - 2018
     if month in [1, 2, 3]:
         reiwa -= 1
-    return reiwa
+    if reiwa == 1:
+        reiwa = '元'
+
+    return str(reiwa)
 
 
 # function to copy the contents of a row into another.
