@@ -207,7 +207,7 @@ def convert_reiwa(year: int, month: int) -> int:
     return reiwa
 
 # function to copy the contents of a row into another.
-def copy_row_contents(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
+def copy_row_style(sheet: Worksheet, row_num: int, new_row_num: int) -> None:
     """
     This function copies the contents of a row into another.  It is meant to copy and replicate the row as
     much as possible.  Not all the attributes are copied over, just the main ones.  This function is indented to be
@@ -435,7 +435,7 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
                     rows_inserted += 1
                     merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
                     adjust_merged_cells(new_sheet, new_row_num)
-                copy_row_contents(new_sheet, row_num, row_num + i)
+                copy_row_style(new_sheet, row_num, row_num + i)
                 insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
 
             # TODO there is still a bug that is caused by the fact that I make merged cells before, during, and after
@@ -540,7 +540,7 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
             if first is not True:
                 new_sheet.insert_rows(count + 3)
                 rows_inserted += 1
-            copy_row_contents(new_sheet, 3, count + 3)
+            copy_row_style(new_sheet, 3, count + 3)
             insert_tally_data(new_sheet, count + 3, class_name, kid_name, price)
             first = False
             count += 1
