@@ -209,7 +209,6 @@ def convert_reiwa(year: int, month: int) -> str:
     :param month: The current month
     :return: a string of the year converted into the japanese calendar year.
     """
-
     reiwa = year - 2018
     if month in [1, 2, 3]:
         reiwa -= 1
