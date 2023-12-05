@@ -240,9 +240,11 @@ def convert_date(date: str) -> str:
 # change the time to the desired format.
 def format_time(time: int) -> str:
     """
-    The
-    :param time:
-    :return:
+    The arrival time and departure time are formatted aas 1034 or 1645 in the worksheet that keeps track of the times
+    of the individual kids.  This function converts it into the format where it has ':' in the middle such as
+    10:34 or 16:45.
+    :param time: a string of the time in the format of 1645
+    :return: a string of the time in the format of 16:45
     """
     chars = list(str(time))
     if 3 > len(chars) > 4:
