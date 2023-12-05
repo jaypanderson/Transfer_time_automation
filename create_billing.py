@@ -201,7 +201,7 @@ def find_year(charges: dict) -> tuple[int, int]:
 
 
 # Convert from Gregorian (Western) calendar years into Japanese calendar years.
-def convert_reiwa(year: int, month: int) -> int:
+def convert_reiwa(year: int, month: int) -> str:
     """
     Convert from Gregorian (Western) calendar years into Japanese calendar years.  The Reiwa year system started
     at 2018
