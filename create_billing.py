@@ -144,15 +144,6 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
 
-# # split child name into first and last name
-# def separate_names(name: str) -> list[str, str]:
-#     """
-#
-#     :param name:
-#     :return:
-#     """
-#     return name.split('　')
-
 
 # function to insert the child's information into the billing document
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
