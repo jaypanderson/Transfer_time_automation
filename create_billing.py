@@ -144,7 +144,7 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
 
 
-# spliting child name into first and last name
+# split child name into first and last name
 def separate_names(name: str) -> list[str, str]:
     return name.split('　')
 
