@@ -174,6 +174,13 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
 
 # helper function to find the key that has the highest value associated with it.
 def find_max(counts: Counter) -> int:
+    """
+    This function is intended to return the key that has the highest value associated with it in a Counter dictionary
+    object.
+    :param counts: Counter object containing the counts of each key. In this script this function finds the most
+    frequent year and month.
+    :return: the year or month that has the highest frequency.
+    """
     highest = 0
     ans = None
     for i in counts:
