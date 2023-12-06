@@ -204,7 +204,6 @@ def find_year(charges: dict) -> tuple[int, int]:
 
     year_ans = find_max(Counter(years))
     month_ans = find_max(Counter(months))
-    print(year_ans, month_ans)
     return int(year_ans), int(month_ans)
 
 
