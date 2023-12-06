@@ -182,7 +182,7 @@ def find_max(counts: Counter) -> int:
             ans = i
     return ans
 
-
+# function to find the most common year and month.
 def find_year(charges: dict) -> tuple[int, int]:
     years = []
     months = []
