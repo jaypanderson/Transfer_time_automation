@@ -172,7 +172,7 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
             if '$' in cell.value:
                 cell.value = cell.value.replace('$', first)
 
-
+# helper function to find the key that has the highest value associated with it.
 def find_max(counts: Counter) -> int:
     highest = 0
     ans = None
