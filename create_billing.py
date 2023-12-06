@@ -152,7 +152,8 @@ def separate_names(name: str) -> list[str, str]:
 # function to insert the child's information into the billing document
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
     """
-    
+    In the base template worksheet there are characters that demark certain information in the document. In this
+    instance the following are use ['%', '#', '?', '@', '&', '$']
     :param sheet:
     :param year:
     :param month:
