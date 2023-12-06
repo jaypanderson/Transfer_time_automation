@@ -151,6 +151,15 @@ def separate_names(name: str) -> list[str, str]:
 
 # function to insert the child's information into the billing document
 def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, child_name: str) -> None:
+    """
+    
+    :param sheet:
+    :param year:
+    :param month:
+    :param class_name:
+    :param child_name:
+    :return:
+    """
     class_age_map = {'あお': '5', 'ふじ': '5', 'き': '4', 'みどり': '4', 'だいだい': '3', 'もも': '3',
                      'うさぎ': '2', 'ひつじ': '1', 'ひよこ': '0'}
     full_name = child_name.split('　')
