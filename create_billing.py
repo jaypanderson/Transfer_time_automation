@@ -184,6 +184,14 @@ def find_max(counts: Counter) -> int:
 
 # function to find the most common year and month.
 def find_year(charges: dict) -> tuple[int, int]:
+    """
+    The idea behind this function is to get the current year and month with allowing for some mistakes in input.
+    Instead of checking for any single cell to get the year which can lead to a mistake where one cell has a certain
+    year and the other has another, this function finds the most common year and month.
+    :param charges: The dictionary that contains all the information about the extra charges for all the children.
+    :return:  tuple with two integers, where the first represents the year, and the second re@presents the month.
+    [year, month] or [2023, 10]
+    """
     years = []
     months = []
     for i in charges:
