@@ -172,6 +172,7 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
             if '$' in cell.value:
                 cell.value = cell.value.replace('$', first)
 
+
 # helper function to find the key that has the highest value associated with it.
 def find_max(counts: Counter) -> int:
     """
@@ -188,6 +189,7 @@ def find_max(counts: Counter) -> int:
             highest = counts[i]
             ans = i
     return ans
+
 
 # function to find the most common year and month.
 def find_year(charges: dict) -> tuple[int, int]:
