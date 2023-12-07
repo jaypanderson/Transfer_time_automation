@@ -135,7 +135,7 @@ def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
     if sheet.print_area:
         new_sheet.print_area = sheet.print_area
 
-
+# copy the width and height of cells
 def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
     for row, col in zip_longest(sheet.row_dimensions, sheet.column_dimensions):
         # if row is not None:
