@@ -138,10 +138,12 @@ def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
 # copy the width and height of cells
 def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
     """
-    
-    :param sheet:
-    :param new_sheet:
-    :return:
+    A function that changes the new sheet's size of the cells to match that of a another sheet. Currently, it is set up
+    so that it only copies the width of the cells.  If the height also needs to be copied, then Uncomment that portion
+    of the code and vice versa.
+    :param sheet: The sheet from which the cell dimensions will be copied from
+    :param new_sheet: The sheet where the dimensions will be pasted into.
+    :return: None
     """
     for row, col in zip_longest(sheet.row_dimensions, sheet.column_dimensions):
         # if row is not None:
