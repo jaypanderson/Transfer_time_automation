@@ -110,6 +110,8 @@ def set_color(sheet: Worksheet, class_name: str) -> None:
     color = Color(rgb=color_map[class_name])
     sheet.sheet_properties.tabColor = color
 
+
+# copy the contents of one sheet to another.
 def copy_sheet(sheet, new_sheet) -> None:
     for row in sheet:
         for cell in row:
