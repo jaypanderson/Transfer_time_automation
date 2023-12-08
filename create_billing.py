@@ -127,6 +127,12 @@ def copy_sheet(sheet, new_sheet) -> None:
 
 # replicate the cell merges from base template.
 def merge_cells(sheet: Worksheet, new_sheet: Worksheet) -> None:
+    """
+    
+    :param sheet:
+    :param new_sheet:
+    :return:
+    """
     for merged_cell_range in sheet.merged_cells.ranges:
         new_sheet.merge_cells(str(merged_cell_range))
 
