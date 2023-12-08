@@ -131,7 +131,7 @@ def merge_cells(sheet: Worksheet, new_sheet: Worksheet) -> None:
         new_sheet.merge_cells(str(merged_cell_range))
 
 
-# copy the part of the worksheet that will printed onto the new sheet.
+# copy the part of the worksheet that will be printed onto the new sheet.
 def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
     """
     A certain area of a page is selected as the default area to be printed when the print button is pressed. To avoid
