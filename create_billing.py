@@ -128,10 +128,12 @@ def copy_sheet(sheet, new_sheet) -> None:
 # replicate the cell merges from base template.
 def merge_cells(sheet: Worksheet, new_sheet: Worksheet) -> None:
     """
-    
-    :param sheet:
-    :param new_sheet:
-    :return:
+    When a new sheet is created and everything is copied, the one thing that will not be copied is the location of where
+    there are merged cells.  This function iterates over all the merged cells of the base worksheet and then merges
+    those cells in the new sheet.
+    :param sheet: The base work sheet this function will use to iterate over the location of the merged cells.
+    :param new_sheet: The new work sheet where the function will merge the cells from the base work sheet.
+    :return: None
     """
     for merged_cell_range in sheet.merged_cells.ranges:
         new_sheet.merge_cells(str(merged_cell_range))
