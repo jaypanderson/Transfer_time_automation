@@ -132,6 +132,14 @@ def merge_cells(sheet: Worksheet, new_sheet: Worksheet) -> None:
 
 
 def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
+    """
+    A certain area of a page is selected as the default area to be printed when the print button is pressed. To avoid
+    having to change the print area for every single new sheet this function copies the print area attribute from the
+    base sheet to the new sheet.
+    :param sheet: the base sheet from which we will copy the print area attribute.
+    :param new_sheet: The new sheet where we will paste the print area.
+    :return: None
+    """
     if sheet.print_area:
         new_sheet.print_area = sheet.print_area
 
