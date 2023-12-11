@@ -118,8 +118,8 @@ def copy_sheet(sheet: Worksheet, new_sheet: Worksheet) -> None:
     copy the contents from one sheet to another sheet. This function only copies the contents of the cells and its
     style, other aspects of the sheet are copied with other functions.
     :param sheet:The base sheet from which the cells are copied.
-    :param new_sheet: The new sheet where the 
-    :return:
+    :param new_sheet: The new sheet where the cell contents and style are pasted.
+    :return: None
     """
     for row in sheet:
         for cell in row:
