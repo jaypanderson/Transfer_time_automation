@@ -112,7 +112,14 @@ def set_color(sheet: Worksheet, class_name: str) -> None:
 
 
 # copy the contents of one sheet to another.
+# noinspection PyDunderSlots,PyUnresolvedReferences
 def copy_sheet(sheet: Worksheet, new_sheet: Worksheet) -> None:
+    """
+    
+    :param sheet:
+    :param new_sheet:
+    :return:
+    """
     for row in sheet:
         for cell in row:
             new_cell = new_sheet.cell(row=cell.row, column=cell.column, value=cell.value)
