@@ -115,9 +115,10 @@ def set_color(sheet: Worksheet, class_name: str) -> None:
 # noinspection PyDunderSlots,PyUnresolvedReferences
 def copy_sheet(sheet: Worksheet, new_sheet: Worksheet) -> None:
     """
-    
-    :param sheet:
-    :param new_sheet:
+    copy the contents from one sheet to another sheet. This function only copies the contents of the cells and its
+    style, other aspects of the sheet are copied with other functions.
+    :param sheet:The base sheet from which the cells are copied.
+    :param new_sheet: The new sheet where the 
     :return:
     """
     for row in sheet:
