@@ -104,6 +104,7 @@ def count_charges():
     return charges
 
 
+# Set the color of the tab for a sheet.
 def set_color(sheet: Worksheet, class_name: str) -> None:
     color_map = {'ひよこ': 'FFFFFCE6', 'ひつじ': 'FFE6FFE6', 'うさぎ': 'FFE6FFFF', 'もも': 'FFFFC0CB',
                  'だいだい': 'FFFFA500', 'き': 'FFFFFF00', 'みどり': 'FF008000', 'あお': 'FF0000FF', 'ふじ': 'FF800080'}
