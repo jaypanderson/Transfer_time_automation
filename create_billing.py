@@ -112,7 +112,7 @@ def set_color(sheet: Worksheet, class_name: str) -> None:
 
 
 # copy the contents of one sheet to another.
-def copy_sheet(sheet, new_sheet) -> None:
+def copy_sheet(sheet: Worksheet, new_sheet: Worksheet) -> None:
     for row in sheet:
         for cell in row:
             new_cell = new_sheet.cell(row=cell.row, column=cell.column, value=cell.value)
