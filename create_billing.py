@@ -59,6 +59,8 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     return ans
 
 
+# TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
+# TODO to open up the correct one.
 # create list or dict with all the extra charges for each child.
 def count_charges() -> defaultdict:
     """
