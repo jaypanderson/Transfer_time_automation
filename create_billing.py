@@ -63,7 +63,8 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 def count_charges() -> defaultdict:
     """
 
-    :return:
+    :return: A nested dictionary that contains all the information needed about the extra charges to create the billing
+    documents. 
     """
     file_path = open_excel_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
