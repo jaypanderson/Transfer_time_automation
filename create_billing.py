@@ -60,7 +60,7 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 
 
 # create list or dict with all the extra charges for each child.
-def count_charges():
+def count_charges() -> defaultdict:
     """
 
     :return:
