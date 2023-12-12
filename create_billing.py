@@ -62,9 +62,11 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 # create list or dict with all the extra charges for each child.
 def count_charges() -> defaultdict:
     """
-
+    This function looks through an Excel file that was creating using the transfer_time.py script to organize all the
+    extra charges into a dictionary.  The function is set up so that it will prompt the user to open up a file. The User
+    can potentially choose the wrong file, which will cause the program to crash.
     :return: A nested dictionary that contains all the information needed about the extra charges to create the billing
-    documents. 
+    documents.
     """
     file_path = open_excel_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
