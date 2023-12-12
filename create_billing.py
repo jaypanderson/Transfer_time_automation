@@ -61,6 +61,10 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 
 # create list or dict with all the extra charges for each child.
 def count_charges():
+    """
+
+    :return:
+    """
     file_path = open_excel_file()
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
