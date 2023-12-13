@@ -48,6 +48,10 @@ def open_billing_file(option: int) -> str:
 
 # open Excel file that has the information about the extra charges.
 def open_excel_file() -> str:
+    """
+    
+    :return:
+    """
     return filedialog.askopenfilename(title='打刻表を選択してください。')
 
 
