@@ -49,8 +49,9 @@ def open_billing_file(option: int) -> str:
 # open Excel file that has the information about the extra charges.
 def open_excel_file() -> str:
     """
-    
-    :return:
+    This funtion prompts the user to open the Excel file that was created with the transfer_time.py script.  It then
+    takes finds the file path and returns it.
+    :return: The file path for the file that the user selected.
     """
     return filedialog.askopenfilename(title='打刻表を選択してください。')
 
