@@ -53,7 +53,12 @@ def open_excel_file() -> str:
 
 # add result to the end of the file name
 def new_file_path(path: str, added_text: str = 'result') -> str:
-
+    """
+    
+    :param path:
+    :param added_text:
+    :return:
+    """
     idx = path.find('.')
     ans = path[:idx] + added_text + path[idx:]
     return ans
