@@ -36,9 +36,11 @@ from openpyxl.worksheet.worksheet import Worksheet
 # open file that will be used create billing docs.
 def open_billing_file(option: int) -> str:
     """
-    
-    :param option:
-    :return:
+    This functions prompts the user open up the base Excel file for the billing form and the tally sheet. Depending on
+    the option variable there are different prompts asking for the different files.
+    :param option: and integer represented which file should be selected when prompted to open a file.  This option
+    then changes the message in the prompt menu so the user knows which file they should be selecting.
+    :return: The file path for the file the user has chosen.
     """
     if option == 1:
         title = '料金明細票を選択してください。'
@@ -56,7 +58,7 @@ def open_excel_file() -> str:
     """
     This funtion prompts the user to open the Excel file that was created with the transfer_time.py script.  It then
     takes finds the file path and returns it.
-    :return: The file path for the file that the user selected.
+    :return: The file path for the file the user has selected.
     """
     return filedialog.askopenfilename(title='打刻表を選択してください。')
 
