@@ -35,6 +35,11 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 # open file that will be used create billing docs.
 def open_billing_file(option: int) -> str:
+    """
+    
+    :param option:
+    :return:
+    """
     if option == 1:
         title = '料金明細票を選択してください。'
     elif option == 2:
