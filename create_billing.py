@@ -40,7 +40,7 @@ def open_billing_file(option: int) -> str:
     the option variable there are different prompts asking for the different files.
     :param option: and integer represented which file should be selected when prompted to open a file.  This option
     then changes the message in the prompt menu so the user knows which file they should be selecting.
-    :return: The file path for the file the user has chosen.
+    :return: The file path for the file the user has selected.
     """
     if option == 1:
         title = '料金明細票を選択してください。'
