@@ -510,7 +510,8 @@ if __name__ == '__main__':
     # TODO import function new_file_path from create billing so that we can easily adjust the new name as well as to
     # TODO to unify how the new file name is created.
     # Generate output file name
-    result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
+    result_file = new_file_path(input_file, '★★作成シート★★')
+    #result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
     test = os.path.splitext(input_file)[0] + "_test.xlsm"
 
     # Ask user if they would like to use a zip file or if they already have unzipped the file.
