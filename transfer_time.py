@@ -496,6 +496,21 @@ def mark_absent(in_file: str) -> None:
     messagebox.showinfo('完了', '空欄のセルに休みの書き込みが完了しました。')
 
 
+# add result to the end of the file name
+def new_file_path(path: str, added_text: str = 'result') -> str:
+    """
+    This function creates a new name for the path of a save file. This is to avoid saving over the original Excel file
+    that was used to create the new one. It places a new text between the name and the extension name. If no added_text
+    is provided the default 'result' will be used.
+    :param path: The path of the original Excel file.
+    :param added_text: The text that will be added inbetween the name and the extension name of the original path.
+    :return: The newly formed name path where the new Excel file will be saved to.
+    """
+    idx = path.find('.')
+    ans = path[:idx] + added_text + path[idx:]
+    return ans
+
+
 if __name__ == '__main__':
 
     # create file paths by asking the user.
