@@ -525,8 +525,6 @@ if __name__ == '__main__':
     # TODO to unify how the new file name is created.
     # Generate output file name
     result_file = new_file_path(input_file, '★★作成シート★★')
-    #result_file = os.path.splitext(input_file)[0] + "_result.xlsm"
-    test = os.path.splitext(input_file)[0] + "_test.xlsm"
 
     # Ask user if they would like to use a zip file or if they already have unzipped the file.
     # and then import the reference files into a dictionary to be used later on.
