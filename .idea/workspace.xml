@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d783158b-8e81-458a-af0c-49a31f53e59c" name="Changes" comment="fixed grammar in readme">
-      <change beforePath="$PROJECT_DIR$/create_billing.py" beforeDir="false" afterPath="$PROJECT_DIR$/create_billing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transfer_time.py" beforeDir="false" afterPath="$PROJECT_DIR$/transfer_time.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
