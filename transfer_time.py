@@ -526,7 +526,6 @@ if __name__ == '__main__':
     # Generate output file name
     result_file = new_file_path(input_file, '★★作成シート★★')
 
-
     # Ask user if they would like to use a zip file or if they already have unzipped the file.
     # and then import the reference files into a dictionary to be used later on.
     result_choice = messagebox.askquestion('一つを選んでください',
