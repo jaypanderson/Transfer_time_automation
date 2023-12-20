@@ -516,8 +516,6 @@ def create_billing_sheets(charges: defaultdict) -> None:
     ex:1 {'class_name': {'kid_name': [(charge, arrival_time, departure_time, date), ...]}, ...}
     ex:2 {'だいだい': {'田中　太郎': [(500, 832, 1700, 2023-10-03), ...]}, ...} The names includes the Japanese space
     character than can also be represented as \u3000
-    :param year: The current year used to fill in the documents as well as name the sheets.
-    :param month: The current month used to fill in the documents as well as name the sheets.
     :return: None
     """
     file_path = open_billing_file(1)
