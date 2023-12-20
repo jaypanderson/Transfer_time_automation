@@ -677,7 +677,7 @@ def main():
     create_tally_sheet(charges)
 
 
-# non important function to count how many children will be parched extra for the month.
+# non-important function to count how many children will be parched extra for the month.
 def testtest(dic: dict) -> None:
     count = 0
     for clas in dic:
