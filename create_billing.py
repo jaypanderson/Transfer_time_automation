@@ -503,8 +503,6 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
         sheet.cell(row, column).value = formula[:start] + str(new_num) + formula[end:]
 
 
-# TODO refactor code so that I don't need to pass in the year and month variables. These variables should be
-# TODO generated within this function by calling the function that generates these variables.
 # one of three documents that this automation creates.  This one creates the billing documents that will be
 # given to the parents with all the individual charges organized by day.
 def create_billing_sheets(charges: defaultdict) -> None:
