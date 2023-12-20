@@ -507,7 +507,7 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
 # TODO generated within this function by calling the function that generates these variables.
 # one of three documents that this automation creates.  This one creates the billing documents that will be
 # given to the parents with all the individual charges organized by day.
-def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
+def create_billing_sheets(charges: defaultdict) -> None:
     """
     This function creates the first document that is a billing form that will be given to the parents. It includes
     the individual charges for each day there was a charge.  It also includes formulas that calculate the subtotal of
@@ -523,6 +523,9 @@ def create_billing_sheets(charges: defaultdict, year: int, month: int) -> None:
     file_path = open_billing_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
+
+    year = find_year(charges)[0]
+    month = find_year(charges)[1]
 
     for class_name in charges:
         for kid_name in charges[class_name]:
