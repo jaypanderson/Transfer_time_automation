@@ -677,8 +677,6 @@ def create_tally_sheet(charges: defaultdict) -> None:
 # some thought put into it on whether it should be created by hand or not.
 def main():
     charges = count_charges()
-    year = find_year(charges)[0]
-    month = find_year(charges)[1]
     create_billing_sheets(charges)
     create_tally_sheet(charges)
 
