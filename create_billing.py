@@ -418,7 +418,7 @@ def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
     Because openpyxl has no build in way of adjusting the merged cells when a row is inserted this function was created.
     It works by taking in the location of where the row was inserted and then adjusting any merged cells bellow that row.
     That is this function is build to incrementally shift the merged cells every time it is called.
-    :param sheet: The worksheet that it we need to adjust the merged cells.
+    :param sheet: The worksheet that we need to adjust the merged cells.
     :param new_row: the location at which a new row was inserted.
     :return: None
     """
