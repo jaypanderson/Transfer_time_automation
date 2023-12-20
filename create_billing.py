@@ -617,7 +617,7 @@ def insert_formula_class_total(new_sheet: Worksheet, rows_inserted: int, first_r
 
 
 # function to create the second document for billing purposes.
-def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
+def create_tally_sheet(charges: defaultdict) -> None:
     """
     This function creates the second document that is a tally of all the charges for each child organized into one
     worksheet.  It displays the age, class name, child name, and the total charges for each child. It also calculates
@@ -632,6 +632,9 @@ def create_tally_sheet(charges: defaultdict, year: int, month: int) -> None:
     """
     file_path = open_billing_file(2)
     book = openpyxl.load_workbook(file_path)
+
+    year = find_year(charges)[0]
+    month = find_year(charges)[1]
     sheet = book['base']
     new_sheet_name = f'{year}.{month}'
     new_sheet = book.create_sheet(new_sheet_name)
