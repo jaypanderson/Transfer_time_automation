@@ -680,7 +680,7 @@ def main():
     year = find_year(charges)[0]
     month = find_year(charges)[1]
     create_billing_sheets(charges)
-    create_tally_sheet(charges, year, month)
+    create_tally_sheet(charges)
 
 
 # non important function to count how many children will be parched extra for the month.
