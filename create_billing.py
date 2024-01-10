@@ -35,7 +35,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 # TODO open_billing_file and open_excel_file can probably be merged into one function just make it another option.
 # open file that will be used create billing docs.
-def open_billing_file(option: int) -> str:
+def open_file(option: int) -> str:
     """
     This functions prompts the user open up the base Excel file for the billing form and the tally sheet. Depending on
     the option variable there are different prompts asking for the different files.
@@ -517,7 +517,7 @@ def create_billing_sheets(charges: defaultdict) -> None:
     character than can also be represented as \u3000
     :return: None
     """
-    file_path = open_billing_file(1)
+    file_path = open_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
 
@@ -625,7 +625,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
     character than can also be represented as \u3000
     :return: None
     """
-    file_path = open_billing_file(2)
+    file_path = open_file(2)
     book = openpyxl.load_workbook(file_path)
 
     year = find_year(charges)[0]
