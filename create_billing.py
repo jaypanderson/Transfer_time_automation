@@ -55,17 +55,6 @@ def open_file(option: int) -> str:
     return filedialog.askopenfilename(title=title)
 
 
-
-# open Excel file that has the information about the extra charges.
-def open_excel_file() -> str:
-    """
-    This funtion prompts the user to open the Excel file that was created with the transfer_time.py script.  It then
-    takes finds the file path and returns it.
-    :return: The file path for the file the user has selected.
-    """
-    return filedialog.askopenfilename(title='打刻表を選択してください。')
-
-
 # add result to the end of the file name
 def new_file_path(path: str, added_text: str = 'result') -> str:
     """
