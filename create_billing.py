@@ -92,7 +92,7 @@ def count_charges() -> defaultdict:
     :return: A nested dictionary that contains all the information needed about the extra charges to create the billing
     documents.
     """
-    file_path = open_excel_file()
+    file_path = open_file(3)
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
     # iterate through the sheets
