@@ -47,6 +47,8 @@ def open_file(option: int) -> str:
         title = '料金明細票を選択してください。'
     elif option == 2:
         title = '料金集計を選択してください。'
+    elif option == 3:
+        title = '打刻表を選択してください。'
     else:
         title = 'incorrect option chosen'
 
