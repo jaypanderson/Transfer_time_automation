@@ -44,11 +44,11 @@ def open_file(option: int) -> str:
     :return: The file path for the file the user has selected.
     """
     if option == 1:
-        title = '料金明細票を選択してください。'
+        title = '保育料金明細票を選択してください。'
     elif option == 2:
-        title = '料金集計を選択してください。'
+        title = '保育料金集計を選択してください。'
     elif option == 3:
-        title = '打刻表を選択してください。'
+        title = '追加預かり料金★★作成シート★★を選択してください。'
     else:
         title = 'incorrect option chosen'
 
