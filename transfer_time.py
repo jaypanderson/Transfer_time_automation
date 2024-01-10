@@ -543,4 +543,6 @@ if __name__ == '__main__':
     recalculate_vba_code(result_file)
     mark_charges_with_pink(result_file)
     mark_absent(result_file)
+    # final recalculate so that the file doesn't need to be manually opened and saved in order to use the create billing
+    # script which would normally crash unless we manually opened the resulting file and then saved it.
     recalculate_vba_code(result_file)
