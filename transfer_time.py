@@ -543,3 +543,4 @@ if __name__ == '__main__':
     recalculate_vba_code(result_file)
     mark_charges_with_pink(result_file)
     mark_absent(result_file)
+    recalculate_vba_code(result_file)
