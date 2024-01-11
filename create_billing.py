@@ -33,7 +33,6 @@ from openpyxl.utils.cell import range_boundaries
 from openpyxl.worksheet.worksheet import Worksheet
 
 
-# TODO open_billing_file and open_excel_file can probably be merged into one function just make it another option.
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
     """
