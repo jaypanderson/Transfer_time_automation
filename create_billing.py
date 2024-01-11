@@ -28,8 +28,6 @@ from copy import copy
 from collections import Counter
 from itertools import zip_longest
 from openpyxl.utils.cell import range_boundaries
-
-
 from openpyxl.worksheet.worksheet import Worksheet
 
 
@@ -189,6 +187,7 @@ def copy_print_area(sheet: Worksheet, new_sheet: Worksheet) -> None:
     if sheet.print_area:
         new_sheet.print_area = sheet.print_area
 
+
 # copy the width and height of cells
 def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
     """
@@ -204,7 +203,6 @@ def copy_dimensions(sheet: Worksheet, new_sheet: Worksheet) -> None:
         #     new_sheet.row_dimensions[row].height = sheet.row_dimensions[row].height
         if col is not None:
             new_sheet.column_dimensions[col].width = sheet.column_dimensions[col].width
-
 
 
 # function to insert the child's information into the billing document
@@ -559,6 +557,7 @@ def price_per_child_total(child_charges: defaultdict) -> int:
     for data in child_charges:
         total += data[0]
     return total
+
 
 # function that inserts the data into the correct cell.
 def insert_tally_data(new_sheet: Worksheet, row: int, class_name: str, kid_name: str, price: int) -> None:
