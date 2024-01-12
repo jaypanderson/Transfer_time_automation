@@ -500,7 +500,7 @@ def create_billing_sheets(charges: defaultdict) -> None:
     the month for an individual.
     :param charges: A dictionary that organizes the charges in a nested format.
     ex:1 {'class_name': {'kid_name': [(charge, arrival_time, departure_time, date), ...]}, ...}
-    ex:2 {'だいだい': {'田中　太郎': [(500, 832, 1700, 2023-10-03), ...]}, ...} The names includes the Japanese space
+    ex:2 {'だいだい': {'田中　太郎': [(500, 832, 1700, 2023-10-03), ...]}, ...} The names include the Japanese space
     character than can also be represented as \u3000
     :return: None
     """
