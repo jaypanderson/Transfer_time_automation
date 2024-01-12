@@ -417,7 +417,6 @@ def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
         if min_row > new_row + 1:
             min_row += 1
             max_row += 1
-        # TODO maybe I dont need to get the column letter maybe i can just use the min col it self and max col it self?
         new_range = f'{openpyxl.utils.get_column_letter(min_col)}{min_row}:{openpyxl.utils.get_column_letter(max_col)}{max_row}'
         new_merged_ranges.append(new_range)
 
