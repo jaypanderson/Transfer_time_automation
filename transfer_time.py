@@ -525,7 +525,7 @@ if __name__ == '__main__':
     root.withdraw()  # Hide the root window
 
     # prompt user for input file
-    input_file = filedialog.askopenfilename(title='①★追加預かり料金表を選択してください。')
+    input_file = filedialog.askopenfilename(title='①★追加預かり料金原紙を選択してください。')
 
     # TODO import function new_file_path from create billing so that we can easily adjust the new name as well as to
     # TODO to unify how the new file name is created.
