@@ -41,13 +41,23 @@ def open_file(option: int) -> str:
     :return: The file path for the file the user has selected.
     """
     if option == 1:
-        title = '③預かり保育料金明細票原本を選択してください。'
-    elif option == 2:
-        title = '②預かり保育料金集計原本を選択してください。'
-    elif option == 3:
         title = '①★追加預かり料金原紙★★作成シート★★を選択してください。'
+    elif option == 2:
+        title = '②預かり保育料金明細票原本を選択してください。'
+    elif option == 3:
+        title = '③預かり保育料金集計原本を選択してください。'
     else:
         title = 'incorrect option chosen'
+
+
+    # if option == 1:
+    #     title = '②預かり保育料金明細票原本を選択してください。'
+    # elif option == 2:
+    #     title = '③預かり保育料金集計原本を選択してください。'
+    # elif option == 3:
+    #     title = '①★追加預かり料金原紙★★作成シート★★を選択してください。'
+    # else:
+    #     title = 'incorrect option chosen'
 
     return filedialog.askopenfilename(title=title)
 
@@ -85,7 +95,7 @@ def count_charges() -> defaultdict:
     :return: A nested dictionary that contains all the information needed about the extra charges to create the billing
     documents.
     """
-    file_path = open_file(3)
+    file_path = open_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     charges = defaultdict(lambda : defaultdict(list))
     # iterate through the sheets
@@ -509,7 +519,7 @@ def create_billing_sheets(charges: defaultdict) -> None:
     character than can also be represented as \u3000
     :return: None
     """
-    file_path = open_file(1)
+    file_path = open_file(2)
     book = openpyxl.load_workbook(file_path, keep_vba=False)
     sheet = book[book.sheetnames[0]]
 
@@ -618,7 +628,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
     character than can also be represented as \u3000
     :return: None
     """
-    file_path = open_file(2)
+    file_path = open_file(3)
     book = openpyxl.load_workbook(file_path)
 
     year = find_year(charges)[0]
