@@ -495,7 +495,6 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
         sheet.cell(row, column).value = formula[:start] + str(new_num) + formula[end:]
 
 
-# TODO fix the dates for the billing so that dates that have 0 are removed. so '11月02日' should be '11月2日'
 # one of three documents that this automation creates.  This one creates the billing documents that will be
 # given to the parents with all the individual charges organized by day.
 def create_billing_sheets(charges: defaultdict) -> None:
