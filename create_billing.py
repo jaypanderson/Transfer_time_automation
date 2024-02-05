@@ -342,14 +342,12 @@ def convert_date(date: str) -> str:
     :param date: a date string in the format of year dash month dash day i.e. '2023-10-07'
     :return: the desired format of a date string i.e. '10月7日'.
     """
-    ye_mo_da = date.split('-')
-    month = ye_mo_da[1]
-    date = ye_mo_da[2]
-
+    _, month, day = date.split('-')
+    
     # I'm converting to int and then inserting into f string because the leading 0 in something like
     # '10月07日' was not desirable. instead we want something like '10月7日'. So converting to int gets
     # rid of the leading 0.
-    return f'{int(month)}月{int(date)}日'
+    return f'{int(month)}月{int(day)}日'
 
 
 # change the time to the desired format.
