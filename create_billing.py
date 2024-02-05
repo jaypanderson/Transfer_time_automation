@@ -57,7 +57,9 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     """
     This function creates a new name for the path of a save file. This is to avoid saving over the original Excel file
     that was used to create the new one. It places a new text between the name and the extension name. If no added_text
-    is provided the default 'result' will be used.
+    is provided the default 'result' will be used. (updated: Changed code so that it looks for the last occurrence of
+    '.' so find the location to add the extra text for new file name. There was a bug where if a folder name had '.' in
+     it, there would be a path error.)
     :param path: The path of the original Excel file.
     :param added_text: The text that will be added inbetween the name and the extension name of the original path.
     :return: The newly formed name path where the new Excel file will be saved to.
