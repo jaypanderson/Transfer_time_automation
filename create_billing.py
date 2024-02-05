@@ -633,7 +633,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
     first = True
     count = 0
     rows_inserted = 0
-    first_row = 3 # row number that will be used to set the range for the sum of each class.
+    first_row = 3  # row number that will be used to set the range for the sum of each class.
     for class_name in charges:
         for kid_name in charges[class_name]:
             print(class_name, kid_name)
