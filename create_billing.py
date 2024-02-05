@@ -425,7 +425,7 @@ def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
         new_range = f'{openpyxl.utils.get_column_letter(min_col)}{min_row}:{openpyxl.utils.get_column_letter(max_col)}{max_row}'
         new_merged_ranges.append(new_range)
 
-    # the code make sure the there are no merged cells so we can reset them it sets the range to an empty list
+    # the code make sure the there are no merged cells, so we can reset them it sets the range to an empty list
     sheet.merged_cells.ranges = []
 
     for new_range in new_merged_ranges:
