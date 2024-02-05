@@ -343,7 +343,7 @@ def convert_date(date: str) -> str:
     :return: the desired format of a date string i.e. '10月7日'.
     """
     _, month, day = date.split('-')
-    
+
     # I'm converting to int and then inserting into f string because the leading 0 in something like
     # '10月07日' was not desirable. instead we want something like '10月7日'. So converting to int gets
     # rid of the leading 0.
