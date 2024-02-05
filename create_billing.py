@@ -49,16 +49,6 @@ def open_file(option: int) -> str:
     else:
         title = 'incorrect option chosen'
 
-
-    # if option == 1:
-    #     title = '②預かり保育料金明細票原本を選択してください。'
-    # elif option == 2:
-    #     title = '③預かり保育料金集計原本を選択してください。'
-    # elif option == 3:
-    #     title = '①★追加預かり料金原紙★★作成シート★★を選択してください。'
-    # else:
-    #     title = 'incorrect option chosen'
-
     return filedialog.askopenfilename(title=title)
 
 
