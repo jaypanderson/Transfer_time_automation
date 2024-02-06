@@ -155,7 +155,7 @@ def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
     else:
         return False
 
-
+# TODO use iter_rows to iterate though the sheet instead of accessing it directly with slicing
 def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workbook, date: datetime) -> int:
     """
     Convert departure time for children that are in 課外授業 and are 一号 to 1430 if they have class that day, and
