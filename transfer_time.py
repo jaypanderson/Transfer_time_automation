@@ -110,7 +110,7 @@ def find_name(tab: Worksheet, name: str, date_row: int) -> list[int]:
         """
     ans = []
     for i, row in enumerate(tab.iter_rows()):
-        if type(row[2].value) == str:
+        if isinstance(row[2].value, str):
             cell_name = replace_all_spaces(row[2].value)
             if cell_name == name:
                 ans.append(i)
