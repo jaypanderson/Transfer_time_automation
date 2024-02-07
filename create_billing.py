@@ -87,10 +87,10 @@ def count_charges() -> defaultdict:
     """
     file_path = open_file(1)
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
-    charges = defaultdict(lambda : defaultdict(list))
+    charges = defaultdict(lambda: defaultdict(list))
     # iterate through the sheets
     for sheet_name in book.sheetnames[2:11]:
-        sheet_name = replace_all_spaces(sheet_name) # replace spaces
+        sheet_name = replace_all_spaces(sheet_name)  # replace spaces
         sheet = book[sheet_name]
         row_ranges = find_name_range(sheet)
         # iterate through the two ranges (its like doing two chained iterations. but this way it's easier to calculate
@@ -114,7 +114,7 @@ def count_charges() -> defaultdict:
 
                     if price is not None and price >= 100:
                         date_row = start - 4
-                        date_col = i*4 + 4 # (its 6 for the price but 2 less for the column that has the date.)
+                        date_col = i*4 + 4  # (its 6 for the price but 2 less for the column that has the date.)
                         date = sheet.cell(row=date_row, column=date_col).value
                         date = str(date)[0:10]
                         arriv_row = start + idx
@@ -409,8 +409,8 @@ def merge_specific_cells(sheet: Worksheet, new_row_num: int, start_col: str, end
 def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
     """
     Because openpyxl has no build in way of adjusting the merged cells when a row is inserted this function was created.
-    It works by taking in the location of where the row was inserted and then adjusting any merged cells bellow that row.
-    That is this function is build to incrementally shift the merged cells every time it is called.
+    It works by taking in the location of where the row was inserted and then adjusting any merged cells bellow that
+    row.  That is this function is build to incrementally shift the merged cells every time it is called.
     :param sheet: The worksheet that we need to adjust the merged cells.
     :param new_row: the location at which a new row was inserted.
     :return: None
@@ -444,8 +444,8 @@ def recalc_number(formula: str, num_rows_inserted: int, cell_range: bool) -> tup
     :param num_rows_inserted: This basically is the number of days the child was charged extra.  This is because
     for every day the child was charged, there will be a new row inserted to record the charge.
     :param cell_range: a bool argument that determines how we search for the number that need to be change. If True it
-    searches the formula assuming that it uses as range of cells.(ex: sum(B23:B25))  If False it searched the formula assuming that it
-    uses a single cell. (ex: =B23)
+    searches the formula assuming that it uses as range of cells.(ex: sum(B23:B25))  If False it searched the formula
+    assuming that it uses a single cell. (ex: =B23)
     :return: returns a tuple containing [new_num, start, end]. new_num is the adjusted number after recalculating with
     the numbers of rows inserted, start is the index of where the number started and end is the index for where the
     number ended. these will be used to splice together the new formula that will be inserted into as cell in the
