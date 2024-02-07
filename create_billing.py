@@ -480,7 +480,7 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
 
     :param sheet: new sheet that was created for each child that has extra charges.
     :param cells_to_be_adjusted: tuple of tuples containing the rows, columns, and type of formula of the cells that
-    need their formulas to be adjusted. ex:((3, 2, True), (10, 5, False)) Each tuple in the tuple represents a cell.
+    need their formulas to be adjusted. ex: ((3, 2, True), (10, 5, False)) Each tuple in the tuple represents a cell.
     The first number in the tuple is the row, the second number is the column of the cell that need to be changed and
     the last bool represents if the formula uses a range of cells or just a single cell. (For True it is a
     range =SUM(D3:D10), for False it is a single cell =D43.)
@@ -541,7 +541,7 @@ def create_billing_sheets(charges: defaultdict) -> None:
                 insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
 
             if rows_inserted > 0:
-                cells_to_be_adjusted =((16 + rows_inserted, 7, True), (30 + rows_inserted, 4, False))
+                cells_to_be_adjusted = ((16 + rows_inserted, 7, True), (30 + rows_inserted, 4, False))
                 adjust_formulas(new_sheet, cells_to_be_adjusted, rows_inserted)
     book.save(new_file_path(file_path, '★★作成シート★★'))
 
