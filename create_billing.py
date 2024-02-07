@@ -443,7 +443,7 @@ def recalc_number(formula: str, num_rows_inserted: int, cell_range: bool) -> tup
     :param formula: this is the formula that was found in the cell that need to be adjusted.
     :param num_rows_inserted: This basically is the number of days the child was charged extra.  This is because
     for every day the child was charged, there will be a new row inserted to record the charge.
-    :param cell_range: a bool argument that determines how we search for the number that need to be change. If True it
+    :param cell_range: a bool argument that determines how we search for the number that needs to change. If True it
     searches the formula assuming that it uses as range of cells.(ex: sum(B23:B25))  If False it searched the formula
     assuming that it uses a single cell. (ex: =B23)
     :return: returns a tuple containing [new_num, start, end]. new_num is the adjusted number after recalculating with
