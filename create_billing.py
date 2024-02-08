@@ -303,8 +303,9 @@ def convert_reiwa(year: int, month: int) -> str:
     :return: a string of the year converted into the japanese calendar year.
     """
     reiwa = year - 2018
-    if month in [1, 2, 3]:
-        reiwa -= 1
+    # this have been commented out because it no longer needs to be adjusted for these three months.
+    # if month in [1, 2, 3]:
+    #     reiwa -= 1
     if reiwa == 1:
         reiwa = '元'
 
