@@ -169,7 +169,6 @@ def kagai_ichigo_check_time(name: str, time: int, day_of_week: int, sheet: Workb
             name_val = replace_all_spaces(name_val)
         if name == name_val:
             time_limit = sheet[i + 1][2 + day_of_week].value
-            print(time_limit)
             if time_limit is None:
                 # print('修正なし: {}は{}に課外がありません。'.format(name, days_of_week[day_of_week]))
                 return time
