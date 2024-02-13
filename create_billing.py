@@ -42,8 +42,6 @@ from openpyxl.worksheet.worksheet import Worksheet
 #  TODO add more comments so that someone who has never seen the code can understand what is happening in the code.
 
 
-
-
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
     """
