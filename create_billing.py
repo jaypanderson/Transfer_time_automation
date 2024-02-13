@@ -31,8 +31,8 @@ from openpyxl.utils.cell import range_boundaries
 from openpyxl.worksheet.worksheet import Worksheet
 
 
-# TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
-# TODO to open up the correct one.
+# TODO add safeguards so the program doesn't crash when the user chooses the wrong file, but instead re-prompts the user
+# TODO to open up the correct one. (this might be quite complex and has the potential to introduce some bugs.)
 
 
 # open file that will be used create billing docs.
