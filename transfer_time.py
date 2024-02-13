@@ -511,8 +511,6 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     return ans
 
 
-
-
 if __name__ == '__main__':
 
     # create file paths by asking the user.
