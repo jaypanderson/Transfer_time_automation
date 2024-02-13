@@ -511,11 +511,7 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     return ans
 
 
-# TODO there is an issue where when using create billing script with the resulting excel file generated from this script
-# TODO the program ends and fails. The issue can be solved by opening up the file and saving it. In that case when i run
-# TODO the create billing script it works fine. This most likely has to do with excel recalculation. so i need to open
-# TODO the file once it has been created, and then allow for recalculation and then save again. I have done this in a
-# TODO previous step in this script so it should be easy to adapt for this situations.
+
 
 if __name__ == '__main__':
 
