@@ -34,6 +34,9 @@ from openpyxl.worksheet.worksheet import Worksheet
 # TODO add safeguards so the program doesn't crash when the user chooses the wrong file, but instead re-prompts the user
 # TODO to open up the correct one. (this might be quite complex and has the potential to introduce some bugs.)
 
+# TODO refactor code so that it is using the openpyxl library correctly instead of just iterating though the rows with
+# TODO normal python code.
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
