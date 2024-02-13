@@ -227,8 +227,8 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
     :param class_name: The name of the class for the child with extra charges. The class name is represented as '@'
     while the age is represented as '?' the age is calculated by using the class age map.
     :param child_name: The name of the child with extra charges. The child's name is represented as the first name, then
-    a japanese space(/u3000) and then the first name. ex: '田中　太郎'.  The last name is represented as '&' and the first
-    name is represented as '$'.
+    a japanese space(/u3000) and then the first name. ex: '田中　太郎'.  '&' represents the last name and '$' represents
+    the first name.
     :return: None
     """
     class_age_map = {'あお': '5', 'ふじ': '5', 'き': '4', 'みどり': '4', 'だいだい': '3', 'もも': '3',
