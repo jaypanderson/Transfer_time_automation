@@ -49,7 +49,8 @@ from openpyxl.worksheet.worksheet import Worksheet
 # TODO or if the underlining excel function has been erassed and thus has None as its value.  Create a try and catch
 # TODO block to handle value and type errors.
 
-
+# TODO once the above feature is implemented add a window that will display all the cells that may have issues with them
+# TODO so the user can go into the excel file and fix the formulas.
 
 
 # open file that will be used create billing docs.
