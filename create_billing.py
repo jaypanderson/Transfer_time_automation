@@ -52,6 +52,8 @@ from openpyxl.worksheet.worksheet import Worksheet
 # TODO once the above feature is implemented add a window that will display all the cells that may have issues with them
 # TODO so the user can go into the excel file and fix the formulas.
 
+# TODO clean up imports and make sure none that are being used are deleted.
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
