@@ -54,6 +54,10 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 # TODO clean up imports and make sure none that are being used are deleted.
 
+# TODO clean up the code generally so it is not so messy.
+
+
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
