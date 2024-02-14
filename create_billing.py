@@ -44,6 +44,13 @@ from openpyxl.worksheet.worksheet import Worksheet
 # TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
 # TODO to open up the correct one.
 
+# TODO for the count charges function that gathers the info. I have an issue where if there is something other than an
+# TODO string that is a numerical it raises an error. this can happen if some other trying is accidentally typed there
+# TODO or if the underlining excel function has been erassed and thus has None as its value.  Create a try and catch
+# TODO block to handle value and type errors.
+
+
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
@@ -121,7 +128,7 @@ def count_charges() -> defaultdict:
                         price = int(price)
                     except TypeError:
                         continue
-                    except ValueError:
+                    except ValueError:  # this is mostly for in case there is None.
                         # TODO add proper warnings to that we can identify where there was an error with the formular.
                         print('数式に間違いがあるかもしれません', price, name, i*4 + 6)
                         continue
