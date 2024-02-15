@@ -60,6 +60,9 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 # TODO add a simple UI so there is no need for the command window which just makes users uncomfortable.
 
+# TODO find out why when I try to open the hugnote data as a zip for some reason the yellow class seems to be left out.
+# TODO all the other classes work just fine, but if I unzip it and then open it all the classes work fine.
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
