@@ -58,6 +58,8 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 # TODO update docstrings so that it reflects the changes that have been made.
 
+# TODO add a simple UI so there is no need for the command window which just makes users uncomfortable.
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
