@@ -63,6 +63,11 @@ from openpyxl.worksheet.worksheet import Worksheet
 # TODO find out why when I try to open the hugnote data as a zip for some reason the yellow class seems to be left out.
 # TODO all the other classes work just fine, but if I unzip it and then open it all the classes work fine.
 
+# TODO There is still an issue where some kagai classes don't meet every week but the way the checks in this script
+# TODO works, its as if they meet every week so potentially they get leeway for days that we should of charged them
+# TODO extra. for example if the limit is 1524 and they dont meet on that week there is a 54 minuet gap they have to
+# TODO stay at smile for free.
+
 
 # open file that will be used create billing docs.
 def open_file(option: int) -> str:
