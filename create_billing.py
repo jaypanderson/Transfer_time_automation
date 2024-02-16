@@ -107,9 +107,10 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     for i, char in enumerate(path):
         if char == '.':
             idx = i
-
-    ans = path[:idx] + added_text + path[idx:]
-    return ans
+    if idx == -1:
+        return path + added_text
+    else:
+        return path[:idx] + added_text + path[idx:]
 
 
 # TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
