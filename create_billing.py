@@ -4,6 +4,7 @@ form that will be delivered to the parents for extra charges incurred during tha
 """
 
 from __future__ import annotations
+from typing import Any
 from typing import Union
 import pandas as pd
 import tkinter as tk
@@ -116,7 +117,7 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 # TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
 # TODO to open up the correct one.
 # create list or dict with all the extra charges for each child.
-def count_charges() -> defaultdict[defaultdict[list]]:
+def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
     """
     This function looks through an Excel file that was creating using the transfer_time.py script to organize all the
     extra charges into a dictionary.  The function is set up so that it will prompt the user to open up a file. The User
