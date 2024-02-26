@@ -45,7 +45,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 # TODO for the count charges function that gathers the info. I have an issue where if there is something other than an
 # TODO string that is a numerical it raises an error. this can happen if some other trying is accidentally typed there
-# TODO or if the underlining excel function has been erassed and thus has None as its value.  Create a try and catch
+# TODO or if the underlining excel function has been erased and thus has None as its value.  Create a try and catch
 # TODO block to handle value and type errors.
 
 # TODO once the above feature is implemented add a window that will display all the cells that may have issues with them
