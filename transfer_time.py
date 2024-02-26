@@ -507,7 +507,7 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     :return: The newly formed name path where the new Excel file will be saved to.
     """
     idx = -1
-
+    # find the last occurrence of '.' to find where the file type extension is located.
     for i, char in enumerate(path):
         if char == '.':
             idx = i
