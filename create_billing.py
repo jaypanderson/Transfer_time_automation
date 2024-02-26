@@ -38,8 +38,6 @@ from openpyxl.worksheet.worksheet import Worksheet
 # TODO refactor code so that it is using the openpyxl library correctly instead of just iterating though the rows with
 # TODO normal python code.
 
-# TODO fix error with file name contains a '.' this was fixed with the transfer_time script but not with create billing.
-
 #  TODO add more comments so that someone who has never seen the code can understand what is happening in the code.
 
 # TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
