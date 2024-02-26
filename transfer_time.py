@@ -506,9 +506,15 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
     :param added_text: The text that will be added inbetween the name and the extension name of the original path.
     :return: The newly formed name path where the new Excel file will be saved to.
     """
-    idx = path.find('.')
-    ans = path[:idx] + added_text + path[idx:]
-    return ans
+    idx = -1
+
+    for i, char in enumerate(path):
+        if char == '.':
+            idx = i
+    if idx == -1:
+        return path + added_text
+    else:
+        return path[:idx] + added_text + path[idx:]
 
 
 if __name__ == '__main__':
