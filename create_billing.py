@@ -5,26 +5,12 @@ form that will be delivered to the parents for extra charges incurred during tha
 
 from __future__ import annotations
 from typing import Any
-from typing import Union
-import pandas as pd
-import tkinter as tk
 from tkinter import filedialog
-from tkinter import messagebox
-from datetime import datetime
 import openpyxl
 from openpyxl.styles import Color
-from openpyxl import Workbook
-# from openpyxl import styles
-from openpyxl.styles import PatternFill
-import xlwings as xw
-import zipfile
-from io import StringIO
-import os
 from collections import defaultdict
 from transfer_time import replace_all_spaces
 from transfer_time import find_name_range
-from transfer_time import range_adjustment
-from itertools import chain
 from copy import copy
 from collections import Counter
 from itertools import zip_longest
