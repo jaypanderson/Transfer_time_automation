@@ -392,6 +392,9 @@ def import_ref_data(choice: str) -> dict:
             zip_file_names = zip_ref.namelist()
             for class_name in class_names:
                 for zip_file_name in zip_file_names:
+                    # encode and decode to that we can properly access the file names properly. if not we end up with
+                    # odd characters like é╨éµé▒. I happen to find the right encoding, but if the person producing the
+                    # zipfile changes the encoding this can cause an error to occur.
                     decoded_name = zip_file_name.encode('cp437').decode('shift_jis')
                     if class_name in decoded_name:
                         unzipped_data = zip_ref.read(zip_file_name).decode('utf-8')
