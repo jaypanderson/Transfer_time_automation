@@ -396,6 +396,7 @@ def import_ref_data(choice: str) -> dict:
                 unzipped_files.append(zip_ref.read(file).decode('utf-8'))
             for class_name in class_names:
                 for file in unzipped_files:
+                    print(file)
                     if class_name in file:
                         # noinspection PyTypeChecker
                         # stringIO allows passing in the unzipped file which is already a string instead of saving it as
