@@ -389,19 +389,26 @@ def import_ref_data(choice: str) -> dict:
         zip_path = filedialog.askopenfilename(title='ダウンロードした打刻表のZIPフォルダを選択してください。',
                                               filetypes=[('Zip Files', '*.zip')])
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            # Extract zipped files
             zip_file_names = zip_ref.namelist()
-            unzipped_files = []
-            for file in zip_file_names:
-                unzipped_files.append(zip_ref.read(file).decode('utf-8'))
             for class_name in class_names:
-                for file in unzipped_files:
-                    print(file)
-                    if class_name in file:
-                        # noinspection PyTypeChecker
-                        # stringIO allows passing in the unzipped file which is already a string instead of saving it as
-                        # a file and then passing in the temporary file address.
-                        ref_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
+                for zip_file_name in zip_file_names:
+                    decoded_name = zip_file_name.encode('cp437').decode('shift_jis')
+                    if class_name in decoded_name:
+                        unzipped_data = zip_ref.read(zip_file_name).decode('utf-8')
+                        ref_files[class_name] = pd.read_csv(StringIO(unzipped_data), parse_dates=['日付'])
+
+            # # Extract zipped files
+            # zip_file_names = zip_ref.namelist()
+            # unzipped_files = []
+            # for file in zip_file_names:
+            #     unzipped_files.append(zip_ref.read(file).decode('utf-8'))
+            # for class_name in class_names:
+            #     for file in unzipped_files:
+            #         if class_name in file:
+            #             # noinspection PyTypeChecker
+            #             # stringIO allows passing in the unzipped file which is already a string instead of saving it as
+            #             # a file and then passing in the temporary file address.
+            #             ref_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
     print(ref_files.keys())
     return ref_files
 
