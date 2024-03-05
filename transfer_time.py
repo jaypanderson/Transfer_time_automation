@@ -398,6 +398,8 @@ def import_ref_data(choice: str) -> dict:
                 for file in unzipped_files:
                     if class_name in file:
                         # noinspection PyTypeChecker
+                        # stringIO allows passing in the unzipped file which is already a string instead of saving it as
+                        # a file and then passing in the temporary file address.
                         ref_files[class_name] = pd.read_csv(StringIO(file), parse_dates=['日付'])
     print(ref_files.keys())
     return ref_files
