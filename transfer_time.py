@@ -439,7 +439,7 @@ def range_adjustment(ranges: list[list[int]]) -> list[list[int]]:
     return ranges
 
 
-def find_name_range(sheet: Workbook) -> list[list[int]]:
+def find_name_range(sheet: Worksheet) -> list[list[int]]:
     # noinspection GrazieInspection
     """
         locate the rows that need to be searched in order to fill in cells for the absent children.
@@ -451,7 +451,7 @@ def find_name_range(sheet: Workbook) -> list[list[int]]:
     ans = []
     start = False
     temp = []
-    for i, row in enumerate(sheet):
+    for i, row in enumerate(sheet.iter_rows()):
         if row[2].value == '氏名':
             start = True
             # print(1, temp, start)
