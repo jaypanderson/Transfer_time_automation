@@ -548,11 +548,14 @@ if __name__ == '__main__':
 
     # Ask user if they would like to use a zip file or if they already have unzipped the file.
     # and then import the reference files into a dictionary to be used later on.
-    result_choice = messagebox.askquestion('一つを選んでください',
-                                           'ZIPファイルを使ってデータ転送をしますか？\n(展開がもう済んでいて普通のファイルを開けたい場合は no を選択してください。)',
-                                           icon='warning')
 
-    reference_files = import_ref_data(result_choice)
+    # this code is temporarily commented out so that the the program expects to open a zipfile
+    # result_choice = messagebox.askquestion('一つを選んでください',
+    #                                        'ZIPファイルを使ってデータ転送をしますか？\n(展開がもう済んでいて普通のファイルを開けたい場合は no を選択してください。)',
+    #                                        icon='warning')
+
+    # replace result choice with 'yes' so it chooses zip files automatically.
+    reference_files = import_ref_data('yes')
     update_excel_data(input_file, reference_files, result_file)
     recalculate_vba_code(result_file)
     mark_charges_with_pink(result_file)
