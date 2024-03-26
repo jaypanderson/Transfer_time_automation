@@ -24,7 +24,8 @@ General features
 10 -- No longer need to physically choose the recalculated Excel file during execution, it is automatically passed into
       the function that fills in the cells with extra charges.
 11 -- Made it so the reference files (Excel documents downloaded from hug note that has the time stamps of arrival and
-      departure times of all the kids) can be opened regardless if they are zipped or unzipped.
+      departure times of all the kids) can be opened regardless if they are zipped or unzipped. (currently the default
+      behavior is to choose a zipped file)
 12 -- Fixed the issue where dep_check_time was being applied to all children. We only want to apply this to
       children that are 一号.
 13 -- Iterate through the Excel file to fill in cells that have both the arrival time and departure time blank with
