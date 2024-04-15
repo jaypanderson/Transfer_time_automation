@@ -138,6 +138,9 @@ def dep_check_time(time: int) -> int:
     return time
 
 
+# todo added flag so that if there is an empty number instead of 1, 2 or 3 it notifies the user instead of crashing.
+# todo not i need to implement a dialog that opens up when such a case is recognized. instead of just a print out in the
+# todo terminal.
 def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
     # noinspection GrazieInspection
     """
@@ -150,7 +153,12 @@ def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
         """
     row = name_coor[0] + 1  # adjust
     col = 1
-    value = int(sheet.cell(row=row, column=col).value)
+    value = sheet.cell(row=row, column=col).value
+    if isinstance(value, int):
+        value = int(sheet.cell(row=row, column=col).value)
+    else:
+        print(f'Value is not an integer, is it a {type(value)} type and its value is {value}')
+
     if value == 1:
         return True
     else:
