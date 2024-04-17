@@ -9,7 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d783158b-8e81-458a-af0c-49a31f53e59c" name="Changes" comment="fixed grammar in readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transfer_time.py" beforeDir="false" afterPath="$PROJECT_DIR$/transfer_time.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,12 +111,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/transfer_time.py</url>
-          <line>563</line>
+          <line>566</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/transfer_time.py</url>
-          <line>194</line>
+          <line>197</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
