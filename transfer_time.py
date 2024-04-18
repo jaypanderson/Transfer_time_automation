@@ -158,6 +158,8 @@ def ichigo_check(name_coor: list[int], sheet: Worksheet) -> bool:
         value = int(sheet.cell(row=row, column=col).value)
     else:
         print(f'Value is not an integer, is it a {type(value)} type and its value is {value}')
+        #print(name_coor)
+        print(f'{sheet.cell(row=name_coor[0]+1, column=3).value}が何号が入力されてない可能性があります。')
 
     if value == 1:
         return True
