@@ -283,8 +283,13 @@ def update_excel_data(in_file, reference_data, output_file):
                 out_sheet.cell(name_coor[0] + 1, date_coor[1] + 1).value = arrive_time
             if isinstance(departure_time, str):
                 departure_time = int(departure_time)  # change type to allow for int comparisons
-                if ichigo_check(name_coor, cur_sheet):  # check if child is 一号.
-                    departure_time = dep_check_time(departure_time)
+
+                ## TODO This process is currently halted due to changes in pricing policy.
+                ## TODO will leave here in the case that changes are reversed
+
+                # if ichigo_check(name_coor, cur_sheet):  # check if child is 一号.
+                #     departure_time = dep_check_time(departure_time)
+
                 if child_name in ichigo_kagai:  # adjust time if the kids are in 課外授業　and are 一号.
                     departure_time = kagai_ichigo_check_time(child_name, departure_time, day_of_week_num,
                                                              ichigo_kagai_sheet, date)
