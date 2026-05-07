@@ -257,7 +257,7 @@ def insert_name_date(sheet: Worksheet, year: int, month: int, class_name: str, c
     child_name = child_name.replace(" ", "　") ##convert normal spaces into japanese format spaces /u3000
     full_name = child_name.split('　')
     if len(full_name) != 2:
-        messagebox.showinfo("スペースエラー", f"{full_name}の名前にスペースがない可能性があります。\n追加預かり料金原本と追加預かり料金原本★★作成シート★★を修正して\nやり直してください。")
+        messagebox.showinfo("スペースエラー", f"{full_name}の名前にスペースがない可能性があります。\n追加預かり料金原本と追加預かり料金原本★★作成シート★★を\n修正して,やり直してください。")
     last = full_name[0]
     first = full_name[1]
     for row in sheet.iter_rows():
