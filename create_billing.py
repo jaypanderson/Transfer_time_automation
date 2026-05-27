@@ -691,6 +691,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
 # some thought put into it on whether it should be created by hand or not.
 def main():
     charges = count_charges()
+    print(charges)
     create_billing_sheets(charges)
     create_tally_sheet(charges)
 
