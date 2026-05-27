@@ -101,6 +101,7 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 
 # TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
 # TODO to open up the correct one.
+
 # create list or dict with all the extra charges for each child.
 def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
     """
@@ -151,6 +152,11 @@ def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
                         charges[sheet_name][name].append((price, arrival, departure, date))
     print(charges)
     return charges
+
+# TODO finish function
+def copy_overtime_attendance_times():
+    pass
+
 
 
 # Set the color of the tab for a sheet.
@@ -691,6 +697,8 @@ def create_tally_sheet(charges: defaultdict) -> None:
 # some thought put into it on whether it should be created by hand or not.
 def main():
     charges = count_charges()
+    # TODO create a list of name
+    copy_overtime_attendance_times()
     print(charges)
     create_billing_sheets(charges)
     create_tally_sheet(charges)
