@@ -156,6 +156,12 @@ def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
 # TODO finish function
 def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]]):
     pass
+    "create a clean list that only contains the class and names of each kid"
+    kids_with_charges = []
+    for class_key, item in charges.items():
+        for name_key in item.keys():
+            kids_with_charges.append((class_key, name_key))
+    print(kids_with_charges)
 
 
 
