@@ -154,7 +154,7 @@ def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
     return charges
 
 # TODO finish function
-def copy_overtime_attendance_times():
+def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]]):
     pass
 
 
@@ -698,8 +698,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
 def main():
     charges = count_charges()
     # TODO create a list of name
-    copy_overtime_attendance_times()
-    print(charges)
+    copy_overtime_attendance_times(charges)
     create_billing_sheets(charges)
     create_tally_sheet(charges)
 
