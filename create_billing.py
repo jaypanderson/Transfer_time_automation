@@ -157,6 +157,7 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
 def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path):
     pass
     "create a clean list that only contains the class and names of each kid"
+    book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     kids_with_charges = []
     for class_key, item in charges.items():
         for name_key in item.keys():
