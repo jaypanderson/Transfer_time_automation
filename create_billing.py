@@ -159,9 +159,14 @@ def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, li
     "create a clean list that only contains the class and names of each kid"
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
     kids_with_charges = []
+    attendance_times = []
     for class_key, item in charges.items():
         for name_key in item.keys():
             kids_with_charges.append((class_key, name_key))
+            sheet = book[class_key]
+            count = 0
+            for row in enumerate(sheet.iter_rows(values_only=True)):
+                if row[]
     print(kids_with_charges)
 
 
