@@ -103,7 +103,7 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 # TODO to open up the correct one.
 
 # create list or dict with all the extra charges for each child.
-def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
+def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
     """
     This function looks through an Excel file that was creating using the transfer_time.py script to organize all the
     extra charges into a dictionary.  The function is set up so that it will prompt the user to open up a file. The User
@@ -154,7 +154,7 @@ def count_charges() -> defaultdict[Any, defaultdict[Any, list]]:
     return charges
 
 # TODO finish function
-def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]]):
+def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path):
     pass
     "create a clean list that only contains the class and names of each kid"
     kids_with_charges = []
@@ -702,9 +702,9 @@ def create_tally_sheet(charges: defaultdict) -> None:
 # main function to run all the processes I need.  Currently, this only creates two files. The final file still needs
 # some thought put into it on whether it should be created by hand or not.
 def main():
-    charges = count_charges()
+    charges, file_path = count_charges()
     # TODO create a list of name
-    copy_overtime_attendance_times(charges)
+    copy_overtime_attendance_times(charges, file_path)
     create_billing_sheets(charges)
     create_tally_sheet(charges)
 
