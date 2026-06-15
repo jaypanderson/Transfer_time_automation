@@ -164,23 +164,14 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     :return:
     """
     kids_with_charges = organize_data_for_transfer(charges)
+    attendance_times = gather_attendance_data(kids_with_charges, file_path)
     print(kids_with_charges)
-
-# TODO finish function
-def copy_overtime_attendance_times():
-    book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
-
-    sheet = book[class_key]
-    # count = 0
-    # for row in enumerate(sheet.iter_rows(values_only=True)):
-    #     if row[]
-
 
 
 
 def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
     """
-    oragize data into the desired
+    oragize data into the desired shape
     :param charges:
     :return:
     """
@@ -190,6 +181,25 @@ def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]
         for name_key in item.keys():
             kids_with_charges.append((class_key, name_key))
     return kids_with_charges
+
+
+
+# TODO finish function
+def gather_attendance_data(kids_with_charges, file_path):
+    attendance_status = {}
+    overtime_attendance_times = {}
+
+    book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
+
+    for class_key, kid_name in kids_with_charges:
+        sheet = book[class_key]
+        for row in sheet.iter_rows():
+            if replace_all_spaces(row[2]) == kid_name:
+                attendance_status[kid_name] = (row[0], row[1])
+
+    # count = 0
+    # for row in enumerate(sheet.iter_rows(values_only=True)):
+    #     if row[]
 
 
 
