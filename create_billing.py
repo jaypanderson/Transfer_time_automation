@@ -165,7 +165,7 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     """
     kids_with_charges = organize_data_for_transfer(charges)
     attendance_times = gather_attendance_data(kids_with_charges, file_path)
-    print(kids_with_charges)
+    print(attendance_times)
 
 
 
@@ -186,20 +186,17 @@ def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]
 
 # TODO finish function
 def gather_attendance_data(kids_with_charges, file_path):
-    attendance_status = {}
-    overtime_attendance_times = {}
+    overtime_attendance_times = defaultdict(list)
 
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
 
     for class_key, kid_name in kids_with_charges:
         sheet = book[class_key]
-        for row in sheet.iter_rows():
-            if replace_all_spaces(row[2]) == kid_name:
-                attendance_status[kid_name] = (row[0], row[1])
+        for row in sheet.iter_rows(values_only=True):
+            if row[2] and replace_all_spaces(row[2]) == replace_all_spaces(kid_name):
+                overtime_attendance_times[kid_name].append(row)
 
-    # count = 0
-    # for row in enumerate(sheet.iter_rows(values_only=True)):
-    #     if row[]
+    return overtime_attendance_times
 
 
 
