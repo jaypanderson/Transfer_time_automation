@@ -151,23 +151,45 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
                         departure = sheet.cell(row=dept_row, column=dept_col).value
                         charges[sheet_name][name].append((price, arrival, departure, date))
     print(charges)
-    return charges
+    return charges, file_path
 
 # TODO finish function
-def copy_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path):
-    pass
-    "create a clean list that only contains the class and names of each kid"
+def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path):
+    # TODO finish doc string
+    """
+    wrapper function for all the functions used to transfer the data of those that were charged overtime fees
+    from the original data and organized into a new work sheet within the workbook.
+    :param charges:
+    :param file_path:
+    :return:
+    """
+    kids_with_charges = organize_data_for_transfer(charges)
+    print(kids_with_charges)
+
+# TODO finish function
+def copy_overtime_attendance_times():
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
+
+    sheet = book[class_key]
+    # count = 0
+    # for row in enumerate(sheet.iter_rows(values_only=True)):
+    #     if row[]
+
+
+
+
+def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
+    """
+    oragize data into the desired
+    :param charges:
+    :return:
+    """
+    "create a clean list that only contains the class and names of each kid"
     kids_with_charges = []
-    attendance_times = []
     for class_key, item in charges.items():
         for name_key in item.keys():
             kids_with_charges.append((class_key, name_key))
-            sheet = book[class_key]
-            count = 0
-            for row in enumerate(sheet.iter_rows(values_only=True)):
-                if row[]
-    print(kids_with_charges)
+    return kids_with_charges
 
 
 
@@ -710,7 +732,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
 def main():
     charges, file_path = count_charges()
     # TODO create a list of name
-    copy_overtime_attendance_times(charges, file_path)
+    transfer_overtime_attendance_times(charges, file_path)
     create_billing_sheets(charges)
     create_tally_sheet(charges)
 
