@@ -165,7 +165,8 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     """
     kids_with_charges = organize_data_for_transfer(charges)
     attendance_times = gather_attendance_data(kids_with_charges, file_path)
-    print(attendance_times)
+    kids_with_charges.sort(key=lambda class_key, name_key: )
+    print(kids_with_charges)
 
 
 
@@ -197,6 +198,11 @@ def gather_attendance_data(kids_with_charges, file_path):
                 overtime_attendance_times[kid_name].append(row)
 
     return overtime_attendance_times
+
+
+
+def custom_priority_ordr(item):
+    class_key = 
 
 
 
