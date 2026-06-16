@@ -15,6 +15,7 @@ from transfer_time import find_name_range
 from copy import copy
 from collections import Counter
 from itertools import zip_longest
+from functools import partial
 from openpyxl.utils.cell import range_boundaries
 from openpyxl.worksheet.worksheet import Worksheet
 
@@ -164,9 +165,10 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     :return:
     """
     kids_with_charges = organize_data_for_transfer(charges)
-    attendance_times = gather_attendance_data(kids_with_charges, file_path)
-    kids_with_charges.sort(key=lambda class_key, name_key: )
+    overtime_attendance_data = gather_attendance_data(kids_with_charges, file_path)
+    kids_with_charges.sort(key=partial(priority_order, overtime_attendance_data))
     print(kids_with_charges)
+    print(len(kids_with_charges))
 
 
 
@@ -187,7 +189,7 @@ def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]
 
 # TODO finish function
 def gather_attendance_data(kids_with_charges, file_path):
-    overtime_attendance_times = defaultdict(list)
+    overtime_attendance_data = defaultdict(list)
 
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
 
@@ -195,14 +197,24 @@ def gather_attendance_data(kids_with_charges, file_path):
         sheet = book[class_key]
         for row in sheet.iter_rows(values_only=True):
             if row[2] and replace_all_spaces(row[2]) == replace_all_spaces(kid_name):
-                overtime_attendance_times[kid_name].append(row)
+                overtime_attendance_data[kid_name].append(row)
 
-    return overtime_attendance_times
+    return overtime_attendance_data
 
 
 
-def custom_priority_ordr(item):
-    class_key = 
+def priority_order(overtime_attendance_data, items):
+    class_name, kid_name = items
+    gou_order = {1: 0, 2: 1, 3: 1}
+    type_order = {"短": 0, "標": 1}
+    class_order = {"ひよこ": 0, "ひつじ": 1, "うさぎ": 2, "だいだい": 3, "もも": 4, "みどり": 5, "き": 6, "あお": 7, "ふじ": 8}
+    gou_value = gou_order[overtime_attendance_data[kid_name][0][0]]
+    type_value = type_order[overtime_attendance_data[kid_name][0][1]]
+    class_value = class_order[class_name]
+
+
+    return gou_value, type_value, class_value
+
 
 
 
