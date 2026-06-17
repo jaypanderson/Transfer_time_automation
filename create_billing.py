@@ -161,7 +161,7 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
     return charges, file_path
 
 # TODO finish function
-def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path):
+def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path: str):
     # TODO finish doc string
     """
     wrapper function for all the functions used to transfer the data of those that were charged overtime fees
@@ -177,6 +177,8 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     print(kids_with_charges)
     for i, kids in enumerate(kids_with_charges):
         print(kids, i+1)
+
+    insert_attendance_times(kids_with_charges, overtime_attendance_data, file_path)
 
 
 
@@ -220,8 +222,36 @@ def priority_order(overtime_attendance_data, items):
     type_value = type_order[overtime_attendance_data[kid_name][0][1]]
     class_value = class_order[class_name]
 
-
     return gou_value, type_value, class_value
+
+
+
+def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_data: defaultdict[str, defaultdict[str, list]], file_path: str) -> None:
+    inserted = 0
+    open_rows = 2
+    cur_row = 4
+    book = openpyxl.load_workbook(file_path)
+    try:
+        sheet = book["料金発生"]
+    except KeyError:
+        messagebox.showinfo("シートエラー", "料金発生のシートを作成してください。\\n作成している場合、シート名に間違いがあるかもしれません。")
+        book.close()
+        raise KeyError
+
+
+    for class_name, kid_name in kids_with_charges:
+        if inserted >= open_rows:
+            sheet.insert_rows()
+
+            for data in overtime_attendance_data[kid_name]:
+                for first_half, second_half in data:
+                    row = sheet[cur_row]
+                    for i, value in enumerate(first_half):
+                        row[i] = value
+                    row = sheet[cur_row]
+
+
+
 
 
 
