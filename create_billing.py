@@ -103,6 +103,12 @@ def new_file_path(path: str, added_text: str = 'result') -> str:
 # TODO add safeguards so the program doesn't crash when the use chooses the wrong file, but instead re-prompts the user
 # TODO to open up the correct one.
 
+# TODO currently the order in which kids are added is based on who first come. it should be changed to the student number.
+# TODO this requires a complete redesign of how charges are searched. currently we search for the name twice because of
+# TODO how the excel sheet is split. first half of the month is on the top and second in the bottom. So if a kid has no
+# TODO charges in the first half of the month and the next kid does have a charge in the first half the second child will
+# TODO be added to the list first and thus change the order in which the children should be.
+
 # create list or dict with all the extra charges for each child.
 def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
     """
@@ -165,10 +171,12 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     :return:
     """
     kids_with_charges = organize_data_for_transfer(charges)
+    print(kids_with_charges)
     overtime_attendance_data = gather_attendance_data(kids_with_charges, file_path)
     kids_with_charges.sort(key=partial(priority_order, overtime_attendance_data))
     print(kids_with_charges)
-    print(len(kids_with_charges))
+    for i, kids in enumerate(kids_with_charges):
+        print(kids, i+1)
 
 
 
