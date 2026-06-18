@@ -10,6 +10,9 @@ from tkinter import messagebox
 import openpyxl
 from openpyxl.styles import Color
 from collections import defaultdict
+
+from zmq.backend import second
+
 from transfer_time import replace_all_spaces
 from transfer_time import find_name_range
 from copy import copy
@@ -178,6 +181,8 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     for i, kids in enumerate(kids_with_charges):
         print(kids, i+1)
 
+    # print(overtime_attendance_data)
+
     insert_attendance_times(kids_with_charges, overtime_attendance_data, file_path)
 
 
@@ -240,15 +245,25 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
 
 
     for class_name, kid_name in kids_with_charges:
+        print(cur_row)
         if inserted >= open_rows:
-            sheet.insert_rows()
+            sheet.insert_rows(cur_row)
 
-            for data in overtime_attendance_data[kid_name]:
-                for first_half, second_half in data:
-                    row = sheet[cur_row]
-                    for i, value in enumerate(first_half):
-                        row[i] = value
-                    row = sheet[cur_row]
+        first_half, second_half = overtime_attendance_data[kid_name]
+        for i, value in enumerate(first_half):
+            print(sheet[cur_row][i].value)
+            sheet[cur_row][i].value = value
+        row_adjust = cur_row
+        if inserted >= open_rows:
+            row_adjust += inserted - 1
+        print(cur_row + row_adjust)
+        for i, value in enumerate(second_half):
+            sheet[cur_row + row_adjust][i].value = value
+        inserted += 1
+        cur_row += 1
+    book.save(file_path)
+    book.close()
+
 
 
 
