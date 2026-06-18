@@ -230,7 +230,7 @@ def priority_order(overtime_attendance_data, items):
     return gou_value, type_value, class_value
 
 
-
+ # TODO need to finish function it is broken at this point
 def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_data: defaultdict[str, defaultdict[str, list]], file_path: str) -> None:
     inserted = 0
     open_rows = 2
@@ -242,23 +242,19 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
         messagebox.showinfo("シートエラー", "料金発生のシートを作成してください。\\n作成している場合、シート名に間違いがあるかもしれません。")
         book.close()
         raise KeyError
-
-
+    l = len(kids_with_charges)
+    if len(kids_with_charges) > 2:
+        sheet.insert_rows(cur_row, len(kids_with_charges) - 2)
+    book.save(file_path)
     for class_name, kid_name in kids_with_charges:
-        print(cur_row)
-        if inserted >= open_rows:
-            sheet.insert_rows(cur_row)
-
         first_half, second_half = overtime_attendance_data[kid_name]
+        print(cur_row)
         for i, value in enumerate(first_half):
-            print(sheet[cur_row][i].value)
             sheet[cur_row][i].value = value
-        row_adjust = cur_row
-        if inserted >= open_rows:
-            row_adjust += inserted - 1
-        print(cur_row + row_adjust)
         for i, value in enumerate(second_half):
-            sheet[cur_row + row_adjust][i].value = value
+            print(cur_row + l)
+            print(sheet[cur_row + l][i].value)
+            sheet[cur_row + l][i].value = value
         inserted += 1
         cur_row += 1
     book.save(file_path)
