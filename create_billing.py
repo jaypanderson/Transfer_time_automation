@@ -11,7 +11,7 @@ import openpyxl
 from openpyxl.styles import Color
 from collections import defaultdict
 
-from zmq.backend import second
+# from zmq.backend import second
 
 from transfer_time import replace_all_spaces
 from transfer_time import find_name_range
@@ -184,7 +184,18 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     # print(overtime_attendance_data)
 
     insert_attendance_times(kids_with_charges, overtime_attendance_data, file_path)
+    format_sheet(file_path)
 
+
+def format_sheet(file_path: str) -> None:
+    book = openpyxl.load_workbook(file_path)
+    sheet = book["料金発生"]
+    set_row_height(sheet)
+
+
+def set_row_height(sheet: Worksheet) -> None:
+    for row in range(1, sheet.max_row + 1):
+        sheet.row_dimensions[row].height = 16.5
 
 
 def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
@@ -245,26 +256,32 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
     l = len(kids_with_charges)
     if len(kids_with_charges) > 2:
         sheet.insert_rows(cur_row, len(kids_with_charges) - 2)
-        copy_paste_row_attributes()
         adjust_merged_cells(sheet, cur_row, len(kids_with_charges) - 2)
         adjust_date_formulas(sheet, cur_row + len(kids_with_charges))
     book.save(file_path)
     for class_name, kid_name in kids_with_charges:
         first_half, second_half = overtime_attendance_data[kid_name]
-        # print(cur_row)
         for i, value in enumerate(first_half):
             sheet[cur_row][i].value = value
+            copy_paste_cell_attributes(sheet[cur_row][i], sheet, cur_row, i)
         for i, value in enumerate(second_half):
             # the 2 is to compensate for the rows used for dates and column names
             sheet[cur_row + l + 2][i].value = value
+            copy_paste_cell_attributes(sheet[cur_row + l + 2][i], sheet, cur_row + l + 2, i)
         inserted += 1
         cur_row += 1
     book.save(file_path)
     book.close()
 
 
-def copy_paste_row_attributes():
-    pass
+def copy_paste_cell_attributes(cell, sheet, row, col) -> None:
+    source_cell = sheet[row-1][col]
+    cell.fill = copy(source_cell.fill)
+    cell.font = copy(source_cell.font)
+    cell.border = copy(source_cell.border)
+    cell.alignment = copy(source_cell.alignment)
+
+
 
 
 
