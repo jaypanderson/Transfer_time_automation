@@ -193,6 +193,7 @@ def format_sheet(file_path: str, n_kids) -> None:
     sheet = book["料金発生"]
     set_row_height(sheet)
     add_alternating_fill_colors(sheet, n_kids)
+    book.save(file_path)
 
 
 def set_row_height(sheet: Worksheet) -> None:
@@ -202,10 +203,12 @@ def set_row_height(sheet: Worksheet) -> None:
 
 def add_alternating_fill_colors(sheet: Worksheet, n_kids) -> None:
     cur_row = 4
+    fill = PatternFill(patternType="solid", fgColor="DDE3F7")
     for i in range(cur_row, cur_row + n_kids, 2):
-        fill = PatternFill(patternType="solid", fgColor="DDE3F7")
         for cell in sheet[i]:
             cell.fill = fill
+    print("test")
+
 
 
 def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
