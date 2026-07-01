@@ -245,6 +245,7 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
     l = len(kids_with_charges)
     if len(kids_with_charges) > 2:
         sheet.insert_rows(cur_row, len(kids_with_charges) - 2)
+        copy_paste_row_attributes()
         adjust_merged_cells(sheet, cur_row, len(kids_with_charges) - 2)
         adjust_date_formulas(sheet, cur_row + len(kids_with_charges))
     book.save(file_path)
@@ -260,6 +261,10 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
         cur_row += 1
     book.save(file_path)
     book.close()
+
+
+def copy_paste_row_attributes():
+    pass
 
 
 
