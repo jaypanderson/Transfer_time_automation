@@ -9,6 +9,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 import openpyxl
 from openpyxl.styles import Color
+from openpyxl.styles import PatternFill
 from collections import defaultdict
 
 # from zmq.backend import second
@@ -184,18 +185,27 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     # print(overtime_attendance_data)
 
     insert_attendance_times(kids_with_charges, overtime_attendance_data, file_path)
-    format_sheet(file_path)
+    format_sheet(file_path, len(kids_with_charges))
 
 
-def format_sheet(file_path: str) -> None:
+def format_sheet(file_path: str, n_kids) -> None:
     book = openpyxl.load_workbook(file_path)
     sheet = book["料金発生"]
     set_row_height(sheet)
+    add_alternating_fill_colors(sheet, n_kids)
 
 
 def set_row_height(sheet: Worksheet) -> None:
     for row in range(1, sheet.max_row + 1):
         sheet.row_dimensions[row].height = 16.5
+
+
+def add_alternating_fill_colors(sheet: Worksheet, n_kids) -> None:
+    cur_row = 4
+    for i in range(cur_row, cur_row + n_kids, 2):
+        fill = PatternFill(patternType="solid", fgColor="DDE3F7")
+        for cell in sheet[i]:
+            cell.fill = fill
 
 
 def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
