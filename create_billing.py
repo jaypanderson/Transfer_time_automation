@@ -245,16 +245,17 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
     l = len(kids_with_charges)
     if len(kids_with_charges) > 2:
         sheet.insert_rows(cur_row, len(kids_with_charges) - 2)
+        adjust_merged_cells(sheet, cur_row, len(kids_with_charges) - 2)
+        adjust_date_formulas(sheet, cur_row + len(kids_with_charges))
     book.save(file_path)
     for class_name, kid_name in kids_with_charges:
         first_half, second_half = overtime_attendance_data[kid_name]
-        print(cur_row)
+        # print(cur_row)
         for i, value in enumerate(first_half):
             sheet[cur_row][i].value = value
         for i, value in enumerate(second_half):
-            print(cur_row + l)
-            print(sheet[cur_row + l][i].value)
-            sheet[cur_row + l][i].value = value
+            # the 2 is to compensate for the rows used for dates and column names
+            sheet[cur_row + l + 2][i].value = value
         inserted += 1
         cur_row += 1
     book.save(file_path)
@@ -262,8 +263,25 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
 
 
 
-
-
+def adjust_date_formulas(sheet: Worksheet, row_i: int) -> None:
+    """
+    :param sheet:
+    :param row_i:
+    :return:
+    """
+    row = sheet[row_i]
+    # may need to adjust starting location depending on if columns are inserted
+    for x, cell in enumerate(row[7::4]):
+        if cell.value is None:
+            break
+        first_half, rest = cell.value.split("(", 1)
+        ref_cell, second_half = rest.split(",", 1)
+        idx = None
+        for i, c in enumerate(ref_cell):
+            if c.isdigit():
+                idx = i
+                break
+        cell.value = f"{first_half}({ref_cell[:idx]}{row_i},{second_half}"
 
 
 
@@ -548,8 +566,8 @@ def merge_specific_cells(sheet: Worksheet, new_row_num: int, start_col: str, end
     merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
     sheet.merge_cells(merge_range)
 
-
-def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
+# TODO change doc string to reflect changes, this now adjusts merged cells based on how many rows have been inserted.
+def adjust_merged_cells(sheet: Worksheet, new_row: int, n_rows_inserted: int) -> None:
     """
     Because openpyxl has no build in way of adjusting the merged cells when a row is inserted this function was created.
     It works by taking in the location of where the row was inserted and then adjusting any merged cells bellow that
@@ -563,8 +581,8 @@ def adjust_merged_cells(sheet: Worksheet, new_row: int) -> None:
         min_col, min_row, max_col, max_row = range_boundaries(str(merged_range))
 
         if min_row > new_row + 1:
-            min_row += 1
-            max_row += 1
+            min_row += n_rows_inserted
+            max_row += n_rows_inserted
         new_range = f'{openpyxl.utils.get_column_letter(min_col)}{min_row}:{openpyxl.utils.get_column_letter(max_col)}{max_row}'
         new_merged_ranges.append(new_range)
 
@@ -679,7 +697,7 @@ def create_billing_sheets(charges: defaultdict) -> None:
                     new_sheet.insert_rows(row_num + 1 + i)
                     rows_inserted += 1
                     merge_specific_cells(new_sheet, row_num + i, 'B', 'C')
-                    adjust_merged_cells(new_sheet, new_row_num)
+                    adjust_merged_cells(new_sheet, new_row_num, 1)
                 copy_row_style(new_sheet, row_num, row_num + i)
                 insert_data(new_sheet, new_row_num, month, data[0], data[1], data[2], data[3])
 
