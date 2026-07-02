@@ -207,7 +207,13 @@ def add_alternating_fill_colors(sheet: Worksheet, n_kids) -> None:
     for i in range(cur_row, cur_row + n_kids, 2):
         for cell in sheet[i]:
             cell.fill = fill
-    print("test")
+    cur_row += n_kids + 2
+    fill = PatternFill(patternType="solid", fgColor="FFF2CC")
+    for i in range(cur_row, cur_row + n_kids, 2):
+        for cell in sheet[i]:
+            cell.fill = fill
+        
+
 
 
 
