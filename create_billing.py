@@ -286,7 +286,7 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
         for i, value in enumerate(second_half):
             # the 2 is to compensate for the rows used for dates and column names
             sheet[cur_row + l + 2][i].value = value
-            copy_paste_cell_attributes(sheet[cur_row + l + 2][i], sheet, cur_row + l + 2, i)
+            copy_paste_cell_attributes(sheet[cur_row + l + 2][i], sheet, 4, i) # 4 is the row we want to copy from possible for error to happen
         inserted += 1
         cur_row += 1
     book.save(file_path)
