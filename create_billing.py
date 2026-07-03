@@ -212,7 +212,7 @@ def add_alternating_fill_colors(sheet: Worksheet, n_kids) -> None:
     for i in range(cur_row, cur_row + n_kids, 2):
         for cell in sheet[i]:
             cell.fill = fill
-        
+
 
 
 
@@ -242,7 +242,7 @@ def gather_attendance_data(kids_with_charges, file_path):
         sheet = book[class_key]
         for row in sheet.iter_rows(values_only=True):
             if row[2] and replace_all_spaces(row[2]) == replace_all_spaces(kid_name):
-                overtime_attendance_data[kid_name].append(row)
+                overtime_attendance_data[kid_name].append((class_key,) + row)
 
     return overtime_attendance_data
 
@@ -253,8 +253,8 @@ def priority_order(overtime_attendance_data, items):
     gou_order = {1: 0, 2: 1, 3: 1}
     type_order = {"短": 0, "標": 1}
     class_order = {"ひよこ": 0, "ひつじ": 1, "うさぎ": 2, "だいだい": 3, "もも": 4, "みどり": 5, "き": 6, "あお": 7, "ふじ": 8}
-    gou_value = gou_order[overtime_attendance_data[kid_name][0][0]]
-    type_value = type_order[overtime_attendance_data[kid_name][0][1]]
+    gou_value = gou_order[overtime_attendance_data[kid_name][0][1]]
+    type_value = type_order[overtime_attendance_data[kid_name][0][2]]
     class_value = class_order[class_name]
 
     return gou_value, type_value, class_value
@@ -312,7 +312,7 @@ def adjust_date_formulas(sheet: Worksheet, row_i: int) -> None:
     """
     row = sheet[row_i]
     # may need to adjust starting location depending on if columns are inserted
-    for x, cell in enumerate(row[7::4]):
+    for x, cell in enumerate(row[8::4]):
         if cell.value is None:
             break
         first_half, rest = cell.value.split("(", 1)
