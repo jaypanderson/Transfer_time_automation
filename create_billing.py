@@ -235,7 +235,7 @@ def flag_charges(sheet: Worksheet) -> None:
     fill = PatternFill(patternType="solid", fgColor="FFFF00")
     for row in sheet.iter_rows(4):
         for cell in row[6::4]:
-            if cell.value and cell.value > 0:
+            if isinstance(cell.value, int) and int(cell.value) > 0:
                 cell.fill = fill
 
 
