@@ -193,7 +193,11 @@ def format_sheet(file_path: str, n_kids) -> None:
     sheet = book["料金発生"]
     set_row_height(sheet)
     add_alternating_fill_colors(sheet, n_kids)
+    add_ichigou_color(sheet)
+    add_type_color(sheet)
+    flag_charges(sheet)
     book.save(file_path)
+    book.close()
 
 
 def set_row_height(sheet: Worksheet) -> None:
@@ -214,6 +218,25 @@ def add_alternating_fill_colors(sheet: Worksheet, n_kids) -> None:
             cell.fill = fill
 
 
+def add_ichigou_color(sheet: Worksheet) -> None:
+    fill = PatternFill(patternType="solid", fgColor="F4B084")
+    for row in sheet.iter_rows(4):
+        if row[1].value == 1:
+            row[1].fill = fill
+
+def add_type_color(sheet: Worksheet) -> None:
+    fill = PatternFill(patternType="solid", fgColor="FFFF00")
+    for row in sheet.iter_rows(4):
+        if row[2].value == "短":
+            row[2].fill = fill
+
+
+def flag_charges(sheet: Worksheet) -> None:
+    fill = PatternFill(patternType="solid", fgColor="FFFF00")
+    for row in sheet.iter_rows(4):
+        for cell in row[6::4]:
+            if cell.value and cell.value > 0:
+                cell.fill = fill
 
 
 
