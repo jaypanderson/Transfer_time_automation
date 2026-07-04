@@ -232,7 +232,7 @@ def add_type_color(sheet: Worksheet) -> None:
 
 
 def flag_charges(sheet: Worksheet) -> None:
-    fill = PatternFill(patternType="solid", fgColor="FFFF00")
+    fill = PatternFill(patternType="solid", fgColor="FFCCFF")
     for row in sheet.iter_rows(4):
         for cell in row[6::4]:
             if isinstance(cell.value, int) and int(cell.value) > 0:
