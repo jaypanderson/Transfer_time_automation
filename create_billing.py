@@ -196,6 +196,8 @@ def format_sheet(file_path: str, n_kids) -> None:
     add_ichigou_color(sheet)
     add_type_color(sheet)
     flag_charges(sheet)
+    mark_early_arrival_times(sheet)
+    mark_late_departure_times(sheet)
     book.save(file_path)
     book.close()
 
@@ -238,6 +240,27 @@ def flag_charges(sheet: Worksheet) -> None:
             if isinstance(cell.value, int) and int(cell.value) > 0:
                 cell.fill = fill
 
+
+
+def mark_early_arrival_times(sheet: Worksheet) -> None:
+    fill = PatternFill(patternType="solid", fgColor="FF0000")
+    for row in sheet.iter_rows(4):
+        for cell in row[4::4]:
+            if not isinstance(cell.value, int):
+                continue
+            time = int(cell.value)
+            if time <= 715:
+                cell.fill = fill
+
+def mark_late_departure_times(sheet: Worksheet) -> None:
+    fill = PatternFill(patternType="solid", fgColor="FF0000")
+    for row in sheet.iter_rows(4):
+        for cell in row[5::4]:
+            if not isinstance(cell.value, int):
+                continue
+            time = int(cell.value)
+            if time >= 1845:
+                cell.fill = fill
 
 
 def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
