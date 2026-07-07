@@ -195,11 +195,13 @@ def format_sheet(file_path: str, n_kids) -> None:
     add_alternating_fill_colors(sheet, n_kids)
     add_ichigou_color(sheet)
     add_type_color(sheet)
-    flag_charges(sheet)
+    total_charges = flag_charges(sheet)
+    insert_total_charges(sheet, total_charges)
     mark_early_arrival_times(sheet)
     mark_late_departure_times(sheet)
     book.save(file_path)
     book.close()
+    print(total_charges)
 
 
 def set_row_height(sheet: Worksheet) -> None:
@@ -233,13 +235,19 @@ def add_type_color(sheet: Worksheet) -> None:
             row[2].fill = fill
 
 
-def flag_charges(sheet: Worksheet) -> None:
+def flag_charges(sheet: Worksheet) -> int:
+    total_charges = 0
     fill = PatternFill(patternType="solid", fgColor="FFCCFF")
     for row in sheet.iter_rows(4):
         for cell in row[6::4]:
             if isinstance(cell.value, int) and int(cell.value) > 0:
                 cell.fill = fill
+                total_charges += cell.value
+    return total_charges
 
+
+def insert_total_charges(sheet: Worksheet, total_charges: int) -> None:
+    sheet[1][]
 
 
 def mark_early_arrival_times(sheet: Worksheet) -> None:
