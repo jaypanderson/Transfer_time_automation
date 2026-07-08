@@ -16,6 +16,7 @@ from collections import defaultdict
 
 from transfer_time import replace_all_spaces
 from transfer_time import find_name_range
+from transfer_time import recalculate_vba_code
 from copy import copy
 from collections import Counter
 from itertools import zip_longest
@@ -162,6 +163,7 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
                         departure = sheet.cell(row=dept_row, column=dept_col).value
                         charges[sheet_name][name].append((price, arrival, departure, date))
     print(charges)
+    book.close()
     return charges, file_path
 
 # TODO finish function
@@ -175,7 +177,7 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     :return:
     """
     kids_with_charges = organize_data_for_transfer(charges)
-    print(kids_with_charges)
+    print(charges, "print test")
     overtime_attendance_data = gather_attendance_data(kids_with_charges, file_path)
     kids_with_charges.sort(key=partial(priority_order, overtime_attendance_data))
     print(kids_with_charges)
@@ -200,6 +202,10 @@ def format_sheet(file_path: str, n_kids) -> None:
     mark_early_arrival_times(sheet)
     mark_late_departure_times(sheet)
     book.save(file_path)
+    #TODO decide if i want to keep this because it gets in the way but protects it from failing when excel isnt available on the computer that is running this code.
+    recalc = messagebox.askyesno("数式再計算", "数式を再計算しますか？しない場合はエラーが発生する可能性があります。")
+    if recalc:
+        recalculate_vba_code(file_path)
     book.close()
     print(total_charges)
 
@@ -247,7 +253,8 @@ def flag_charges(sheet: Worksheet) -> int:
 
 
 def insert_total_charges(sheet: Worksheet, total_charges: int) -> None:
-    sheet[1][]
+    sheet[1][48].value = total_charges
+    sheet[1][48].fill = PatternFill(patternType="solid", fgColor="FFCCFF")
 
 
 def mark_early_arrival_times(sheet: Worksheet) -> None:
@@ -280,6 +287,7 @@ def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]
     "create a clean list that only contains the class and names of each kid"
     kids_with_charges = []
     for class_key, item in charges.items():
+        print("test print", class_key, item)
         for name_key in item.keys():
             kids_with_charges.append((class_key, name_key))
     return kids_with_charges
