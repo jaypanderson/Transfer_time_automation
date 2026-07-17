@@ -176,7 +176,7 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     :param charges: Overtime charges that are grouped by class and then by student name as their keys.  When accessed
     the inner list is a collection of tuples containing the charged amount, arrival time, departure time, date of late
     charges of each individual date in which a charges were incurred.
-    :param file_path: the path address to the Workbook
+    :param file_path: the path address to the Workbook.
     :return: None
     """
     kids_with_charges = organize_data_for_transfer(charges)
@@ -194,6 +194,15 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
 
 
 def format_sheet(file_path: str, n_kids: int) -> None:
+    """
+    formats the Worksheet "料金発生" to match the settings of the other Worksheets in the Workbook.  It also colors in
+    cells that meet certain criteria such as having a certain type like 1 gou or having charges incurred.  Currently, the
+    function asks the user to choose whether the vba values should be recalculated or not.  This is so that computers
+    that do not have Excel can refuse this option and allow for the program to continue without crashing.
+    :param file_path: The path address to the Workbook.
+    :param n_kids: The number of kids which have at least one over time charge for the month.
+    :return: None
+    """
     book = openpyxl.load_workbook(file_path)
     sheet = book["料金発生"]
     set_row_height(sheet)
@@ -639,7 +648,7 @@ def insert_data(sheet: Worksheet, row: int, month: int, price: int, arrival: int
     """
     This function inserts the data into the billing documents at their respective rows.  This function is called from
     the create_billing function and it not to be confused with insert_tally_data. This function should be called for
-    every day the child has an extra charge.
+    everyday the child has an extra charge.
     :param sheet: The sheet that was created to insert the data
     :param row: The row in which we cant to insert the data into
     :param month: The month of the current billing cycle
