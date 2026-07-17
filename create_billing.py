@@ -255,7 +255,7 @@ def add_alternating_fill_colors(sheet: Worksheet, n_kids: int) -> None:
 
 def add_ichigou_color(sheet: Worksheet) -> None:
     """
-    add color to cells in the gou column that have the value of 1.
+    Add color to cells in the gou column that have the value of 1.
     :param sheet: The Worksheet in which the color is added to the cells.
     :return: None
     """
@@ -265,6 +265,11 @@ def add_ichigou_color(sheet: Worksheet) -> None:
             row[1].fill = fill
 
 def add_type_color(sheet: Worksheet) -> None:
+    """
+    Add color to the cells in the type column which have the value of "短"
+    :param sheet: The Worksheet in which the color is added to the cells.
+    :return: None
+    """
     fill = PatternFill(patternType="solid", fgColor="FFFF00")
     for row in sheet.iter_rows(4):
         if row[2].value == "短":
