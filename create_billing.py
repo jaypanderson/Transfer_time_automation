@@ -23,6 +23,7 @@ from itertools import zip_longest
 from functools import partial
 from openpyxl.utils.cell import range_boundaries
 from openpyxl.worksheet.worksheet import Worksheet
+from openpyxl.cell.cell import Cell
 
 
 # TODO add safeguards so the program doesn't crash when the user chooses the wrong file, but instead re-prompts the user
@@ -167,7 +168,7 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
     return charges, file_path
 
 # TODO finish function
-def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path: str):
+def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path: str) -> None:
     # TODO finish doc string
     """
     wrapper function for all the functions used to transfer the data of those that were charged overtime fees
@@ -190,7 +191,7 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     format_sheet(file_path, len(kids_with_charges))
 
 
-def format_sheet(file_path: str, n_kids) -> None:
+def format_sheet(file_path: str, n_kids: int) -> None:
     book = openpyxl.load_workbook(file_path)
     sheet = book["料金発生"]
     set_row_height(sheet)
@@ -215,7 +216,7 @@ def set_row_height(sheet: Worksheet) -> None:
         sheet.row_dimensions[row].height = 16.5
 
 
-def add_alternating_fill_colors(sheet: Worksheet, n_kids) -> None:
+def add_alternating_fill_colors(sheet: Worksheet, n_kids: int) -> None:
     cur_row = 4
     fill = PatternFill(patternType="solid", fgColor="DDE3F7")
     for i in range(cur_row, cur_row + n_kids, 2):
@@ -278,7 +279,7 @@ def mark_late_departure_times(sheet: Worksheet) -> None:
                 cell.fill = fill
 
 
-def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]):
+def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]) -> list[tuple]:
     """
     oragize data into the desired shape
     :param charges:
@@ -295,7 +296,7 @@ def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]
 
 
 # TODO finish function
-def gather_attendance_data(kids_with_charges, file_path):
+def gather_attendance_data(kids_with_charges: list[tuple], file_path: str) -> defaultdict[Any, list]:
     overtime_attendance_data = defaultdict(list)
 
     book = openpyxl.load_workbook(file_path, keep_vba=False, data_only=True)
@@ -323,7 +324,7 @@ def priority_order(overtime_attendance_data, items):
 
 
  # TODO need to finish function it is broken at this point
-def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_data: defaultdict[str, defaultdict[str, list]], file_path: str) -> None:
+def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_data: defaultdict[str, list], file_path: str) -> None:
     inserted = 0
     open_rows = 2
     cur_row = 4
@@ -355,7 +356,7 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
     book.close()
 
 
-def copy_paste_cell_attributes(cell, sheet, row, col) -> None:
+def copy_paste_cell_attributes(cell: Cell, sheet: Worksheet, row: int, col: int) -> None:
     source_cell = sheet[row-1][col]
     cell.fill = copy(source_cell.fill)
     cell.font = copy(source_cell.font)
