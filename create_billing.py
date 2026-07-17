@@ -196,9 +196,10 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
 def format_sheet(file_path: str, n_kids: int) -> None:
     """
     formats the Worksheet "料金発生" to match the settings of the other Worksheets in the Workbook.  It also colors in
-    cells that meet certain criteria such as having a certain type like 1 gou or having charges incurred.  Currently, the
-    function asks the user to choose whether the vba values should be recalculated or not.  This is so that computers
-    that do not have Excel can refuse this option and allow for the program to continue without crashing.
+    cells that meet certain criteria such as having a certain type like 1 gou or having charges incurred.  This is simply
+    for general formating, individual cell attributes are handled in another function.   Currently, the function asks the
+    user to choose whether the vba values should be recalculated or not.  This is so that computers that do not have Excel
+    can refuse this option and allow for the program to continue without crashing.
     :param file_path: The path address to the Workbook.
     :param n_kids: The number of kids which have at least one over time charge for the month.
     :return: None
