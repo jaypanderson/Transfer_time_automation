@@ -234,6 +234,13 @@ def set_row_height(sheet: Worksheet) -> None:
 
 
 def add_alternating_fill_colors(sheet: Worksheet, n_kids: int) -> None:
+    """
+    Adds color to rows in an alternating fashion to make reading the sheet easier.  the first half of the month uses a
+    light blue, alternating between white.  The second half of the month uses a light pink, alternating between white.
+    :param sheet: The Worksheet where the row colors will be added.
+    :param n_kids: The number of kids which have at least one over time charge for the month.
+    :return:
+    """
     cur_row = 4
     fill = PatternFill(patternType="solid", fgColor="DDE3F7")
     for i in range(cur_row, cur_row + n_kids, 2):
