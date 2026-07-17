@@ -277,6 +277,12 @@ def add_type_color(sheet: Worksheet) -> None:
 
 
 def flag_charges(sheet: Worksheet) -> int:
+    """
+    Add color to the cells which have a charge associated with them. any cell that has an int value and is above 0 will
+    have the color added to it.
+    :param sheet: The Worksheet in which the color is added to the cells.
+    :return: None
+    """
     total_charges = 0
     fill = PatternFill(patternType="solid", fgColor="FFCCFF")
     for row in sheet.iter_rows(4):
