@@ -223,6 +223,11 @@ def format_sheet(file_path: str, n_kids: int) -> None:
 
 
 def set_row_height(sheet: Worksheet) -> None:
+    """
+    Adjust the height of the rows to 16.5 due to formatting issues when pasting data into the newly added rows.
+    :param sheet: The sheet where the height of the rows will be changed.
+    :return: None
+    """
     for row in range(1, sheet.max_row + 1):
         sheet.row_dimensions[row].height = 16.5
 
