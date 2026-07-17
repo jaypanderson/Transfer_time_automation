@@ -173,9 +173,11 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     """
     wrapper function for all the functions used to transfer the data of those that were charged overtime fees
     from the original data and organized into a new work sheet within the workbook.
-    :param charges:
-    :param file_path:
-    :return:
+    :param charges: Overtime charges that are grouped by class and then by student name as their keys.  When accessed
+    the inner list is a collection of tuples containing the charged amount, arrival time, departure time, date of late
+    charges of each individual date in which a charges were incurred.
+    :param file_path: the path address to the Workbook
+    :return: None
     """
     kids_with_charges = organize_data_for_transfer(charges)
     print(charges, "print test")
