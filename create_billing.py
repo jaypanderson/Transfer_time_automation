@@ -337,11 +337,11 @@ def mark_late_departure_times(sheet: Worksheet) -> None:
 
 def organize_data_for_transfer(charges: defaultdict[Any, defaultdict[Any, list]]) -> list[tuple]:
     """
-    oragize data into the desired shape
-    :param charges:
-    :return:
+    organize data into the desired shape.  The nested defaultdicts have extra information that wont be needed for the
+    next task that uses this dat. it organizes i so that it simply includes the class name and child name.
+    :param charges: nested defaultdict that includes charges time and date organized my class and then name.
+    :return: A list of tuples that has the class name and the childs names ex) [("たんぽぽ"、"田中　太郎"), ("ばら", "田中　花子")]
     """
-    "create a clean list that only contains the class and names of each kid"
     kids_with_charges = []
     for class_key, item in charges.items():
         print("test print", class_key, item)
