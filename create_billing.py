@@ -204,7 +204,7 @@ def format_sheet(file_path: str, n_kids: int) -> None:
     :param n_kids: The number of kids which have at least one over time charge for the month.
     :return: None
     """
-    book = openpyxl.load_workbook(file_path)
+    book = openpyxl.load_workbook(file_path, keep_vba=True)
     sheet = book["料金発生"]
     set_row_height(sheet)
     add_alternating_fill_colors(sheet, n_kids)
@@ -384,7 +384,7 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
     inserted = 0
     open_rows = 2
     cur_row = 4
-    book = openpyxl.load_workbook(file_path)
+    book = openpyxl.load_workbook(file_path, keep_vba=True)
     try:
         sheet = book["料金発生"]
     except KeyError:
@@ -939,7 +939,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
     :return: None
     """
     file_path = open_file(3)
-    book = openpyxl.load_workbook(file_path)
+    book = openpyxl.load_workbook(file_path, keep_vba=True)
 
     year = find_year(charges)[0]
     month = find_year(charges)[1]
