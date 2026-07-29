@@ -294,6 +294,12 @@ def flag_charges(sheet: Worksheet) -> int:
 
 
 def insert_total_charges(sheet: Worksheet, total_charges: int) -> None:
+    """
+    inserts the total charges for the month of all the children and the colors the cell where the number is inserted
+    :param sheet: The worksheet in which the number is inserted into.
+    :param total_charges: the total of all chagres for evey child for the given month.
+    :return: None
+    """
     sheet[1][48].value = total_charges
     sheet[1][48].fill = PatternFill(patternType="solid", fgColor="FFCCFF")
 
