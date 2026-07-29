@@ -320,6 +320,11 @@ def mark_early_arrival_times(sheet: Worksheet) -> None:
                 cell.fill = fill
 
 def mark_late_departure_times(sheet: Worksheet) -> None:
+    """
+    Marks cells with red that have a value above 1845 indicating departure time dangerously clos to official closing hours
+    :param sheet: The worksheet in which the cells are marked.
+    :return: None
+    """
     fill = PatternFill(patternType="solid", fgColor="FF0000")
     for row in sheet.iter_rows(4):
         for cell in row[5::4]:
