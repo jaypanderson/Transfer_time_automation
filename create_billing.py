@@ -305,6 +305,11 @@ def insert_total_charges(sheet: Worksheet, total_charges: int) -> None:
 
 
 def mark_early_arrival_times(sheet: Worksheet) -> None:
+    """
+    Marks cells with red if they have a value below 715 to indicate children arriving before the official opening.
+    :param sheet: The worksheet in which the cells are marked
+    :return:
+    """
     fill = PatternFill(patternType="solid", fgColor="FF0000")
     for row in sheet.iter_rows(4):
         for cell in row[4::4]:
