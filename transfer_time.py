@@ -314,9 +314,9 @@ def recalculate_vba_code(in_file):
     :return:
     """
     app = xw.App(visible=False)
-    workbook = app.books.open(in_file)
+    workbook = xw.Book(in_file)
     workbook.app.calculation = 'automatic'
-    workbook.save()
+    workbook.save(in_file)
     workbook.close()
     app.quit()
 
