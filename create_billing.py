@@ -77,6 +77,8 @@ def open_file(option: int) -> str:
         title = '②預かり保育料金明細票原本を選択してください。'
     elif option == 3:
         title = '③預かり保育料金集計原本を選択してください。'
+    elif option  == 4:
+        title = "④料金発生原本を選択してください。"
     else:
         title = 'incorrect option chosen'
 
@@ -168,7 +170,7 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
     return charges, file_path
 
 # TODO finish function
-def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], file_path: str) -> None:
+def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], time_data_file_path: str) -> None:
     # TODO finish doc string
     """
     wrapper function for all the functions used to transfer the data of those that were charged overtime fees
@@ -176,12 +178,13 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     :param charges: Overtime charges that are grouped by class and then by student name as their keys.  When accessed
     the inner list is a collection of tuples containing the charged amount, arrival time, departure time, date of late
     charges of each individual date in which a charges were incurred.
-    :param file_path: the path address to the Workbook.
+    :param time_data_file_path: the path address to the Workbook.
     :return: None
     """
+    file_path = open_file(4)
     kids_with_charges = organize_data_for_transfer(charges)
     print(charges, "print test")
-    overtime_attendance_data = gather_attendance_data(kids_with_charges, file_path)
+    overtime_attendance_data = gather_attendance_data(kids_with_charges, time_data_file_path)
     kids_with_charges.sort(key=partial(priority_order, overtime_attendance_data))
     print(kids_with_charges)
     for i, kids in enumerate(kids_with_charges):
@@ -190,7 +193,10 @@ def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any
     # print(overtime_attendance_data)
 
     insert_attendance_times(kids_with_charges, overtime_attendance_data, file_path)
-    format_sheet(file_path, len(kids_with_charges))
+
+    # The previous function creates a new file that is a duplicate but has the data transferred
+    # so has a new file name so the next function needs the new file path.
+    format_sheet(new_file_path(file_path, "★★作成シート★★"), len(kids_with_charges))
 
 
 def format_sheet(file_path: str, n_kids: int) -> None:
@@ -215,10 +221,6 @@ def format_sheet(file_path: str, n_kids: int) -> None:
     mark_early_arrival_times(sheet)
     mark_late_departure_times(sheet)
     book.save(file_path)
-    #TODO decide if i want to keep this because it gets in the way but protects it from failing when excel isnt available on the computer that is running this code.
-    recalc = messagebox.askyesno("数式再計算", "数式を再計算しますか？しない場合はエラーが発生する可能性があります。")
-    if recalc:
-        recalculate_vba_code(file_path)
     book.close()
     print(total_charges)
 
@@ -362,7 +364,7 @@ def gather_attendance_data(kids_with_charges: list[tuple], file_path: str) -> de
         for row in sheet.iter_rows(values_only=True):
             if row[2] and replace_all_spaces(row[2]) == replace_all_spaces(kid_name):
                 overtime_attendance_data[kid_name].append((class_key,) + row)
-
+    book.close()
     return overtime_attendance_data
 
 
@@ -396,7 +398,6 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
         sheet.insert_rows(cur_row, len(kids_with_charges) - 2)
         adjust_merged_cells(sheet, cur_row, len(kids_with_charges) - 2)
         adjust_date_formulas(sheet, cur_row + len(kids_with_charges))
-    book.save(file_path)
     for class_name, kid_name in kids_with_charges:
         first_half, second_half = overtime_attendance_data[kid_name]
         for i, value in enumerate(first_half):
@@ -408,7 +409,7 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
             copy_paste_cell_attributes(sheet[cur_row + l + 2][i], sheet, 4, i) # 4 is the row we want to copy from possible for error to happen
         inserted += 1
         cur_row += 1
-    book.save(file_path)
+    book.save(new_file_path(file_path, "★★作成シート★★"))
     book.close()
 
 
@@ -982,11 +983,10 @@ def create_tally_sheet(charges: defaultdict) -> None:
 # main function to run all the processes I need.  Currently, this only creates two files. The final file still needs
 # some thought put into it on whether it should be created by hand or not.
 def main():
-    charges, file_path = count_charges()
-    # TODO create a list of name
-    transfer_overtime_attendance_times(charges, file_path)
+    charges ,time_data_file_path = count_charges()
     create_billing_sheets(charges)
     create_tally_sheet(charges)
+    transfer_overtime_attendance_times(charges, time_data_file_path)
 
 
 if __name__ == '__main__':
