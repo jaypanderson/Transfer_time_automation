@@ -980,8 +980,8 @@ def create_tally_sheet(charges: defaultdict) -> None:
     book.save(new_file_path(file_path, '★★作成シート★★'))
 
 
-# main function to run all the processes I need.  Currently, this only creates two files. The final file still needs
-# some thought put into it on whether it should be created by hand or not.
+# main function to run all the processes I need.  Currently, this creates 3 output files, all of which use a base
+# Excel file as a template and saves as a different name leaving the template document untouched.
 def main():
     charges ,time_data_file_path = count_charges()
     create_billing_sheets(charges)
