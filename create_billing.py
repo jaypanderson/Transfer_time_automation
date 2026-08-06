@@ -169,6 +169,7 @@ def count_charges() -> tuple[defaultdict[Any, defaultdict[Any, list]], str:]:
     book.close()
     return charges, file_path
 
+
 # TODO finish function
 def transfer_overtime_attendance_times(charges: defaultdict[Any, defaultdict[Any, list]], time_data_file_path: str) -> None:
     # TODO finish doc string
@@ -210,7 +211,7 @@ def format_sheet(file_path: str, n_kids: int) -> None:
     :param n_kids: The number of kids which have at least one over time charge for the month.
     :return: None
     """
-    book = openpyxl.load_workbook(file_path, keep_vba=True)
+    book = openpyxl.load_workbook(file_path)
     sheet = book["料金発生"]
     set_row_height(sheet)
     add_alternating_fill_colors(sheet, n_kids)
@@ -266,6 +267,7 @@ def add_ichigou_color(sheet: Worksheet) -> None:
         if row[1].value == 1:
             row[1].fill = fill
 
+
 def add_type_color(sheet: Worksheet) -> None:
     """
     Add color to the cells in the type column which have the value of "短"
@@ -320,6 +322,7 @@ def mark_early_arrival_times(sheet: Worksheet) -> None:
             time = int(cell.value)
             if time <= 715:
                 cell.fill = fill
+
 
 def mark_late_departure_times(sheet: Worksheet) -> None:
     """
@@ -386,7 +389,7 @@ def insert_attendance_times(kids_with_charges: list[tuple], overtime_attendance_
     inserted = 0
     open_rows = 2
     cur_row = 4
-    book = openpyxl.load_workbook(file_path, keep_vba=True)
+    book = openpyxl.load_workbook(file_path)
     try:
         sheet = book["料金発生"]
     except KeyError:
@@ -419,9 +422,6 @@ def copy_paste_cell_attributes(cell: Cell, sheet: Worksheet, row: int, col: int)
     cell.font = copy(source_cell.font)
     cell.border = copy(source_cell.border)
     cell.alignment = copy(source_cell.alignment)
-
-
-
 
 
 def adjust_date_formulas(sheet: Worksheet, row_i: int) -> None:
@@ -727,6 +727,7 @@ def merge_specific_cells(sheet: Worksheet, new_row_num: int, start_col: str, end
     merge_range = f'{start_col}{new_row_num}:{end_col}{new_row_num}'
     sheet.merge_cells(merge_range)
 
+
 # TODO change doc string to reflect changes, this now adjusts merged cells based on how many rows have been inserted.
 def adjust_merged_cells(sheet: Worksheet, new_row: int, n_rows_inserted: int) -> None:
     """
@@ -807,7 +808,7 @@ def adjust_formulas(sheet: Worksheet, cells_to_be_adjusted: tuple[tuple[int, int
     the last bool represents if the formula uses a range of cells or just a single cell. (For True it is a
     range =SUM(D3:D10), for False it is a single cell =D43.)
     :param num_rows_inserted: This basically is the number of days the child was charged extra.  This is because
-    for every day the child was charged, there will be a new row inserted to record the charge.
+    for everyday the child was charged, there will be a new row inserted to record the charge.
     :return:
     """
     for row, column, cell_range in cells_to_be_adjusted:
@@ -831,7 +832,7 @@ def create_billing_sheets(charges: defaultdict) -> None:
     :return: None
     """
     file_path = open_file(2)
-    book = openpyxl.load_workbook(file_path, keep_vba=False)
+    book = openpyxl.load_workbook(file_path)
     sheet = book[book.sheetnames[0]]
 
     year = find_year(charges)[0]
@@ -940,7 +941,7 @@ def create_tally_sheet(charges: defaultdict) -> None:
     :return: None
     """
     file_path = open_file(3)
-    book = openpyxl.load_workbook(file_path, keep_vba=True)
+    book = openpyxl.load_workbook(file_path)
 
     year = find_year(charges)[0]
     month = find_year(charges)[1]
